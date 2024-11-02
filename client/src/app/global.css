@@ -1,0 +1,70 @@
+:root {
+  --primary: #2185d0;
+  --secondary: #1b1c1d;
+  --background: #0f0f0f;
+  --foreground: #ffffff;
+  --link-color: #2185d0;
+  --green: #21ba45;
+  --red: #db2828;
+  --yellow: #eaae00;
+  --border-radius: 5px;
+}
+
+.secondary {
+  color: var(--background);
+  background-color: var(--secondary);
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body,
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
+  color: var(--primary);
+}
+
+a {
+  color: var(--link-color);
+  transition: 0.3s;
+}
+
+.secondary a:hover {
+  color: var(--background);
+}
+
+a:hover {
+  color: var(--foreground);
+}
+
+.desktop.label.inverted {
+  color: var(--foreground) !important;
+}
+
+.footer {
+  background-color: var(--secondary);
+  color: white;
+  padding: 20px 70px 20px 0px;
+  border-top: 10px solid var(--primary);
+}
+
+.content-container {
+  padding: 20px;
+  margin-left: 250px;
+}

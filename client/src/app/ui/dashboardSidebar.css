@@ -1,0 +1,84 @@
+#sidebar {
+  background-color: var(--secondary);
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  z-index: 2;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#sidebar .header {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  width: 100%;
+}
+
+#sidebar .footer {
+  width: 250px;
+}
+
+#sidebar .header .navheader {
+  font-size: 20px;
+  color: var(--foreground);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#sidebar .sidebarhidden {
+  display: none;
+}
+
+#sidebar .footer {
+  position: absolute;
+  bottom: 0;
+}
+
+#sidebar .sidebarlinkhidden {
+  display: none;
+}
+
+#sidebar ul {
+  list-style-type: none;
+  padding-right: 5px;
+  padding-left: 20px;
+  margin: 0;
+}
+
+#sidebar ul li {
+  margin-bottom: 8px;
+  width: 225px;
+}
+
+#sidebar ul li a {
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+#sidebar ul li a:hover {
+  background-color: var(--foreground);
+}
+
+.active {
+  background-color: var(--foreground);
+  color: var(--secondary);
+  border-radius: var(--border-radius);
+}
+
+#sidebar ul li a i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.webcontent {
+  margin-left: 250px;
+  padding: 0px 10px;
+}
