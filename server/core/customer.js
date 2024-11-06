@@ -38,3 +38,37 @@ export function createCustomer(fastify, customer) {
         return null;
     }
 }
+
+export function updateCustomer(fastify, id, customer) {
+    const statement = fastify.db.prepare('UPDATE customers SET name = ?, email = ?, phone = ?, address = ?, city = ?, country = ?, zip = ?, company = ? WHERE id = ?');
+
+    try {
+        const result = statement.run(customer.name, customer.email, customer.phone, customer.address, customer.city, customer.country, customer.zip, customer.company, id);
+        if (result.changes === 1) {
+            return getCustomer(fastify, id);
+        } else {
+            fastify.log.error('Could not update customer');
+            return null;
+        }
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
+export function deleteCustomer(fastify, id) {
+    const statement = fastify.db.prepare('DELETE FROM customers WHERE id = ?');
+
+    try {
+        const result = statement.run(id);
+        if (result.changes === 1) {
+            return { success: true };
+        } else {
+            fastify.log.error('Could not delete customer');
+            return { success: false };
+        }
+    } catch (error) {
+        fastify.log.error(error);
+        return { success: false };
+    }
+}

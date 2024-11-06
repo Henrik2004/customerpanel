@@ -1,0 +1,24 @@
+meta {
+  name: Update Customer
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/customers/2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Baumer Bäume",
+      "email": "test@test.de",
+      "phone": "01234567",
+      "address": "Baumstraße 7",
+      "city": "Baumstadt",
+      "country": "Baumland",
+      "zip": "2839",
+      "company": "Baumann"
+  }
+}
