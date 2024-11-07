@@ -22,10 +22,10 @@ export function getCustomer(fastify, id) {
 }
 
 export function createCustomer(fastify, customer) {
-    const statement = fastify.db.prepare('INSERT INTO customers (name, email, phone, address, city, country, zip, company) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    const statement = fastify.db.prepare('INSERT INTO customers (name, email, phone, address, city, country, zip, company, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
     try {
-        const result = statement.run(customer.name, customer.email, customer.phone, customer.address, customer.city, customer.country, customer.zip, customer.company);
+        const result = statement.run(customer.name, customer.email, customer.phone, customer.address, customer.city, customer.country, customer.zip, customer.company, customer.createdBy, customer.createdBy);
         const customerId = result.changes === 1 ? result.lastInsertRowid : null;
         if (customerId) {
             return getCustomer(fastify, customerId);
@@ -40,10 +40,10 @@ export function createCustomer(fastify, customer) {
 }
 
 export function updateCustomer(fastify, id, customer) {
-    const statement = fastify.db.prepare('UPDATE customers SET name = ?, email = ?, phone = ?, address = ?, city = ?, country = ?, zip = ?, company = ? WHERE id = ?');
+    const statement = fastify.db.prepare('UPDATE customers SET name = ?, email = ?, phone = ?, address = ?, city = ?, country = ?, zip = ?, company = ?, updatedBy = ? WHERE id = ?');
 
     try {
-        const result = statement.run(customer.name, customer.email, customer.phone, customer.address, customer.city, customer.country, customer.zip, customer.company, id);
+        const result = statement.run(customer.name, customer.email, customer.phone, customer.address, customer.city, customer.country, customer.zip, customer.company, customer.updatedBy, id);
         if (result.changes === 1) {
             return getCustomer(fastify, id);
         } else {

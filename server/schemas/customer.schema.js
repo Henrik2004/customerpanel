@@ -11,6 +11,10 @@ const customerSchema = {
         country: { type: 'string' },
         zip: { type: 'string' },
         company: { type: 'string' },
+        createdAt: { type: 'string' },
+        createdBy: { type: 'string' },
+        updatedAt: { type: 'string' },
+        updatedBy: { type: 'string' }
     }
 };
 

@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import CustomersRoutes from "./routes/customers.routes.js";
+import OffersRoutes from "./routes/offers.routes.js";
 import connectDatabase from "./database/database.js";
 import { customerSchema } from "./schemas/customer.schema.js";
 
@@ -22,6 +23,7 @@ server.register(cors, {
 server.register(connectDatabase);
 
 server.register(CustomersRoutes, { prefix: '/customers' });
+server.register(OffersRoutes, { prefix: '/offers' });
 
 server.listen({ port: 8080 }, (err, address) => {
     if (err) {
