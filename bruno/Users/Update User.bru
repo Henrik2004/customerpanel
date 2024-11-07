@@ -5,18 +5,16 @@ meta {
 }
 
 put {
-  url: http://localhost:8080/offers/1
+  url: http://localhost:8080/users/1
   body: json
   auth: none
 }
 
 body:json {
   {
-    "customerId": "1",
-    "title": "Welcoming Offer",
-    "description": "Testoffer for testing",
-    "price": 500.89,
-    "status": "draft",
-    "updatedBy": "2"
+    "name": "henrik",
+    "password": "1234",
+    "role": 1,
+    "updatedBy": "0"
   }
 }
