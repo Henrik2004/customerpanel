@@ -44,6 +44,39 @@ const createTables = (db) => {
         BEGIN
             UPDATE offers SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
         END;`).run();
+
+    db.prepare(`CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        password TEXT,
+        role INTEGER,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy TEXT,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedBy TEXT)`).run();
+
+    db.prepare(`CREATE TRIGGER IF NOT EXISTS update_timestamp_user
+        AFTER UPDATE ON users
+        FOR EACH ROW
+        BEGIN
+            UPDATE users SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
+        END;`).run();
+
+    db.prepare(`CREATE TABLE IF NOT EXISTS roles (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        canEdit BOOLEAN,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy TEXT,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedBy TEXT)`).run();
+
+    db.prepare(`CREATE TRIGGER IF NOT EXISTS update_timestamp_role
+        AFTER UPDATE ON roles
+        FOR EACH ROW
+        BEGIN
+            UPDATE roles SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
+        END;`).run();
 }
 
 function connectDatabase(fastify, options, done) {

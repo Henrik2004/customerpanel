@@ -1,0 +1,22 @@
+meta {
+  name: Create User
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "customerId": "1",
+    "title": "Welcoming Offer",
+    "description": "Testoffer",
+    "price": 500.89,
+    "status": "draft",
+    "createdBy": "1"
+  }
+}
