@@ -1,0 +1,19 @@
+meta {
+  name: Update Role
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/roles/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Account-Manager",
+    "canEdit": 1,
+    "updatedBy": "1"
+  }
+}

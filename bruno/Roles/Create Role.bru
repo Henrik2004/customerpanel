@@ -1,0 +1,19 @@
+meta {
+  name: Create Role
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/roles
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Account-Manager",
+    "canEdit": 0,
+    "createdBy": "1"
+  }
+}
