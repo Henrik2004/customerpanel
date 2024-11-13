@@ -21,7 +21,7 @@ server.register(cors, {
         }
     }
 });
-// Hallo
+
 server.register(connectDatabase);
 
 server.register(CustomersRoutes, { prefix: '/customers' });
