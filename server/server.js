@@ -6,10 +6,19 @@ import UsersRoutes from "./routes/users.routes.js";
 import RolesRoutes from "./routes/roles.routes.js";
 import connectDatabase from "./database/database.js";
 import { customerSchema } from "./schemas/customer.schema.js";
+import {commentSchema} from "./schemas/comment.schema.js";
+import {offerSchema} from "./schemas/offer.schema.js";
+import {roleSchema} from "./schemas/role.schema.js";
+import {userSchema} from "./schemas/user.schema.js";
 
 const server = Fastify({ logger: true });
 
 server.addSchema(customerSchema);
+server.addSchema(commentSchema);
+server.addSchema(offerSchema);
+server.addSchema(roleSchema);
+server.addSchema(userSchema);
+
 
 server.register(cors, {
     origin: (origin, callback) => {
