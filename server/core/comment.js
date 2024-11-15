@@ -7,7 +7,6 @@ export function getAllComments(fastify) {
     } catch (error) {
         fastify.log.error(error);
         return null;
-
     }
 }
 
