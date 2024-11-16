@@ -9,7 +9,7 @@ import {
 } from "../core/comment.js";
 
 
-async function CommentRoutes(fastify) {
+async function CommentsRoutes(fastify) {
     fastify.get('/', commentSchema, async (request, reply) => {
         const comments = getAllComments(fastify);
         if (!comments) {
@@ -60,4 +60,4 @@ async function CommentRoutes(fastify) {
     });
 }
 
-export default CommentRoutes;
+export default CommentsRoutes;
