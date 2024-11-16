@@ -26,8 +26,8 @@ export function createComment(fastify, comment) {
 
     try {
         const result = statement.run(comment.id, comment.user, comment.text, comment.createdBy, comment.updatedBy);
-        const customerId = result.changes === 1 ? result.lastInsertRowid : null;
-        if (customerId) {
+        const commentId = result.changes === 1 ? result.lastInsertRowid : null;
+        if (commentId) {
             return getComment(fastify, commentId);
         } else {
             fastify.log.error('Could not create comment');
@@ -40,7 +40,7 @@ export function createComment(fastify, comment) {
 }
 
 export function updateComment(fastify, id, comment) {
-    const statement = fastify.db.prepare('UPDATE comment Set user = ?, text = ?, updatedBy = ? WHERE id = ? ');
+    const statement = fastify.db.prepare('UPDATE comment Set user = ?, text = ?, updatedBy = ? WHERE id = ?');
 
     try {
         const result = statement.run(comment.id, comment.user, comment.text, comment.updatedBy);
