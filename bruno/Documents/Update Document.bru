@@ -1,0 +1,19 @@
+meta {
+  name: Update Document
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/documents/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "angebot",
+    "documentPath": "/angebot.pdf",
+    "updatedBy": "1"
+  }
+}

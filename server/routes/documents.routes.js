@@ -1,4 +1,4 @@
-import { documentSchema} from "../schemas/document.schema.js";
+import {documentSchema} from "../schemas/document.schema.js";
 
 import {
     createDocument,
@@ -14,7 +14,7 @@ async function DocumentRoutes(fastify) {
         const documents = await getAllDocuments(fastify);
         if (!documents) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return documents;
     });
@@ -23,7 +23,7 @@ async function DocumentRoutes(fastify) {
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
-            return { error: "Document not found" };
+            return {error: "Document not found"};
         }
         return document;
     });
@@ -33,7 +33,7 @@ async function DocumentRoutes(fastify) {
         const newDocument = createDocument(fastify, documentProps);
         if (!newDocument) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         reply.code(201);
         return newDocument;
@@ -44,19 +44,19 @@ async function DocumentRoutes(fastify) {
         const updatedDocument = updateDocument(fastify, request.params.id, documentProps);
         if (!updatedDocument) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return updatedDocument;
     });
 
-    fastify.put('/:id', documentSchema, async (request, reply) => {
+    fastify.delete('/:id', documentSchema, async (request, reply) => {
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
-            return { error: "Document not found" };
+            return {error: "Document not found"};
         }
         deleteDocument(fastify, request.params.id);
-        return { message: 'Document deleted' };
+        return {message: 'Document deleted'};
     });
 }
 

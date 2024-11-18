@@ -1,7 +1,7 @@
-export function getAllDocuments(fastify){
+export function getAllDocuments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM documents");
 
-    try{
+    try {
         const documents = statement.all();
         return {documents};
     } catch (error) {
@@ -10,7 +10,7 @@ export function getAllDocuments(fastify){
     }
 }
 
-export function getDocument(fastify, id)    {
+export function getDocument(fastify, id) {
     const statement = fastify.db.prepare("SELECT * FROM documents WHERE id = ?");
 
     try {
@@ -22,10 +22,10 @@ export function getDocument(fastify, id)    {
 }
 
 export function createDocument(fastify, document) {
-    const statement = fastify.db.prepare('Insert Into Document(id, name, document_path, createdBy, updatedBy) Values (?, ?, ?, ?, ?)');
+    const statement = fastify.db.prepare('Insert Into documents (id, name, documentPath, createdBy, updatedBy) Values (?, ?, ?, ?, ?)');
 
     try {
-        const result = statement.run(document.id, document.name, document.document_path, document.createdBy, document.updatedBy);
+        const result = statement.run(document.id, document.name, document.documentPath, document.createdBy, document.createdBy);
         const documentid = result.changes === 1 ? result.lastInsertRowid : null;
         if (documentid) {
             return getDocument(fastify, documentid);
@@ -40,10 +40,10 @@ export function createDocument(fastify, document) {
 }
 
 export function updateDocument(fastify, id, document) {
-    const statement = fastify.db.prepare('UPDATE document Set name = ?, document_path = ?, updatedBy = ?, WHERE id = ?');
+    const statement = fastify.db.prepare('UPDATE documents SET name = ?, documentPath = ?, updatedBy = ? WHERE id = ?');
 
     try {
-        const result = statement.run(document.id, document.name, document.document_path, document.updatedBy);
+        const result = statement.run(document.name, document.documentPath, document.updatedBy, id);
         if (result.changes === 1) {
             return getDocument(fastify, id);
         } else {

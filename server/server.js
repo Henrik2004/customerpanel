@@ -5,16 +5,20 @@ import OffersRoutes from "./routes/offers.routes.js";
 import UsersRoutes from "./routes/users.routes.js";
 import RolesRoutes from "./routes/roles.routes.js";
 import connectDatabase from "./database/database.js";
-import { customerSchema } from "./schemas/customer.schema.js";
+import {customerSchema} from "./schemas/customer.schema.js";
 import {commentSchema} from "./schemas/comment.schema.js";
 import {offerSchema} from "./schemas/offer.schema.js";
 import {roleSchema} from "./schemas/role.schema.js";
 import {userSchema} from "./schemas/user.schema.js";
+import {documentSchema} from "./schemas/document.schema.js";
+import CommentsRoutes from "./routes/comments.routes.js";
+import DocumentRoutes from "./routes/documents.routes.js";
 
-const server = Fastify({ logger: true });
+const server = Fastify({logger: true});
 
 server.addSchema(customerSchema);
 server.addSchema(commentSchema);
+server.addSchema(documentSchema);
 server.addSchema(offerSchema);
 server.addSchema(roleSchema);
 server.addSchema(userSchema);
@@ -33,12 +37,14 @@ server.register(cors, {
 
 server.register(connectDatabase);
 
-server.register(CustomersRoutes, { prefix: '/customers' });
-server.register(OffersRoutes, { prefix: '/offers' });
-server.register(UsersRoutes, { prefix: '/users' });
-server.register(RolesRoutes, { prefix: '/roles' });
+server.register(CustomersRoutes, {prefix: '/customers'});
+server.register(CommentsRoutes, {prefix: '/comments'});
+server.register(DocumentRoutes, {prefix: '/documents'});
+server.register(OffersRoutes, {prefix: '/offers'});
+server.register(UsersRoutes, {prefix: '/users'});
+server.register(RolesRoutes, {prefix: '/roles'});
 
-server.listen({ port: 8080 }, (err, address) => {
+server.listen({port: 8080}, (err, address) => {
     if (err) {
         server.log.error(err);
         process.exit(1);

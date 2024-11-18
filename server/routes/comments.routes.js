@@ -1,4 +1,4 @@
-import { commentSchema } from "../schemas/comment.schema.js";
+import {commentSchema} from "../schemas/comment.schema.js";
 
 import {
     createComment,
@@ -14,7 +14,7 @@ async function CommentsRoutes(fastify) {
         const comments = getAllComments(fastify);
         if (!comments) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return comments;
     });
@@ -23,7 +23,7 @@ async function CommentsRoutes(fastify) {
         const comment = getComment(fastify, request.params.id);
         if (!comment) {
             reply.code(404);
-            return { error: "Comment not found" };
+            return {error: "Comment not found"};
         }
         return comment;
     });
@@ -33,7 +33,7 @@ async function CommentsRoutes(fastify) {
         const newComment = createComment(fastify, commentProps);
         if (!newComment) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         reply.code(201);
         return newComment;
@@ -44,7 +44,7 @@ async function CommentsRoutes(fastify) {
         const updatedComment = updateComment(fastify, request.params.id, commentProps);
         if (!updatedComment) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return updatedComment;
     });
@@ -53,10 +53,10 @@ async function CommentsRoutes(fastify) {
         const comment = getComment(fastify, request.params.id);
         if (!comment) {
             reply.code(404);
-            return { error: "Comment not found" };
+            return {error: "Comment not found"};
         }
         deleteComment(fastify, request.params.id);
-        return { message: "Comment deleted" };
+        return {message: "Comment deleted"};
     });
 }
 

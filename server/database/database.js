@@ -95,13 +95,13 @@ const createTables = (db) => {
         END;`).run();
 
     db.prepare(`CREATE TABLE IF NOT EXISTS documents (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    document_path TEXT,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    createdBy TEXT,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedBy TEXT`).run();
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        documentPath TEXT,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy TEXT,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedBy TEXT)`).run();
 
     db.prepare(`CREATE TRIGGER IF NOT EXISTS update_timestamp_document
         AFTER UPDATE ON documents

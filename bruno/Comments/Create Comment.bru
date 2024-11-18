@@ -1,0 +1,19 @@
+meta {
+  name: Create Comment
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/comments
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user": 1,
+    "text": "Test-Kommentar",
+    "createdBy": "0"
+  }
+}
