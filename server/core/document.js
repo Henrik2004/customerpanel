@@ -22,7 +22,7 @@ export function getDocument(fastify, id) {
 }
 
 export function createDocument(fastify, document) {
-    const statement = fastify.db.prepare('Insert Into documents (id, name, documentPath, createdBy, updatedBy) Values (?, ?, ?, ?, ?)');
+    const statement = fastify.db.prepare('INSERT INTO documents (id, name, documentPath, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
 
     try {
         const result = statement.run(document.id, document.name, document.documentPath, document.createdBy, document.createdBy);

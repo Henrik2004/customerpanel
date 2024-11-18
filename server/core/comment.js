@@ -22,7 +22,7 @@ export function getComment(fastify, id) {
 }
 
 export function createComment(fastify, comment) {
-    const statement = fastify.db.prepare('Insert Into comments (id, user, text, createdBy, updatedBy) Values (?, ?, ?, ?, ?)');
+    const statement = fastify.db.prepare('INSERT INTO comments (id, user, text, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
 
     try {
         const result = statement.run(comment.id, comment.user, comment.text, comment.createdBy, comment.createdBy);
