@@ -1,19 +1,13 @@
-import { roleSchema } from '../schemas/role.schema.js';
+import {roleSchema} from '../schemas/role.schema.js';
 
-import {
-    createRole,
-    deleteRole,
-    getRole,
-    getAllRoles,
-    updateRole
-} from '../core/role.js';
+import {createRole, deleteRole, getAllRoles, getRole, updateRole} from '../core/role.js';
 
 async function RolesRoutes(fastify) {
     fastify.get('/', roleSchema, async (request, reply) => {
         const roles = getAllRoles(fastify);
         if (!roles) {
             reply.code(500);
-            return { error: 'Internal Server Error' };
+            return {error: 'Internal Server Error'};
         }
         return roles;
     });
@@ -22,7 +16,7 @@ async function RolesRoutes(fastify) {
         const role = getRole(fastify, request.params.id);
         if (!role) {
             reply.code(404);
-            return { error: 'Role not found' };
+            return {error: 'Role not found'};
         }
         return role;
     });
@@ -32,7 +26,7 @@ async function RolesRoutes(fastify) {
         const newRole = createRole(fastify, roleProps);
         if (!newRole) {
             reply.code(500);
-            return { error: 'Internal Server Error' };
+            return {error: 'Internal Server Error'};
         }
         reply.code(201);
         return newRole;
@@ -43,7 +37,7 @@ async function RolesRoutes(fastify) {
         const updatedRole = updateRole(fastify, request.params.id, roleProps);
         if (!updatedRole) {
             reply.code(500);
-            return { error: 'Internal Server Error' };
+            return {error: 'Internal Server Error'};
         }
         return updatedRole;
     });
@@ -52,10 +46,10 @@ async function RolesRoutes(fastify) {
         const role = getRole(fastify, request.params.id);
         if (!role) {
             reply.code(404);
-            return { error: 'Role not found' };
+            return {error: 'Role not found'};
         }
         deleteRole(fastify, request.params.id);
-        return { message: 'Role deleted' };
+        return {message: 'Role deleted'};
     });
 }
 

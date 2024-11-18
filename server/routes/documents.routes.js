@@ -1,12 +1,6 @@
 import {documentSchema} from "../schemas/document.schema.js";
 
-import {
-    createDocument,
-    deleteDocument,
-    getAllDocuments,
-    getDocument,
-    updateDocument,
-} from "../core/document.js";
+import {createDocument, deleteDocument, getAllDocuments, getDocument, updateDocument,} from "../core/document.js";
 
 
 async function DocumentRoutes(fastify) {

@@ -62,13 +62,13 @@ export function deleteCustomer(fastify, id) {
     try {
         const result = statement.run(id);
         if (result.changes === 1) {
-            return { success: true };
+            return {success: true};
         } else {
             fastify.log.error('Could not delete customer');
-            return { success: false };
+            return {success: false};
         }
     } catch (error) {
         fastify.log.error(error);
-        return { success: false };
+        return {success: false};
     }
 }

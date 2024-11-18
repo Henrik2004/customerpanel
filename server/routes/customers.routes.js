@@ -1,12 +1,6 @@
-import { customerSchema } from "../schemas/customer.schema.js";
+import {customerSchema} from "../schemas/customer.schema.js";
 
-import {
-    createCustomer,
-    deleteCustomer,
-    getAllCustomers,
-    getCustomer,
-    updateCustomer
-} from "../core/customer.js";
+import {createCustomer, deleteCustomer, getAllCustomers, getCustomer, updateCustomer} from "../core/customer.js";
 
 
 async function CustomersRoutes(fastify) {
@@ -14,7 +8,7 @@ async function CustomersRoutes(fastify) {
         const customers = getAllCustomers(fastify);
         if (!customers) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return customers;
     });
@@ -23,7 +17,7 @@ async function CustomersRoutes(fastify) {
         const customer = getCustomer(fastify, request.params.id);
         if (!customer) {
             reply.code(404);
-            return { error: "Customer not found" };
+            return {error: "Customer not found"};
         }
         return customer;
     });
@@ -33,7 +27,7 @@ async function CustomersRoutes(fastify) {
         const newCustomer = createCustomer(fastify, customerProps);
         if (!newCustomer) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         reply.code(201);
         return newCustomer;
@@ -44,7 +38,7 @@ async function CustomersRoutes(fastify) {
         const updatedCustomer = updateCustomer(fastify, request.params.id, customerProps);
         if (!updatedCustomer) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return updatedCustomer;
     });
@@ -53,10 +47,10 @@ async function CustomersRoutes(fastify) {
         const customer = getCustomer(fastify, request.params.id);
         if (!customer) {
             reply.code(404);
-            return { error: "Customer not found" };
+            return {error: "Customer not found"};
         }
         deleteCustomer(fastify, request.params.id);
-        return { message: "Customer deleted" };
+        return {message: "Customer deleted"};
     });
 }
 

@@ -1,19 +1,13 @@
-import { offerSchema } from "../schemas/offer.schema.js";
+import {offerSchema} from "../schemas/offer.schema.js";
 
-import {
-    createOffer,
-    deleteOffer,
-    getAllOffers,
-    getOffer,
-    updateOffer
-} from "../core/offer.js";
+import {createOffer, deleteOffer, getAllOffers, getOffer, updateOffer} from "../core/offer.js";
 
 async function OffersRoutes(fastify) {
     fastify.get('/', offerSchema, async (request, reply) => {
         const offers = getAllOffers(fastify);
         if (!offers) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return offers;
     });
@@ -22,7 +16,7 @@ async function OffersRoutes(fastify) {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
             reply.code(404);
-            return { error: "Offer not found" };
+            return {error: "Offer not found"};
         }
         return offer;
     });
@@ -32,7 +26,7 @@ async function OffersRoutes(fastify) {
         const newOffer = createOffer(fastify, offerProps);
         if (!newOffer) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         reply.code(201);
         return newOffer;
@@ -43,7 +37,7 @@ async function OffersRoutes(fastify) {
         const updatedOffer = updateOffer(fastify, request.params.id, offerProps);
         if (!updatedOffer) {
             reply.code(500);
-            return { error: "Internal Server Error" };
+            return {error: "Internal Server Error"};
         }
         return updatedOffer;
     });
@@ -52,10 +46,10 @@ async function OffersRoutes(fastify) {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
             reply.code(404);
-            return { error: "Offer not found" };
+            return {error: "Offer not found"};
         }
         deleteOffer(fastify, request.params.id);
-        return { message: "Offer deleted" };
+        return {message: "Offer deleted"};
     });
 }
 
