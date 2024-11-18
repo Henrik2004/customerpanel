@@ -1,0 +1,19 @@
+meta {
+  name: Update Comment
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/comments/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user": 1,
+    "text": "Test-Kommentar updated",
+    "updatedBy": "0"
+  }
+}

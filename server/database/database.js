@@ -77,6 +77,38 @@ const createTables = (db) => {
         BEGIN
             UPDATE roles SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
         END;`).run();
+
+    db.prepare(`CREATE TABLE IF NOT EXISTS comments (
+        id INTEGER PRIMARY KEY,
+        user INTEGER,
+        text TEXT,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy TEXT,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedBy TEXT)`).run();
+
+    db.prepare(`CREATE TRIGGER IF NOT EXISTS update_timestamp_comment
+        AFTER UPDATE ON comments
+        FOR EACH ROW
+        BEGIN
+            UPDATE comments SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
+        END;`).run();
+
+    db.prepare(`CREATE TABLE IF NOT EXISTS documents (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        documentPath TEXT,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy TEXT,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedBy TEXT)`).run();
+
+    db.prepare(`CREATE TRIGGER IF NOT EXISTS update_timestamp_document
+        AFTER UPDATE ON documents
+        FOR EACH ROW
+        BEGIN
+            UPDATE documents SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
+        END;`).run();
 }
 
 function connectDatabase(fastify, options, done) {

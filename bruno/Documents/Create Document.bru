@@ -1,0 +1,19 @@
+meta {
+  name: Create Document
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/documents
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Angebot",
+    "documentPath": "/Angebot.pdf",
+    "createdBy": "1"
+  }
+}
