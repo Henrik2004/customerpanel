@@ -23,3 +23,10 @@ body:json {
       "updatedBy": "2"
   }
 }
+
+tests {
+  test("updateCustomer", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

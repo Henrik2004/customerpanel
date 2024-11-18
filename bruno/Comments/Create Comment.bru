@@ -17,3 +17,10 @@ body:json {
     "createdBy": "0"
   }
 }
+
+tests {
+  test("createComments", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(201);
+  });
+}

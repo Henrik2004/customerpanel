@@ -20,3 +20,10 @@ body:json {
     "updatedBy": "2"
   }
 }
+
+tests {
+  test("updateOffer", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

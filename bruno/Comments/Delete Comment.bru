@@ -5,7 +5,14 @@ meta {
 }
 
 delete {
-  url: http://localhost:8080/comments/2
+  url: http://localhost:8080/comments/1
   body: none
   auth: none
+}
+
+tests {
+  test("deleteComment", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
 }

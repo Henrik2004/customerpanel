@@ -9,3 +9,10 @@ get {
   body: none
   auth: none
 }
+
+tests {
+  test("getAllOffers", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

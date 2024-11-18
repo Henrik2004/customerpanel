@@ -17,3 +17,10 @@ body:json {
     "createdBy": "1"
   }
 }
+
+tests {
+  test("createDocument", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(201);
+  });
+}

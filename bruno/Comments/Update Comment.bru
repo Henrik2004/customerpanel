@@ -17,3 +17,10 @@ body:json {
     "updatedBy": "0"
   }
 }
+
+tests {
+  test("updateComment", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

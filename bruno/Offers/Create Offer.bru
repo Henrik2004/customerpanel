@@ -20,3 +20,10 @@ body:json {
     "createdBy": "1"
   }
 }
+
+tests {
+  test("createOffer", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(201);
+  });
+}
