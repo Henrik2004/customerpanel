@@ -11,7 +11,7 @@ import {
 
 async function DocumentRoutes(fastify) {
     fastify.get('/', documentSchema, async (request, reply) => {
-        const documents = await getAllDocuments(fastify);
+        const documents = getAllDocuments(fastify);
         if (!documents) {
             reply.code(500);
             return {error: "Internal Server Error"};
