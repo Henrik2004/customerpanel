@@ -1,8 +1,34 @@
 <div class="sidebar">
-  <ul>
-    <li><a href="/overview">Übersicht</a></li>
-    <li><a href="/offers">Angebote</a></li>
-    <li><a href="/customers">Kunden</a></li>
-    <li><a href="/settings">Einstellungen</a></li>
-  </ul>
+  <div class="sidebar-header">
+    <h1 class="title">OfferSphere</h1>
+    <p class="subtitle">By <strong>Prismarine Solutions</strong>!</p>
+  </div>
+  <div class="sidebar-menu">
+    <ul>
+      <li [class.active]="isActive('/overview')">
+        <a routerLink="/overview" routerLinkActive="active">Overview</a>
+      </li>
+      <li [class.active]="isActive('/offers')" class="has-submenu">
+        <a routerLink="/offers" routerLinkActive="active">Offers</a>
+        <ul class="submenu">
+          <li [class.active]="isActive('/offers/create')">
+            <a routerLink="/offers/create" routerLinkActive="active">Create</a>
+          </li>
+          <li [class.active]="isActive('/offers/list')">
+            <a routerLink="/offers/list" routerLinkActive="active">List</a>
+          </li>
+        </ul>
+      </li>
+      <li [class.active]="isActive('/customers')">
+        <a routerLink="/customers" routerLinkActive="active">Customers</a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar-footer">
+    <ul>
+      <li [class.active]="isActive('/settings')">
+        <a routerLink="/settings" routerLinkActive="active">Settings</a>
+      </li>
+    </ul>
+  </div>
 </div>
