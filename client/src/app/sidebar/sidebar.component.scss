@@ -12,19 +12,26 @@
     position: relative;
 
     .submenu {
-      display: none;
+      visibility: hidden;
+      background-color: var(--dark-color);
       flex-direction: column;
       padding-left: 20px;
+      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
     }
 
+    &:hover .submenu,
     &.active .submenu {
-      display: flex;
+      visibility: visible;
+      max-height: 500px;
+      opacity: 1;
     }
   }
 }
 
 .active {
-  font-weight: bold;
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
 }

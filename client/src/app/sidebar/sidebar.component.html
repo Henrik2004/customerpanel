@@ -1,21 +1,21 @@
 <div class="sidebar">
   <div class="sidebar-header">
     <h1 class="title">OfferSphere</h1>
-    <p class="subtitle">By <strong>Prismarine Solutions</strong>!</p>
+    <p class="subtitle is-6">By Prismarine Solutions</p>
   </div>
   <div class="sidebar-menu">
     <ul>
       <li [class.active]="isActive('/overview')">
         <a routerLink="/overview" routerLinkActive="active">Overview</a>
       </li>
-      <li [class.active]="isActive('/offers')" class="has-submenu">
+      <li [class.active]="isActive('/offers') || isActive('/createoffer') || isActive('/alloffers')" class="has-submenu">
         <a routerLink="/offers" routerLinkActive="active">Offers</a>
         <ul class="submenu">
-          <li [class.active]="isActive('/offers/create')">
-            <a routerLink="/offers/create" routerLinkActive="active">Create</a>
+          <li [class.active]="isActive('/createoffer')">
+            <a routerLink="/createoffer" routerLinkActive="active">Create new</a>
           </li>
-          <li [class.active]="isActive('/offers/list')">
-            <a routerLink="/offers/list" routerLinkActive="active">List</a>
+          <li [class.active]="isActive('/alloffers')">
+            <a routerLink="/alloffers" routerLinkActive="active">List all</a>
           </li>
         </ul>
       </li>
