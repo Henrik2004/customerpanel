@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import {OverviewComponent} from './overview/overview.component';
-import {OffersComponent} from './offers/offers.component';
-import {CustomersComponent} from './customers/customers.component';
-import {SettingsComponent} from './settings/settings.component';
-import {CreateofferComponent} from './createoffer/createoffer.component';
-import {AlloffersComponent} from './alloffers/alloffers.component';
+import {OverviewComponent} from './layout/overview/overview.component';
+import {OffersComponent} from './layout/offers/offers.component';
+import {CustomersComponent} from './layout/customers/customers.component';
+import {SettingsComponent} from './layout/settings/settings.component';
+import {CreateofferComponent} from './layout/createoffer/createoffer.component';
+import {AlloffersComponent} from './layout/alloffers/alloffers.component';
 
 export const routes: Routes = [
   { path: 'overview', component: OverviewComponent },
