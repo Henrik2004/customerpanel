@@ -2,8 +2,7 @@ export function getAllCustomers(fastify) {
     const statement = fastify.db.prepare('SELECT * FROM customers');
 
     try {
-        const customers = statement.all();
-        return {customers};
+        return statement.all();
     } catch (error) {
         fastify.log.error(error);
         return null;

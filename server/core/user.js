@@ -2,8 +2,7 @@ export function getAllUsers(fastify) {
     const statement = fastify.db.prepare('SELECT * FROM users');
 
     try {
-        const users = statement.all();
-        return {users};
+        return statement.all();
     } catch (error) {
         fastify.log.error(error);
         return null;

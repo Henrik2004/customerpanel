@@ -2,8 +2,7 @@ export function getAllDocuments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM documents");
 
     try {
-        const documents = statement.all();
-        return {documents};
+        return statement.all();
     } catch (error) {
         fastify.log.error(error);
         return null;

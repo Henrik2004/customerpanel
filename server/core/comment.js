@@ -2,8 +2,7 @@ export function getAllComments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM comments");
 
     try {
-        const comments = statement.all();
-        return {comments};
+        return statement.all();
     } catch (error) {
         fastify.log.error(error);
         return null;

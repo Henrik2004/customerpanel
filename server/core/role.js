@@ -2,8 +2,7 @@ export function getAllRoles(fastify) {
     const statement = fastify.db.prepare('SELECT * FROM roles');
 
     try {
-        const roles = statement.all();
-        return {roles};
+        return statement.all();
     } catch (error) {
         fastify.log.error(error);
         return null;
