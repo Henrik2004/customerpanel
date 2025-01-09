@@ -21,9 +21,13 @@ const createDocumentSchema = {
             properties: {
                 name: {type: 'string'},
                 offerId: {type: 'integer'},
-                createdBy: {type: 'integer'}
+                createdBy: {type: 'integer'},
+                file: {
+                    type: 'string',
+                    format: 'binary'
+                }
             },
-            required: ['name', 'offerId', 'createdBy']
+            required: ['name', 'offerId', 'createdBy', 'file']
         },
         response: {
             201: {

@@ -1,9 +1,12 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from "fs";
+import fsPromises from "fs/promises";
+import { pipeline } from "stream";
+import { promisify } from "util";
 
-const UPLOAD_DIR = path.resolve("./assets");
+const UPLOAD_DIR = "./assets/";
+const pump = promisify(pipeline);
 
-await fs.mkdir(UPLOAD_DIR, { recursive: true });
+await fsPromises.mkdir(UPLOAD_DIR, { recursive: true });
 
 export function getAllDocuments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM documents");
@@ -31,9 +34,12 @@ export async function createDocument(fastify, documentProps, file) {
     const statement = fastify.db.prepare("INSERT INTO documents (name, documentPath, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)");
 
     try {
-        const documentPath = path.join(UPLOAD_DIR, file.filename);
-        await fs.writeFile(documentPath, file.data);
-        const result = statement.run(documentProps.name, documentPath, documentProps.offerId, documentProps.createdBy, documentProps.createdBy);
+        if (!file) {
+            throw new Error("Invalid file object");
+        }
+        const documentPath = `${UPLOAD_DIR}${file.filename}`;
+        await pump(file.file, fs.createWriteStream(documentPath));
+        const result = statement.run(documentProps.name.value, documentPath, documentProps.offerId.value, documentProps.createdBy.value, documentProps.createdBy.value);
         const documentId = result.changes === 1 ? result.lastInsertRowid : null;
         if (documentId) {
             return getDocument(fastify, documentId);

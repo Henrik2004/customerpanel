@@ -1,12 +1,12 @@
 import {
     createDocumentSchema,
-    documentSchema, getAllDocumentsSchema,
+    documentSchema,
+    getAllDocumentsSchema,
     getDocumentSchema,
     updateDocumentSchema
 } from "../schemas/document.schema.js";
 
 import {createDocument, deleteDocument, getAllDocuments, getDocument, updateDocument,} from "../core/document.js";
-
 
 async function DocumentRoutes(fastify) {
     fastify.get('/', getAllDocumentsSchema, async (request, reply) => {
@@ -27,15 +27,20 @@ async function DocumentRoutes(fastify) {
         return document;
     });
 
-    fastify.post('/', createDocumentSchema, async (request, reply) => {
-        const documentProps = request.body;
-        const file = request.raw.files.document;
-        const createdDocument = createDocument(fastify, documentProps, file);
-        if (!createdDocument) {
+    fastify.post('/', {
+        schema: createDocumentSchema,
+        config: {
+            multipart: true
+        }
+    }, async (request, reply) => {
+        const data = await request.file();
+        const documentProps = data.fields;
+        const document = await createDocument(fastify, documentProps, data);
+        if (!document) {
             reply.code(500);
             return {error: "Internal Server Error"};
         }
-        return createdDocument;
+        return document;
     });
 
     fastify.put('/:id', updateDocumentSchema, async (request, reply) => {

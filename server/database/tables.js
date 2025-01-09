@@ -93,6 +93,7 @@ const tables = (db) => {
         id INTEGER PRIMARY KEY,
         name TEXT,
         documentPath TEXT,
+        offerId INTEGER,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         createdBy INTEGER,
         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
