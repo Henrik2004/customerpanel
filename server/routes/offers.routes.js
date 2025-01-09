@@ -1,9 +1,26 @@
-import {offerSchema} from "../schemas/offer.schema.js";
+import {
+    createOfferSchema,
+    deleteOfferSchema,
+    getAllOffersSchema,
+    getOfferSchema,
+    updateOfferSchema
+} from "../schemas/offer.schema.js";
 
 import {createOffer, deleteOffer, getAllOffers, getOffer, updateOffer} from "../core/offer.js";
 
+/**
+ * Offers routes
+ * - GET all offers
+ * - GET offer by id
+ * - POST create offer
+ * - PUT update offer
+ * - DELETE offer
+ * @param fastify - instance of Fastify
+ * @returns {Promise<void>} - Offers routes
+ * @constructor
+ */
 async function OffersRoutes(fastify) {
-    fastify.get('/', offerSchema, async (request, reply) => {
+    fastify.get('/', getAllOffersSchema, async (request, reply) => {
         const offers = getAllOffers(fastify);
         if (!offers) {
             reply.code(500);
@@ -12,16 +29,17 @@ async function OffersRoutes(fastify) {
         return offers;
     });
 
-    fastify.get('/:id', offerSchema, async (request, reply) => {
+    fastify.get('/:id', getOfferSchema, async (request, reply) => {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
             reply.code(404);
             return {error: "Offer not found"};
         }
-        return offer;
+        console.log(offer);
+        return {offer: offer};
     });
 
-    fastify.post('/', offerSchema, async (request, reply) => {
+    fastify.post('/', createOfferSchema, async (request, reply) => {
         const offerProps = request.body;
         const newOffer = createOffer(fastify, offerProps);
         if (!newOffer) {
@@ -29,20 +47,20 @@ async function OffersRoutes(fastify) {
             return {error: "Internal Server Error"};
         }
         reply.code(201);
-        return newOffer;
+        return {offer: newOffer};
     });
 
-    fastify.put('/:id', offerSchema, async (request, reply) => {
+    fastify.put('/:id', updateOfferSchema, async (request, reply) => {
         const offerProps = request.body;
         const updatedOffer = updateOffer(fastify, request.params.id, offerProps);
         if (!updatedOffer) {
             reply.code(500);
             return {error: "Internal Server Error"};
         }
-        return updatedOffer;
+        return {offer: updatedOffer};
     });
 
-    fastify.delete('/:id', offerSchema, async (request, reply) => {
+    fastify.delete('/:id', deleteOfferSchema, async (request, reply) => {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
             reply.code(404);

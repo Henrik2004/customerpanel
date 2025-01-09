@@ -1,3 +1,8 @@
+/**
+ * Get all offers from the database
+ * @param fastify - instance of Fastify
+ * @returns {*|null} - array of offers or null if an error occurred
+ */
 export function getAllOffers(fastify) {
     const statement = fastify.db.prepare('SELECT * FROM offers');
 
@@ -9,6 +14,12 @@ export function getAllOffers(fastify) {
     }
 }
 
+/**
+ * Get a single offer from the database
+ * @param fastify - instance of Fastify
+ * @param id - offer id
+ * @returns {*|null} - offer object or null if an error occurred
+ */
 export function getOffer(fastify, id) {
     const statement = fastify.db.prepare('SELECT * FROM offers WHERE id = ?');
 
@@ -20,6 +31,12 @@ export function getOffer(fastify, id) {
     }
 }
 
+/**
+ * Create a new offer in the database
+ * @param fastify - instance of Fastify
+ * @param offer - offer object
+ * @returns {*|null} - offer object or null if an error occurred
+ */
 export function createOffer(fastify, offer) {
     const statement = fastify.db.prepare('INSERT INTO offers (customerId, title, description, price, status, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?, ?, ?)');
 
@@ -38,6 +55,13 @@ export function createOffer(fastify, offer) {
     }
 }
 
+/**
+ * Update an offer in the database
+ * @param fastify - instance of Fastify
+ * @param id - offer id
+ * @param offer - offer object
+ * @returns {*|null} - updated offer object or null if an error occurred
+ */
 export function updateOffer(fastify, id, offer) {
     const statement = fastify.db.prepare('UPDATE offers SET customerId = ?, title = ?, description = ?, price = ?, status = ?, updatedBy = ? WHERE id = ?');
 
@@ -55,6 +79,12 @@ export function updateOffer(fastify, id, offer) {
     }
 }
 
+/**
+ * Delete an offer from the database
+ * @param fastify - instance of Fastify
+ * @param id - offer id
+ * @returns {boolean} - true if the offer was deleted, false otherwise
+ */
 export function deleteOffer(fastify, id) {
     const statement = fastify.db.prepare('DELETE FROM offers WHERE id = ?');
 
