@@ -5,7 +5,25 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/login
-  body: none
+  url: http://localhost:8080/auth
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "name": "Henrik",
+    "password": "1234"
+  }
+}
+
+vars:post-response {
+  auth_token: res.body.token
+}
+
+tests {
+  test("userAuthentication", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
 }

@@ -5,9 +5,13 @@ meta {
 }
 
 patch {
-  url: http://localhost:8080/offers/1/status
+  url: http://localhost:8080/offers/2/status
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
 }
 
 body:json {
