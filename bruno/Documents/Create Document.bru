@@ -6,7 +6,7 @@ meta {
 
 post {
   url: http://localhost:8080/documents
-  body: json
+  body: multipartForm
   auth: none
 }
 
@@ -16,6 +16,13 @@ body:json {
     "documentPath": "/Angebot.pdf",
     "createdBy": "1"
   }
+}
+
+body:multipart-form {
+  name: TestDocument
+  offerId: 1
+  createdBy: 1
+  : @file(C:\Users\henri\Downloads\Test.txt)
 }
 
 tests {

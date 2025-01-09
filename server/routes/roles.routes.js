@@ -1,9 +1,26 @@
-import {roleSchema} from '../schemas/role.schema.js';
+import {
+    createRoleSchema, deleteRoleSchema,
+    getAllRolesSchema,
+    getRoleSchema,
+    roleSchema,
+    updateRoleSchema
+} from '../schemas/role.schema.js';
 
 import {createRole, deleteRole, getAllRoles, getRole, updateRole} from '../core/role.js';
 
+/**
+ * Roles routes
+ * GET all roles
+ * GET role by id
+ * POST create role
+ * PUT update role
+ * DELETE role
+ * @param fastify
+ * @returns {Promise<void>}
+ * @constructor
+ */
 async function RolesRoutes(fastify) {
-    fastify.get('/', roleSchema, async (request, reply) => {
+    fastify.get('/', getAllRolesSchema, async (request, reply) => {
         const roles = getAllRoles(fastify);
         if (!roles) {
             reply.code(500);
@@ -12,7 +29,7 @@ async function RolesRoutes(fastify) {
         return roles;
     });
 
-    fastify.get('/:id', roleSchema, async (request, reply) => {
+    fastify.get('/:id', getRoleSchema, async (request, reply) => {
         const role = getRole(fastify, request.params.id);
         if (!role) {
             reply.code(404);
@@ -21,7 +38,7 @@ async function RolesRoutes(fastify) {
         return role;
     });
 
-    fastify.post('/', roleSchema, async (request, reply) => {
+    fastify.post('/', createRoleSchema, async (request, reply) => {
         const roleProps = request.body;
         const newRole = createRole(fastify, roleProps);
         if (!newRole) {
@@ -32,7 +49,7 @@ async function RolesRoutes(fastify) {
         return newRole;
     });
 
-    fastify.put('/:id', roleSchema, async (request, reply) => {
+    fastify.put('/:id', updateRoleSchema, async (request, reply) => {
         const roleProps = request.body;
         const updatedRole = updateRole(fastify, request.params.id, roleProps);
         if (!updatedRole) {
@@ -42,7 +59,7 @@ async function RolesRoutes(fastify) {
         return updatedRole;
     });
 
-    fastify.delete('/:id', roleSchema, async (request, reply) => {
+    fastify.delete('/:id', deleteRoleSchema, async (request, reply) => {
         const role = getRole(fastify, request.params.id);
         if (!role) {
             reply.code(404);

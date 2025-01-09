@@ -12,9 +12,9 @@ const customerSchema = {
         zip: {type: 'string'},
         company: {type: 'string'},
         createdAt: {type: 'string'},
-        createdBy: {type: 'string'},
+        createdBy: {type: 'integer'},
         updatedAt: {type: 'string'},
-        updatedBy: {type: 'string'}
+        updatedBy: {type: 'integer'}
     }
 };
 
@@ -32,7 +32,7 @@ const createCustomerSchema = {
                 country: {type: 'string'},
                 zip: {type: 'string'},
                 company: {type: 'string'},
-                createdBy: {type: 'string'}
+                createdBy: {type: 'integer'}
             },
             required: ['name', 'email', 'phone', 'address', 'city', 'country', 'zip', 'company', 'createdBy']
         },
@@ -62,7 +62,7 @@ const updateCustomerSchema = {
                 country: {type: 'string'},
                 zip: {type: 'string'},
                 company: {type: 'string'},
-                updatedBy: {type: 'string'}
+                updatedBy: {type: 'integer'}
             }
         },
         response: {

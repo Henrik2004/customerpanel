@@ -1,3 +1,10 @@
+import fs from "fs/promises";
+import path from "path";
+
+const UPLOAD_DIR = path.resolve("./assets");
+
+await fs.mkdir(UPLOAD_DIR, { recursive: true });
+
 export function getAllDocuments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM documents");
 
@@ -20,14 +27,16 @@ export function getDocument(fastify, id) {
     }
 }
 
-export function createDocument(fastify, document) {
-    const statement = fastify.db.prepare('INSERT INTO documents (id, name, documentPath, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
+export async function createDocument(fastify, documentProps, file) {
+    const statement = fastify.db.prepare("INSERT INTO documents (name, documentPath, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)");
 
     try {
-        const result = statement.run(document.id, document.name, document.documentPath, document.createdBy, document.createdBy);
-        const documentid = result.changes === 1 ? result.lastInsertRowid : null;
-        if (documentid) {
-            return getDocument(fastify, documentid);
+        const documentPath = path.join(UPLOAD_DIR, file.filename);
+        await fs.writeFile(documentPath, file.data);
+        const result = statement.run(documentProps.name, documentPath, documentProps.offerId, documentProps.createdBy, documentProps.createdBy);
+        const documentId = result.changes === 1 ? result.lastInsertRowid : null;
+        if (documentId) {
+            return getDocument(fastify, documentId);
         } else {
             fastify.log.error("Could not create document");
             return null;
@@ -39,10 +48,10 @@ export function createDocument(fastify, document) {
 }
 
 export function updateDocument(fastify, id, document) {
-    const statement = fastify.db.prepare('UPDATE documents SET name = ?, documentPath = ?, updatedBy = ? WHERE id = ?');
+    const statement = fastify.db.prepare('UPDATE documents SET name = ?, documentPath = ?, offerId = ?, updatedBy = ? WHERE id = ?');
 
     try {
-        const result = statement.run(document.name, document.documentPath, document.updatedBy, id);
+        const result = statement.run(document.name, document.documentPath, document.offerId, document.updatedBy, id);
         if (result.changes === 1) {
             return getDocument(fastify, id);
         } else {

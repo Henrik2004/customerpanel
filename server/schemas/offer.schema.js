@@ -9,9 +9,9 @@ const offerSchema = {
         price: {type: 'number'},
         status: {type: 'string'},
         createdAt: {type: 'string'},
-        createdBy: {type: 'string'},
+        createdBy: {type: 'integer'},
         updatedAt: {type: 'string'},
-        updatedBy: {type: 'string'}
+        updatedBy: {type: 'integer'}
     }
 }
 
@@ -26,7 +26,7 @@ const createOfferSchema = {
                 description: {type: 'string'},
                 price: {type: 'number'},
                 status: {type: 'string'},
-                createdBy: {type: 'string'}
+                createdBy: {type: 'integer'}
             },
             required: ['customerId', 'title', 'description', 'price', 'status', 'createdBy']
         },
@@ -53,7 +53,7 @@ const updateOfferSchema = {
                 description: {type: 'string'},
                 price: {type: 'number'},
                 status: {type: 'string'},
-                updatedBy: {type: 'string'}
+                updatedBy: {type: 'integer'}
             }
         },
         response: {

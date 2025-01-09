@@ -1,0 +1,18 @@
+meta {
+  name: RecreateTables
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/settings
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "action": "recreateTables",
+    "secret": "Henrik27122004#!?X"
+  }
+}

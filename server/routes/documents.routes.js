@@ -1,10 +1,15 @@
-import {documentSchema} from "../schemas/document.schema.js";
+import {
+    createDocumentSchema,
+    documentSchema, getAllDocumentsSchema,
+    getDocumentSchema,
+    updateDocumentSchema
+} from "../schemas/document.schema.js";
 
 import {createDocument, deleteDocument, getAllDocuments, getDocument, updateDocument,} from "../core/document.js";
 
 
 async function DocumentRoutes(fastify) {
-    fastify.get('/', documentSchema, async (request, reply) => {
+    fastify.get('/', getAllDocumentsSchema, async (request, reply) => {
         const documents = getAllDocuments(fastify);
         if (!documents) {
             reply.code(500);
@@ -13,7 +18,7 @@ async function DocumentRoutes(fastify) {
         return documents;
     });
 
-    fastify.get('/:id', documentSchema, async (request, reply) => {
+    fastify.get('/:id', getDocumentSchema, async (request, reply) => {
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
@@ -22,18 +27,18 @@ async function DocumentRoutes(fastify) {
         return document;
     });
 
-    fastify.post('/', documentSchema, async (request, reply) => {
+    fastify.post('/', createDocumentSchema, async (request, reply) => {
         const documentProps = request.body;
-        const newDocument = createDocument(fastify, documentProps);
-        if (!newDocument) {
+        const file = request.raw.files.document;
+        const createdDocument = createDocument(fastify, documentProps, file);
+        if (!createdDocument) {
             reply.code(500);
             return {error: "Internal Server Error"};
         }
-        reply.code(201);
-        return newDocument;
+        return createdDocument;
     });
 
-    fastify.put('/:id', documentSchema, async (request, reply) => {
+    fastify.put('/:id', updateDocumentSchema, async (request, reply) => {
         const documentProps = request.body;
         const updatedDocument = updateDocument(fastify, request.params.id, documentProps);
         if (!updatedDocument) {

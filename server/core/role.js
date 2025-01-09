@@ -22,9 +22,10 @@ export function getRole(fastify, id) {
 
 export function createRole(fastify, role) {
     const statement = fastify.db.prepare('INSERT INTO roles (name, canEdit, createdBy, updatedBy) VALUES (?, ?, ?, ?)');
-
+    console.log('canEdit', role.canEdit);
+    const canEdit = role.canEdit ? 1 : 0;
     try {
-        const result = statement.run(role.name, role.canEdit, role.createdBy, role.createdBy);
+        const result = statement.run(role.name, canEdit, role.createdBy, role.createdBy);
         const roleId = result.changes === 1 ? result.lastInsertRowid : null;
         if (roleId) {
             return getRole(fastify, roleId);
@@ -40,9 +41,9 @@ export function createRole(fastify, role) {
 
 export function updateRole(fastify, id, role) {
     const statement = fastify.db.prepare('UPDATE roles SET name = ?, canEdit = ?, updatedBy = ? WHERE id = ?');
-
+    const canEdit = role.canEdit ? 1 : 0;
     try {
-        const result = statement.run(role.name, role.canEdit, role.updatedBy, id);
+        const result = statement.run(role.name, canEdit, role.updatedBy, id);
         if (result.changes === 1) {
             return getRole(fastify, id);
         } else {

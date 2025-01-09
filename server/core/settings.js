@@ -1,0 +1,33 @@
+import tables from "../database/tables.js";
+
+function coordinateSettings(action, data, fastify) {
+    console.log('action', action);
+    switch (action) {
+        case 'recreateTables':
+            console.log('recreateTables');
+            return handleRecreateTables(data, fastify);
+
+    }
+}
+
+function handleRecreateTables(data, fastify) {
+    //drop all tables and recreate them
+    const dropRoles = fastify.db.prepare('DROP TABLE IF EXISTS roles');
+    const dropComments = fastify.db.prepare('DROP TABLE IF EXISTS comments');
+    const dropDocuments = fastify.db.prepare('DROP TABLE IF EXISTS documents');
+    const dropUsers = fastify.db.prepare('DROP TABLE IF EXISTS users');
+    const dropCustomers = fastify.db.prepare('DROP TABLE IF EXISTS customers');
+    const dropOffers = fastify.db.prepare('DROP TABLE IF EXISTS offers');
+    dropRoles.run();
+    dropComments.run();
+    dropDocuments.run();
+    dropUsers.run();
+    dropCustomers.run();
+    dropOffers.run();
+
+    tables(fastify.db);
+
+    return {success: true, message: 'Tables deleted and recreated successfully'};
+}
+
+export {coordinateSettings};

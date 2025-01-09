@@ -6,9 +6,9 @@ const commentSchema = {
         user: {type: 'integer'},
         text: {type: 'string'},
         createdAt: {type: 'string'},
-        createdBy: {type: 'string'},
+        createdBy: {type: 'integer'},
         updatedAt: {type: 'string'},
-        updatedBy: {type: 'string'}
+        updatedBy: {type: 'integer'}
     }
 };
 
@@ -20,7 +20,7 @@ const createCommentSchema = {
             properties: {
                 user: {type: 'integer'},
                 text: {type: 'string'},
-                createdBy: {type: 'string'}
+                createdBy: {type: 'integer'}
             },
             required: ['user', 'text', 'createdBy']
         },
@@ -44,7 +44,7 @@ const updateCommentSchema = {
             properties: {
                 user: {type: 'integer'},
                 text: {type: 'string'},
-                updatedBy: {type: 'string'}
+                updatedBy: {type: 'integer'}
             }
         },
         response: {
