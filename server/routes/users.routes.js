@@ -1,9 +1,15 @@
-import {userSchema} from '../schemas/user.schema.js';
+import {
+    createUserSchema, deleteUserSchema,
+    getAllUsersSchema,
+    getUserSchema,
+    updateUserSchema,
+    userSchema
+} from '../schemas/user.schema.js';
 
 import {createUser, deleteUser, getAllUsers, getUser, updateUser} from '../core/user.js';
 
 async function UsersRoutes(fastify) {
-    fastify.get('/', userSchema, async (request, reply) => {
+    fastify.get('/', getAllUsersSchema, async (request, reply) => {
         const users = getAllUsers(fastify);
         if (!users) {
             reply.code(500);
@@ -12,7 +18,7 @@ async function UsersRoutes(fastify) {
         return users;
     });
 
-    fastify.get('/:id', userSchema, async (request, reply) => {
+    fastify.get('/:id', getUserSchema, async (request, reply) => {
         const user = getUser(fastify, request.params.id);
         if (!user) {
             reply.code(404);
@@ -21,7 +27,7 @@ async function UsersRoutes(fastify) {
         return user;
     });
 
-    fastify.post('/', userSchema, async (request, reply) => {
+    fastify.post('/', createUserSchema, async (request, reply) => {
         const userProps = request.body;
         const newUser = createUser(fastify, userProps);
         if (!newUser) {
@@ -32,7 +38,7 @@ async function UsersRoutes(fastify) {
         return newUser;
     });
 
-    fastify.put('/:id', userSchema, async (request, reply) => {
+    fastify.put('/:id', updateUserSchema, async (request, reply) => {
         const userProps = request.body;
         const updatedUser = updateUser(fastify, request.params.id, userProps);
         if (!updatedUser) {
@@ -42,7 +48,7 @@ async function UsersRoutes(fastify) {
         return updatedUser;
     });
 
-    fastify.delete('/:id', userSchema, async (request, reply) => {
+    fastify.delete('/:id', deleteUserSchema, async (request, reply) => {
         const user = getUser(fastify, request.params.id);
         if (!user) {
             reply.code(404);
