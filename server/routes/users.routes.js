@@ -24,7 +24,7 @@ async function UsersRoutes(fastify) {
             reply.code(404);
             return {error: 'User not found'};
         }
-        return user;
+        return {user: user};
     });
 
     fastify.post('/', createUserSchema, async (request, reply) => {
@@ -35,7 +35,7 @@ async function UsersRoutes(fastify) {
             return {error: 'Internal Server Error'};
         }
         reply.code(201);
-        return newUser;
+        return {user: newUser};
     });
 
     fastify.put('/:id', updateUserSchema, async (request, reply) => {
@@ -45,7 +45,7 @@ async function UsersRoutes(fastify) {
             reply.code(500);
             return {error: 'Internal Server Error'};
         }
-        return updatedUser;
+        return {user: updatedUser};
     });
 
     fastify.delete('/:id', deleteUserSchema, async (request, reply) => {

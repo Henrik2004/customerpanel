@@ -22,7 +22,6 @@ export function getRole(fastify, id) {
 
 export function createRole(fastify, role) {
     const statement = fastify.db.prepare('INSERT INTO roles (name, canEdit, createdBy, updatedBy) VALUES (?, ?, ?, ?)');
-    console.log('canEdit', role.canEdit);
     const canEdit = role.canEdit ? 1 : 0;
     try {
         const result = statement.run(role.name, canEdit, role.createdBy, role.createdBy);

@@ -1,23 +1,86 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyMultipart from "@fastify/multipart";
+import jwt from "@fastify/jwt";
 import CustomersRoutes from "./routes/customers.routes.js";
 import OffersRoutes from "./routes/offers.routes.js";
 import UsersRoutes from "./routes/users.routes.js";
 import RolesRoutes from "./routes/roles.routes.js";
 import connectDatabase from "./database/database.js";
-import {customerSchema, createCustomerSchema, deleteCustomerSchema, getAllCustomersSchema, getCustomerSchema, updateCustomerSchema} from "./schemas/customer.schema.js";
-import {commentSchema, createCommentSchema, deleteCommentSchema, getAllCommentsSchema, updateCommentSchema, getCommentSchema} from "./schemas/comment.schema.js";
-import {createOfferSchema, updateOfferSchema, deleteOfferSchema, offerSchema, getOfferSchema, getAllOffersSchema} from "./schemas/offer.schema.js";
-import {roleSchema, createRoleSchema, deleteRoleSchema, getAllRolesSchema, updateRoleSchema, getRoleSchema} from "./schemas/role.schema.js";
-import {userSchema} from "./schemas/user.schema.js";
-import {createDocumentSchema, documentSchema, updateDocumentSchema, getDocumentSchema, getAllDocumentsSchema, deleteDocumentSchema} from "./schemas/document.schema.js";
+import {
+    createCustomerSchema,
+    customerSchema,
+    deleteCustomerSchema,
+    getAllCustomersSchema,
+    getCustomerSchema,
+    updateCustomerSchema
+} from "./schemas/customer.schema.js";
+import {
+    commentSchema,
+    createCommentSchema,
+    deleteCommentSchema,
+    getAllCommentsSchema,
+    getCommentSchema,
+    updateCommentSchema
+} from "./schemas/comment.schema.js";
+import {
+    changeOfferStatusSchema,
+    createOfferSchema,
+    deleteOfferSchema,
+    getAllOffersSchema,
+    getOfferSchema,
+    offerSchema,
+    updateOfferSchema
+} from "./schemas/offer.schema.js";
+import {
+    createRoleSchema,
+    deleteRoleSchema,
+    getAllRolesSchema,
+    getRoleSchema,
+    roleSchema,
+    updateRoleSchema
+} from "./schemas/role.schema.js";
+import {
+    createDocumentSchema,
+    deleteDocumentSchema,
+    documentSchema,
+    getAllDocumentsSchema,
+    getDocumentSchema,
+    updateDocumentSchema
+} from "./schemas/document.schema.js";
 import CommentsRoutes from "./routes/comments.routes.js";
 import DocumentRoutes from "./routes/documents.routes.js";
 import SettingsRoutes from "./routes/settings.routes.js";
 import {settingsSchema} from "./schemas/settings.schema.js";
+import {SECRET_KEY} from "./app_config.js";
+import {
+    createUserSchema,
+    deleteUserSchema,
+    getAllUsersSchema,
+    getUserSchema,
+    updateUserSchema,
+    userSchema
+} from "./schemas/user.schema.js";
+import {AuthRoutes} from "./routes/auth.routes.js";
 
 const server = Fastify({logger: true});
+
+server.register(cors, {
+    origin: (origin, callback) => {
+        const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200'];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+});
+
+server.register(connectDatabase);
+server.register(fastifyMultipart);
+server.register(jwt, {
+    secret: 'supersecret'
+});
 
 server.addSchema(customerSchema);
 server.addSchema(createCustomerSchema);
@@ -43,6 +106,7 @@ server.addSchema(updateOfferSchema);
 server.addSchema(deleteOfferSchema);
 server.addSchema(getOfferSchema);
 server.addSchema(getAllOffersSchema);
+server.addSchema(changeOfferStatusSchema);
 server.addSchema(roleSchema);
 server.addSchema(createRoleSchema);
 server.addSchema(updateRoleSchema);
@@ -50,21 +114,13 @@ server.addSchema(deleteRoleSchema);
 server.addSchema(getRoleSchema);
 server.addSchema(getAllRolesSchema);
 server.addSchema(userSchema);
+server.addSchema(createUserSchema);
+server.addSchema(updateUserSchema);
+server.addSchema(deleteUserSchema);
+server.addSchema(getUserSchema);
+server.addSchema(getAllUsersSchema);
 server.addSchema(settingsSchema);
 
-server.register(cors, {
-    origin: (origin, callback) => {
-        const allowedOrigins = ['http://localhost:3000', 'http://localhost:4200'];
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-});
-
-server.register(connectDatabase);
-server.register(fastifyMultipart);
 server.register(CustomersRoutes, {prefix: '/customers'});
 server.register(CommentsRoutes, {prefix: '/comments'});
 server.register(DocumentRoutes, {prefix: '/documents'});
@@ -72,6 +128,7 @@ server.register(OffersRoutes, {prefix: '/offers'});
 server.register(UsersRoutes, {prefix: '/users'});
 server.register(RolesRoutes, {prefix: '/roles'});
 server.register(SettingsRoutes, {prefix: '/settings'});
+server.register(AuthRoutes, {prefix: '/auth'});
 
 server.listen({port: 8080}, (err, address) => {
     if (err) {

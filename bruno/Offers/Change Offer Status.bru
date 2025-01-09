@@ -1,0 +1,25 @@
+meta {
+  name: Change Offer Status
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8080/offers/1/status
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "status": "Ready",
+    "updatedBy": 1
+  }
+}
+
+tests {
+  test("changeOfferStatus", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

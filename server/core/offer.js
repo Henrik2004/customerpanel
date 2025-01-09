@@ -80,6 +80,30 @@ export function updateOffer(fastify, id, offer) {
 }
 
 /**
+ * Update an offer status in the database
+ * @param fastify - instance of Fastify
+ * @param id - offer id
+ * @param status - offer status
+ * @returns {*|null} - updated offer object or null if an error occurred
+ */
+export function updateOfferStatus(fastify, id, status) {
+    const statement = fastify.db.prepare('UPDATE offers SET status = ? WHERE id = ?');
+
+    try {
+        const result = statement.run(status, id);
+        if (result.changes === 1) {
+            return getOffer(fastify, id);
+        } else {
+            fastify.log.error('Could not update offer status');
+            return null;
+        }
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
+/**
  * Delete an offer from the database
  * @param fastify - instance of Fastify
  * @param id - offer id

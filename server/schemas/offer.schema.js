@@ -107,4 +107,26 @@ const deleteOfferSchema = {
     }
 }
 
-export {offerSchema, createOfferSchema, updateOfferSchema, getOfferSchema, getAllOffersSchema, deleteOfferSchema};
+const changeOfferStatusSchema = {
+    $id: "changeOfferStatusSchema",
+    schema: {
+        body: {
+            type: 'object',
+            required: ['status', 'updatedBy'],
+            properties: {
+                status: {type: 'string'},
+                updatedBy: {type: 'integer'}
+            }
+        },
+        response: {
+            200: {
+                type: 'object',
+                properties: {
+                    offer: offerSchema
+                }
+            }
+        }
+    }
+}
+
+export {offerSchema, createOfferSchema, updateOfferSchema, getOfferSchema, getAllOffersSchema, deleteOfferSchema, changeOfferStatusSchema};

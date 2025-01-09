@@ -1,9 +1,13 @@
 import {settingsSchema} from "../schemas/settings.schema.js";
 import {coordinateSettings} from "../core/settings.js";
 import {SETTINGS_SECRET} from "../app_config.js";
+import {roleCheck} from "../middleware/roleCheck.js";
 
 async function SettingsRoutes(fastify) {
-    fastify.post('/', settingsSchema, async (request, reply) => {
+    fastify.post('/', {
+        schema: settingsSchema,
+        //preHandler: roleCheck('1')
+    }, async (request, reply) => {
         const action = request.body.action;
         const secret = request.body.secret;
         const data = request.body.data;

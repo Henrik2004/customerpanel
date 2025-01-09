@@ -35,7 +35,7 @@ async function RolesRoutes(fastify) {
             reply.code(404);
             return {error: 'Role not found'};
         }
-        return role;
+        return {role: role};
     });
 
     fastify.post('/', createRoleSchema, async (request, reply) => {
@@ -46,7 +46,7 @@ async function RolesRoutes(fastify) {
             return {error: 'Internal Server Error'};
         }
         reply.code(201);
-        return newRole;
+        return {role: newRole};
     });
 
     fastify.put('/:id', updateRoleSchema, async (request, reply) => {
@@ -56,7 +56,7 @@ async function RolesRoutes(fastify) {
             reply.code(500);
             return {error: 'Internal Server Error'};
         }
-        return updatedRole;
+        return {role: updatedRole};
     });
 
     fastify.delete('/:id', deleteRoleSchema, async (request, reply) => {

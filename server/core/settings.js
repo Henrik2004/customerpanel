@@ -1,10 +1,8 @@
 import tables from "../database/tables.js";
 
 function coordinateSettings(action, data, fastify) {
-    console.log('action', action);
     switch (action) {
         case 'recreateTables':
-            console.log('recreateTables');
             return handleRecreateTables(data, fastify);
 
     }

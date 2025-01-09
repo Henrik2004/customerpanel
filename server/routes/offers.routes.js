@@ -1,4 +1,5 @@
 import {
+    changeOfferStatusSchema,
     createOfferSchema,
     deleteOfferSchema,
     getAllOffersSchema,
@@ -6,7 +7,8 @@ import {
     updateOfferSchema
 } from "../schemas/offer.schema.js";
 
-import {createOffer, deleteOffer, getAllOffers, getOffer, updateOffer} from "../core/offer.js";
+import {createOffer, deleteOffer, getAllOffers, getOffer, updateOffer, updateOfferStatus} from "../core/offer.js";
+import {roleCheck} from "../middleware/roleCheck.js";
 
 /**
  * Offers routes
@@ -35,7 +37,6 @@ async function OffersRoutes(fastify) {
             reply.code(404);
             return {error: "Offer not found"};
         }
-        console.log(offer);
         return {offer: offer};
     });
 
@@ -60,7 +61,10 @@ async function OffersRoutes(fastify) {
         return {offer: updatedOffer};
     });
 
-    fastify.delete('/:id', deleteOfferSchema, async (request, reply) => {
+    fastify.delete('/:id', {
+        schema: deleteOfferSchema,
+        preHandler: roleCheck('1')
+    }, async (request, reply) => {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
             reply.code(404);
@@ -68,6 +72,23 @@ async function OffersRoutes(fastify) {
         }
         deleteOffer(fastify, request.params.id);
         return {message: "Offer deleted"};
+    });
+
+    fastify.patch('/:id/status', {
+        schema: changeOfferStatusSchema,
+        preHandler: roleCheck('1')
+    }, async (request, reply) => {
+        const offer = getOffer(fastify, request.params.id);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+        const updatedOffer = updateOfferStatus(fastify, request.params.id, request.body.status);
+        if (!updatedOffer) {
+            reply.code(500);
+            return {error: "Internal Server Error"};
+        }
+        return {offer: updatedOffer};
     });
 }
 

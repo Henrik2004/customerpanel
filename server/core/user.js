@@ -20,6 +20,17 @@ export function getUser(fastify, id) {
     }
 }
 
+export function getUserByName(fastify, email) {
+    const statement = fastify.db.prepare('SELECT * FROM users WHERE name = ?');
+
+    try {
+        return statement.get(email);
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
 export function createUser(fastify, user) {
     const statement = fastify.db.prepare('INSERT INTO users (name, password, role, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
 
