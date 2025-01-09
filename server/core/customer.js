@@ -1,3 +1,8 @@
+/**
+ * Get all customers
+ * @param fastify - the fastify instance
+ * @returns {*|null} - the customers or null
+ */
 export function getAllCustomers(fastify) {
     const statement = fastify.db.prepare('SELECT * FROM customers');
 
@@ -9,6 +14,12 @@ export function getAllCustomers(fastify) {
     }
 }
 
+/**
+ * Get customer by id
+ * @param fastify - the fast
+ * @param id - the customer id
+ * @returns {*|null} - the customer or null
+ */
 export function getCustomer(fastify, id) {
     const statement = fastify.db.prepare('SELECT * FROM customers WHERE id = ?');
 
@@ -20,6 +31,12 @@ export function getCustomer(fastify, id) {
     }
 }
 
+/**
+ * Create a new customer
+ * @param fastify - the fastify instance
+ * @param customer - the customer object with the properties
+ * @returns {*|null} - the new customer or null
+ */
 export function createCustomer(fastify, customer) {
     const statement = fastify.db.prepare('INSERT INTO customers (name, email, phone, address, city, country, zip, company, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
@@ -38,6 +55,13 @@ export function createCustomer(fastify, customer) {
     }
 }
 
+/**
+ * Update a customer
+ * @param fastify - the fastify instance
+ * @param id - the customer id
+ * @param customer - the customer object with the properties
+ * @returns {*|null} - the updated customer or null
+ */
 export function updateCustomer(fastify, id, customer) {
     const statement = fastify.db.prepare('UPDATE customers SET name = ?, email = ?, phone = ?, address = ?, city = ?, country = ?, zip = ?, company = ?, updatedBy = ? WHERE id = ?');
 
@@ -55,6 +79,12 @@ export function updateCustomer(fastify, id, customer) {
     }
 }
 
+/**
+ * Delete a customer
+ * @param fastify - the fastify instance
+ * @param id - the customer id
+ * @returns {{success: boolean}} - the result
+ */
 export function deleteCustomer(fastify, id) {
     const statement = fastify.db.prepare('DELETE FROM customers WHERE id = ?');
 
