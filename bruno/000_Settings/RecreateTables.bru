@@ -16,3 +16,10 @@ body:json {
     "secret": "Henrik27#!?X"
   }
 }
+
+tests {
+  test("recreatedTables", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -14,7 +14,7 @@ export function roleCheck(requiredRole, fastify) {
             const decoded = jwt.verify(token, SECRET_KEY);
             const userRole = parseInt(decoded.role);
 
-            if (userRole !== requiredRole) {
+            if (userRole > requiredRole) {
                 reply.code(403).send({ error: 'Forbidden' });
                 return;
             }

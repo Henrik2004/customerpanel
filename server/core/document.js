@@ -34,9 +34,6 @@ export async function createDocument(fastify, documentProps, file) {
     const statement = fastify.db.prepare("INSERT INTO documents (name, documentPath, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)");
 
     try {
-        if (!file) {
-            throw new Error("Invalid file object");
-        }
         const documentPath = `${UPLOAD_DIR}${file.filename}`;
         await pump(file.file, fs.createWriteStream(documentPath));
         const result = statement.run(documentProps.name.value, documentPath, documentProps.offerId.value, documentProps.createdBy.value, documentProps.createdBy.value);

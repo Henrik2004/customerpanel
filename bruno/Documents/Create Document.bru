@@ -7,7 +7,11 @@ meta {
 post {
   url: http://localhost:8080/documents
   body: multipartForm
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
 }
 
 body:json {
@@ -19,10 +23,10 @@ body:json {
 }
 
 body:multipart-form {
-  name: TestDocument
+  name: TestDocument3
   offerId: 1
   createdBy: 1
-  : @file(C:\Users\henri\Downloads\Test.txt)
+  : @file(C:\Users\henri\Downloads\Test3.txt)
 }
 
 tests {

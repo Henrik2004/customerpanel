@@ -1,12 +1,13 @@
 import {
     createDocumentSchema,
-    documentSchema,
+    deleteDocumentSchema,
     getAllDocumentsSchema,
     getDocumentSchema,
     updateDocumentSchema
 } from "../schemas/document.schema.js";
 
 import {createDocument, deleteDocument, getAllDocuments, getDocument, updateDocument,} from "../core/document.js";
+import {roleCheck} from "../middleware/roleCheck.js";
 
 async function DocumentRoutes(fastify) {
     fastify.get('/', getAllDocumentsSchema, async (request, reply) => {
@@ -29,6 +30,7 @@ async function DocumentRoutes(fastify) {
 
     fastify.post('/', {
         schema: createDocumentSchema,
+        preHandler: roleCheck(2),
         config: {
             multipart: true
         }
@@ -40,10 +42,14 @@ async function DocumentRoutes(fastify) {
             reply.code(500);
             return {error: "Internal Server Error"};
         }
-        return document;
+        reply.code(201);
+        return {document: document};
     });
 
-    fastify.put('/:id', updateDocumentSchema, async (request, reply) => {
+    fastify.put('/:id', {
+        schema: updateDocumentSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
         const documentProps = request.body;
         const updatedDocument = updateDocument(fastify, request.params.id, documentProps);
         if (!updatedDocument) {
@@ -53,7 +59,10 @@ async function DocumentRoutes(fastify) {
         return updatedDocument;
     });
 
-    fastify.delete('/:id', documentSchema, async (request, reply) => {
+    fastify.delete('/:id', {
+        schema: deleteDocumentSchema,
+        preHandler: roleCheck(1)
+    }, async (request, reply) => {
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
