@@ -1,12 +1,12 @@
 import fs from "fs";
 import fsPromises from "fs/promises";
-import { pipeline } from "stream";
-import { promisify } from "util";
+import {pipeline} from "stream";
+import {promisify} from "util";
 
 const UPLOAD_DIR = "./assets/";
 const pump = promisify(pipeline);
 
-await fsPromises.mkdir(UPLOAD_DIR, { recursive: true });
+await fsPromises.mkdir(UPLOAD_DIR, {recursive: true});
 
 export function getAllDocuments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM documents");
@@ -71,6 +71,12 @@ export function deleteDocument(fastify, id) {
     const statement = fastify.db.prepare('DELETE FROM documents WHERE id = ?');
 
     try {
+        const document = getDocument(fastify, id);
+        if (!document) {
+            fastify.log.error('Document not found');
+            return {success: false};
+        }
+        fsPromises.unlink(document.documentPath);
         const result = statement.run(id);
         if (result.changes === 1) {
             return {success: true};
