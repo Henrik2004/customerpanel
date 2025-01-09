@@ -1,3 +1,8 @@
+/**
+ * Get all comments
+ * @param fastify - Fastify instance
+ * @returns {*|null} - Array of
+ */
 export function getAllComments(fastify) {
     const statement = fastify.db.prepare("SELECT * FROM comments");
 
@@ -9,6 +14,12 @@ export function getAllComments(fastify) {
     }
 }
 
+/**
+ * Get a comment by id
+ * @param fastify - Fastify instance
+ * @param id - the id of the comment
+ * @returns {*|null} - the comment
+ */
 export function getComment(fastify, id) {
     const statement = fastify.db.prepare('SELECT * FROM comments WHERE id = ?');
 
@@ -20,6 +31,12 @@ export function getComment(fastify, id) {
     }
 }
 
+/**
+ * Create a comment
+ * @param fastify - Fastify instance
+ * @param comment - the comment
+ * @returns {*|null} - the created comment
+ */
 export function createComment(fastify, comment) {
     const statement = fastify.db.prepare('INSERT INTO comments (id, user, text, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
 
@@ -38,6 +55,13 @@ export function createComment(fastify, comment) {
     }
 }
 
+/**
+ * Update a comment
+ * @param fastify - Fastify instance
+ * @param id - the id of the comment
+ * @param comment - the comment
+ * @returns {*|null} - the updated comment
+ */
 export function updateComment(fastify, id, comment) {
     const statement = fastify.db.prepare('UPDATE comments SET user = ?, text = ?, updatedBy = ? WHERE id = ?');
 
@@ -55,6 +79,12 @@ export function updateComment(fastify, id, comment) {
     }
 }
 
+/**
+ * Delete a comment
+ * @param fastify - Fastify instance
+ * @param id - the id of the comment
+ * @returns {{success: boolean}} - the result
+ */
 export function deleteComment(fastify, id) {
     const statement = fastify.db.prepare('DELETE FROM comments WHERE id = ?');
 
