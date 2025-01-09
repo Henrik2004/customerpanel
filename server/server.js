@@ -1,7 +1,6 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifyMultipart from "@fastify/multipart";
-import jwt from "@fastify/jwt";
 import CustomersRoutes from "./routes/customers.routes.js";
 import OffersRoutes from "./routes/offers.routes.js";
 import UsersRoutes from "./routes/users.routes.js";
@@ -52,7 +51,6 @@ import CommentsRoutes from "./routes/comments.routes.js";
 import DocumentRoutes from "./routes/documents.routes.js";
 import SettingsRoutes from "./routes/settings.routes.js";
 import {settingsSchema} from "./schemas/settings.schema.js";
-import {SECRET_KEY} from "./app_config.js";
 import {
     createUserSchema,
     deleteUserSchema,
@@ -78,10 +76,6 @@ server.register(cors, {
 
 server.register(connectDatabase);
 server.register(fastifyMultipart);
-server.register(jwt, {
-    secret: 'supersecret'
-});
-
 server.addSchema(customerSchema);
 server.addSchema(createCustomerSchema);
 server.addSchema(updateCustomerSchema);

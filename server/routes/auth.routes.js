@@ -1,5 +1,7 @@
 import {userSchema} from "../schemas/user.schema.js";
 import {authenticateUser} from "../core/auth.js";
+import jwt from "jsonwebtoken";
+import {SECRET_KEY} from "../app_config.js";
 
 async function AuthRoutes(fastify) {
     fastify.post('/', {
@@ -14,7 +16,10 @@ async function AuthRoutes(fastify) {
             return {error: "Invalid user or password"};
         }
 
-        const token = fastify.jwt.sign({name: user.name, role: user.role});
+        const token = jwt.sign({
+            userId: user.id,
+            role: user.role
+        }, SECRET_KEY);
         return {token: token};
     });
 }

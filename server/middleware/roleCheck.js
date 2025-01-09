@@ -1,4 +1,5 @@
 import {SECRET_KEY} from "../app_config.js";
+import jwt from 'jsonwebtoken';
 
 export function roleCheck(requiredRole, fastify) {
     return async function (request, reply, done) {
@@ -12,9 +13,10 @@ export function roleCheck(requiredRole, fastify) {
 
         try {
             const token = authorization.split(' ')[1];
-            const decoded = fastify.jwt.verify(token);
-            const userRole = decoded.role;
+            const decoded = jwt.verify(token, SECRET_KEY);
+            const userRole = parseInt(decoded.role);
             console.log('userRole', userRole);
+            console.log('requiredRole', requiredRole);
 
             if (userRole !== requiredRole) {
                 reply.code(403).send({ error: 'Forbidden' });

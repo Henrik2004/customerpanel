@@ -63,7 +63,7 @@ async function OffersRoutes(fastify) {
 
     fastify.delete('/:id', {
         schema: deleteOfferSchema,
-        preHandler: roleCheck('1')
+        preHandler: roleCheck(1)
     }, async (request, reply) => {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
@@ -76,7 +76,7 @@ async function OffersRoutes(fastify) {
 
     fastify.patch('/:id/status', {
         schema: changeOfferStatusSchema,
-        preHandler: roleCheck('1')
+        preHandler: roleCheck(1)
     }, async (request, reply) => {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
