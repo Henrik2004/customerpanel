@@ -7,6 +7,7 @@ import {
 } from "../schemas/comment.schema.js";
 
 import {createComment, deleteComment, getAllComments, getComment, updateComment} from "../core/comment.js";
+import {roleCheck} from "../middleware/roleCheck.js";
 
 /**
  * Comments routes
@@ -20,7 +21,10 @@ import {createComment, deleteComment, getAllComments, getComment, updateComment}
  * @constructor
  */
 async function CommentsRoutes(fastify) {
-    fastify.get('/', getAllCommentsSchema, async (request, reply) => {
+    fastify.get('/', {
+        schema: getAllCommentsSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const comments = getAllComments(fastify);
         if (!comments) {
             reply.code(500);
@@ -29,7 +33,10 @@ async function CommentsRoutes(fastify) {
         return comments;
     });
 
-    fastify.get('/:id', getCommentSchema, async (request, reply) => {
+    fastify.get('/:id', {
+        schema: getCommentSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const comment = getComment(fastify, request.params.id);
         if (!comment) {
             reply.code(404);
@@ -38,7 +45,10 @@ async function CommentsRoutes(fastify) {
         return { comment };
     });
 
-    fastify.post('/', createCommentSchema, async (request, reply) => {
+    fastify.post('/', {
+        schema: createCommentSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
         const commentProps = request.body;
         const newComment = createComment(fastify, commentProps);
         if (!newComment) {
@@ -49,7 +59,10 @@ async function CommentsRoutes(fastify) {
         return { comment: newComment };
     });
 
-    fastify.put('/:id', updateCommentSchema, async (request, reply) => {
+    fastify.put('/:id', {
+        schema: updateCommentSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
         const commentProps = request.body;
         const updatedComment = updateComment(fastify, request.params.id, commentProps);
         if (!updatedComment) {
@@ -59,7 +72,10 @@ async function CommentsRoutes(fastify) {
         return { comment: updatedComment };
     });
 
-    fastify.delete('/:id', deleteCommentSchema, async (request, reply) => {
+    fastify.delete('/:id', {
+        schema: deleteCommentSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
         const comment = getComment(fastify, request.params.id);
         if (!comment) {
             reply.code(404);

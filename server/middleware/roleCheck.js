@@ -1,7 +1,7 @@
 import {SECRET_KEY} from "../app_config.js";
 import jwt from 'jsonwebtoken';
 
-export function roleCheck(requiredRole, fastify) {
+export function roleCheck(requiredRole) {
     return async function (request, reply, done) {
         const {authorization} = request.headers;
         if (!authorization) {
