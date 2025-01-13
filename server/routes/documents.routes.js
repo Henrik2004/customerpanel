@@ -5,8 +5,16 @@ import {
     getDocumentSchema,
     updateDocumentSchema
 } from "../schemas/document.schema.js";
+import fs from "fs";
 
-import {createDocument, deleteDocument, getAllDocuments, getDocument, updateDocument,} from "../core/document.js";
+import {
+    createDocument,
+    deleteDocument,
+    getAllDocuments,
+    getDocument,
+    getDocumentsByOfferId,
+    updateDocument,
+} from "../core/document.js";
 import {roleCheck} from "../middleware/roleCheck.js";
 
 async function DocumentRoutes(fastify) {
@@ -26,6 +34,26 @@ async function DocumentRoutes(fastify) {
             return {error: "Document not found"};
         }
         return document;
+    });
+
+    fastify.get('/offerid/:offerId', getAllDocumentsSchema, async (request, reply) => {
+        const documents = getDocumentsByOfferId(fastify, request.params.offerId);
+        if (!documents) {
+            reply.code(500);
+            return {error: "Internal Server Error"};
+        }
+        return documents;
+    });
+
+    fastify.get('/content/:id', async (request, reply) => {
+        const document = getDocument(fastify, request.params.id);
+        if (!document) {
+            reply.code(404);
+            return {error: "Document not found"};
+        }
+        const documentContent = fs.readFileSync(document.documentPath);
+        reply.type('text/plain');
+        return documentContent;
     });
 
     fastify.post('/', {

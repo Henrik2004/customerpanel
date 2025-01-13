@@ -30,6 +30,17 @@ export function getDocument(fastify, id) {
     }
 }
 
+export function getDocumentsByOfferId(fastify, offerId) {
+    const statement = fastify.db.prepare("SELECT * FROM documents WHERE offerId = ?");
+
+    try {
+        return statement.all(offerId);
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
 export async function createDocument(fastify, documentProps, file) {
     const statement = fastify.db.prepare("INSERT INTO documents (name, documentPath, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)");
 
