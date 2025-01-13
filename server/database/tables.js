@@ -77,6 +77,7 @@ const tables = (db) => {
         id INTEGER PRIMARY KEY,
         user INTEGER,
         text TEXT,
+        offerId INTEGER,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         createdBy INTEGER,
         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

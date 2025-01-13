@@ -6,8 +6,16 @@ import {
     updateCommentSchema
 } from "../schemas/comment.schema.js";
 
-import {createComment, deleteComment, getAllComments, getComment, updateComment} from "../core/comment.js";
+import {
+    createComment,
+    deleteComment,
+    getAllComments,
+    getComment,
+    getCommentsByOffer,
+    updateComment
+} from "../core/comment.js";
 import {roleCheck} from "../middleware/roleCheck.js";
+import {getOffer} from "../core/offer.js";
 
 /**
  * Comments routes
@@ -45,11 +53,29 @@ async function CommentsRoutes(fastify) {
         return { comment };
     });
 
+    fastify.get('/offerId/:id', {
+        schema: getAllCommentsSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
+        const comments = getCommentsByOffer(fastify, request.params.id);
+        if (!comments) {
+            reply.code(500);
+            return {error: "Internal Server Error"};
+        }
+        return comments;
+    });
+
     fastify.post('/', {
         schema: createCommentSchema,
         preHandler: roleCheck(2)
     }, async (request, reply) => {
         const commentProps = request.body;
+        const offer = getOffer(fastify, commentProps.offerId);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+
         const newComment = createComment(fastify, commentProps);
         if (!newComment) {
             reply.code(500);

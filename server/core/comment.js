@@ -31,6 +31,17 @@ export function getComment(fastify, id) {
     }
 }
 
+export function getCommentsByOffer(fastify, offerId) {
+    const statement = fastify.db.prepare('SELECT * FROM comments WHERE offerId = ?');
+
+    try {
+        return statement.all(offerId);
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
 /**
  * Create a comment
  * @param fastify - Fastify instance
@@ -38,10 +49,10 @@ export function getComment(fastify, id) {
  * @returns {*|null} - the created comment
  */
 export function createComment(fastify, comment) {
-    const statement = fastify.db.prepare('INSERT INTO comments (id, user, text, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
+    const statement = fastify.db.prepare('INSERT INTO comments (user, text, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
 
     try {
-        const result = statement.run(comment.id, comment.user, comment.text, comment.createdBy, comment.createdBy);
+        const result = statement.run(comment.user, comment.text, comment.offerId, comment.createdBy, comment.createdBy);
         const commentId = result.changes === 1 ? result.lastInsertRowid : null;
         if (commentId) {
             return getComment(fastify, commentId);
@@ -63,10 +74,10 @@ export function createComment(fastify, comment) {
  * @returns {*|null} - the updated comment
  */
 export function updateComment(fastify, id, comment) {
-    const statement = fastify.db.prepare('UPDATE comments SET user = ?, text = ?, updatedBy = ? WHERE id = ?');
+    const statement = fastify.db.prepare('UPDATE comments SET user = ?, text = ?, offerId = ?, updatedBy = ? WHERE id = ?');
 
     try {
-        const result = statement.run(comment.user, comment.text, comment.updatedBy, id);
+        const result = statement.run(comment.user, comment.text, comment.offerId, comment.updatedBy, id);
         if (result.changes === 1) {
             return getComment(fastify, id);
         } else {

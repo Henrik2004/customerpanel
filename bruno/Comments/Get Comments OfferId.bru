@@ -1,0 +1,22 @@
+meta {
+  name: Get Comments OfferId
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:8080/comments/offerId/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
+
+tests {
+  test("getComment", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}
