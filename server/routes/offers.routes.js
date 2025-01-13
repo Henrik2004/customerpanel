@@ -22,7 +22,10 @@ import {roleCheck} from "../middleware/roleCheck.js";
  * @constructor
  */
 async function OffersRoutes(fastify) {
-    fastify.get('/', getAllOffersSchema, async (request, reply) => {
+    fastify.get('/', {
+        schema: getAllOffersSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const offers = getAllOffers(fastify);
         if (!offers) {
             reply.code(500);
@@ -31,7 +34,10 @@ async function OffersRoutes(fastify) {
         return offers;
     });
 
-    fastify.get('/:id', getOfferSchema, async (request, reply) => {
+    fastify.get('/:id', {
+        schema: getOfferSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const offer = getOffer(fastify, request.params.id);
         if (!offer) {
             reply.code(404);
@@ -40,7 +46,10 @@ async function OffersRoutes(fastify) {
         return {offer: offer};
     });
 
-    fastify.post('/', createOfferSchema, async (request, reply) => {
+    fastify.post('/', {
+        schema: createOfferSchema,
+        preHandler: roleCheck(1)
+    }, async (request, reply) => {
         const offerProps = request.body;
         const newOffer = createOffer(fastify, offerProps);
         if (!newOffer) {
@@ -51,7 +60,10 @@ async function OffersRoutes(fastify) {
         return {offer: newOffer};
     });
 
-    fastify.put('/:id', updateOfferSchema, async (request, reply) => {
+    fastify.put('/:id', {
+        schema: updateOfferSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
         const offerProps = request.body;
         const updatedOffer = updateOffer(fastify, request.params.id, offerProps);
         if (!updatedOffer) {

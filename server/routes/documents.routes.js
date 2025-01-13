@@ -1,7 +1,7 @@
 import {
     createDocumentSchema,
     deleteDocumentSchema,
-    getAllDocumentsSchema,
+    getAllDocumentsSchema, getDocumentContentSchema,
     getDocumentSchema,
     updateDocumentSchema
 } from "../schemas/document.schema.js";
@@ -18,7 +18,10 @@ import {
 import {roleCheck} from "../middleware/roleCheck.js";
 
 async function DocumentRoutes(fastify) {
-    fastify.get('/', getAllDocumentsSchema, async (request, reply) => {
+    fastify.get('/', {
+        schema: getAllDocumentsSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const documents = getAllDocuments(fastify);
         if (!documents) {
             reply.code(500);
@@ -27,7 +30,10 @@ async function DocumentRoutes(fastify) {
         return documents;
     });
 
-    fastify.get('/:id', getDocumentSchema, async (request, reply) => {
+    fastify.get('/:id', {
+        schema: getDocumentSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
@@ -36,7 +42,10 @@ async function DocumentRoutes(fastify) {
         return document;
     });
 
-    fastify.get('/offerid/:offerId', getAllDocumentsSchema, async (request, reply) => {
+    fastify.get('/offerid/:offerId', {
+        schema: getDocumentSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const documents = getDocumentsByOfferId(fastify, request.params.offerId);
         if (!documents) {
             reply.code(500);
@@ -45,7 +54,10 @@ async function DocumentRoutes(fastify) {
         return documents;
     });
 
-    fastify.get('/content/:id', async (request, reply) => {
+    fastify.get('/content/:id', {
+        schema: getDocumentContentSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
@@ -76,7 +88,7 @@ async function DocumentRoutes(fastify) {
 
     fastify.put('/:id', {
         schema: updateDocumentSchema,
-        preHandler: roleCheck(2)
+        preHandler: roleCheck(1)
     }, async (request, reply) => {
         const documentProps = request.body;
         const updatedDocument = updateDocument(fastify, request.params.id, documentProps);
@@ -89,7 +101,7 @@ async function DocumentRoutes(fastify) {
 
     fastify.delete('/:id', {
         schema: deleteDocumentSchema,
-        preHandler: roleCheck(1)
+        preHandler: roleCheck(2)
     }, async (request, reply) => {
         const document = getDocument(fastify, request.params.id);
         if (!document) {

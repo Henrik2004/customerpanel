@@ -6,6 +6,7 @@ import {
 } from "../schemas/customer.schema.js";
 
 import {createCustomer, deleteCustomer, getAllCustomers, getCustomer, updateCustomer} from "../core/customer.js";
+import {roleCheck} from "../middleware/roleCheck.js";
 
 /**
  * Customers routes
@@ -19,7 +20,10 @@ import {createCustomer, deleteCustomer, getAllCustomers, getCustomer, updateCust
  * @constructor
  */
 async function CustomersRoutes(fastify) {
-    fastify.get('/', getAllCustomersSchema, async (request, reply) => {
+    fastify.get('/', {
+        schema: getAllCustomersSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
         const customers = getAllCustomers(fastify);
         if (!customers) {
             reply.code(500);
@@ -28,7 +32,10 @@ async function CustomersRoutes(fastify) {
         return customers;
     });
 
-    fastify.get('/:id', getCustomerSchema, async (request, reply) => {
+    fastify.get('/:id', {
+        schema: getCustomerSchema,
+        preHandler: roleCheck(3)
+    }, async (request, reply) => {
         const customer = getCustomer(fastify, request.params.id);
         if (!customer) {
             reply.code(404);
@@ -37,7 +44,10 @@ async function CustomersRoutes(fastify) {
         return {customer};
     });
 
-    fastify.post('/', createCustomerSchema, async (request, reply) => {
+    fastify.post('/', {
+        schema: createCustomerSchema,
+        preHandler: roleCheck(1)
+    }, async (request, reply) => {
         const customerProps = request.body;
         const newCustomer = createCustomer(fastify, customerProps);
         if (!newCustomer) {
@@ -48,7 +58,10 @@ async function CustomersRoutes(fastify) {
         return {customer: newCustomer};
     });
 
-    fastify.put('/:id', updateCustomerSchema, async (request, reply) => {
+    fastify.put('/:id', {
+        schema: updateCustomerSchema,
+        preHandler: roleCheck(1)
+    }, async (request, reply) => {
         const customerProps = request.body;
         const updatedCustomer = updateCustomer(fastify, request.params.id, customerProps);
         if (!updatedCustomer) {
@@ -58,7 +71,10 @@ async function CustomersRoutes(fastify) {
         return {customer: updatedCustomer};
     });
 
-    fastify.delete('/:id', deleteCustomerSchema, async (request, reply) => {
+    fastify.delete('/:id', {
+        schema: deleteCustomerSchema,
+        preHandler: roleCheck(1)
+    }, async (request, reply) => {
         const customer = getCustomer(fastify, request.params.id);
         if (!customer) {
             reply.code(404);

@@ -103,4 +103,15 @@ const getAllDocumentsSchema = {
     }
 }
 
-export {documentSchema, createDocumentSchema, updateDocumentSchema, getDocumentSchema, getAllDocumentsSchema, deleteDocumentSchema};
+const getDocumentContentSchema = {
+    $id: "getDocumentContentSchema",
+    schema: {
+        response: {
+            200: {
+                type: 'text'
+            }
+        }
+    }
+}
+
+export {documentSchema, createDocumentSchema, updateDocumentSchema, getDocumentSchema, getAllDocumentsSchema, deleteDocumentSchema, getDocumentContentSchema};
