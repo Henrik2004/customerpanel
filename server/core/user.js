@@ -20,11 +20,11 @@ export function getUser(fastify, id) {
     }
 }
 
-export function getUserByName(fastify, email) {
+export function getUserByName(fastify, name) {
     const statement = fastify.db.prepare('SELECT * FROM users WHERE name = ?');
 
     try {
-        return statement.get(email);
+        return statement.get(name);
     } catch (error) {
         fastify.log.error(error);
         return null;

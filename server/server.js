@@ -60,6 +60,8 @@ import {
     userSchema
 } from "./schemas/user.schema.js";
 import {AuthRoutes} from "./routes/auth.routes.js";
+import {addLegacyDataSchema, legacySchema} from "./schemas/legacy.schema.js";
+import {LegacyRoutes} from "./routes/legacy.routes.js";
 
 const server = Fastify({logger: true});
 
@@ -114,6 +116,8 @@ server.addSchema(deleteUserSchema);
 server.addSchema(getUserSchema);
 server.addSchema(getAllUsersSchema);
 server.addSchema(settingsSchema);
+server.addSchema(legacySchema);
+server.addSchema(addLegacyDataSchema);
 
 server.register(CustomersRoutes, {prefix: '/customers'});
 server.register(CommentsRoutes, {prefix: '/comments'});
@@ -123,6 +127,7 @@ server.register(UsersRoutes, {prefix: '/users'});
 server.register(RolesRoutes, {prefix: '/roles'});
 server.register(SettingsRoutes, {prefix: '/settings'});
 server.register(AuthRoutes, {prefix: '/auth'});
+server.register(LegacyRoutes, {prefix: '/legacy'});
 
 server.listen({port: 8080}, (err, address) => {
     if (err) {

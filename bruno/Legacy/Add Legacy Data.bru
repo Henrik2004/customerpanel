@@ -1,0 +1,31 @@
+meta {
+  name: Add Legacy Data
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/legacy
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
+
+body:json {
+  {
+    "xCreatedOn": "2024-10-19T00:00:00Z",
+    "xCreatedBy": "Henrik",
+    "xSoftwareVersion": "1.0.0",
+    "xOffer": {
+      "customerId": 1,
+      "price": 142000,
+      "currency": "USD",
+      "state": "Active",
+      "name": "Offer 1",
+      "hints": []
+    }
+  }
+}
