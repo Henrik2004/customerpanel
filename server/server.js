@@ -62,6 +62,7 @@ import {
 import {AuthRoutes} from "./routes/auth.routes.js";
 import {addLegacyDataSchema, legacySchema} from "./schemas/legacy.schema.js";
 import {LegacyRoutes} from "./routes/legacy.routes.js";
+import {TestRoutes} from "./routes/test.routes.js";
 
 const server = Fastify({logger: true});
 
@@ -128,6 +129,7 @@ server.register(RolesRoutes, {prefix: '/roles'});
 server.register(SettingsRoutes, {prefix: '/settings'});
 server.register(AuthRoutes, {prefix: '/auth'});
 server.register(LegacyRoutes, {prefix: '/legacy'});
+server.register(TestRoutes, {prefix: '/test'});
 
 server.listen({port: 8080}, (err, address) => {
     if (err) {
