@@ -70,7 +70,7 @@ export const offers = [{
     title: 'Test Offer 2',
     description: 'Test Offer Description 2',
     price: 200,
-    status: 'active',
+    status: 'draft',
     createdBy: 1,
     updatedBy: 1
 }]

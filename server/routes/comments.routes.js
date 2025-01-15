@@ -76,6 +76,11 @@ async function CommentsRoutes(fastify) {
             return {error: "Offer not found"};
         }
 
+        if (offer.status !== "draft") {
+            reply.code(400);
+            return {error: "You can only comment on draft offers!"};
+        }
+
         const newComment = createComment(fastify, commentProps);
         if (!newComment) {
             reply.code(500);
@@ -90,6 +95,17 @@ async function CommentsRoutes(fastify) {
         preHandler: roleCheck(2)
     }, async (request, reply) => {
         const commentProps = request.body;
+        const offer = getOffer(fastify, commentProps.offerId);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+
+        if (offer.status !== "draft") {
+            reply.code(400);
+            return {error: "You can only comment on draft offers!"};
+        }
+
         const updatedComment = updateComment(fastify, request.params.id, commentProps);
         if (!updatedComment) {
             reply.code(500);
@@ -103,6 +119,17 @@ async function CommentsRoutes(fastify) {
         preHandler: roleCheck(2)
     }, async (request, reply) => {
         const comment = getComment(fastify, request.params.id);
+        const offer = getOffer(fastify, comment.offerId);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+
+        if (offer.status !== "draft") {
+            reply.code(400);
+            return {error: "You can only comment on draft offers!"};
+        }
+
         if (!comment) {
             reply.code(404);
             return {error: "Comment not found"};

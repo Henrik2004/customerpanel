@@ -16,6 +16,7 @@ import {
     updateDocument,
 } from "../core/document.js";
 import {roleCheck} from "../middleware/roleCheck.js";
+import {getOffer} from "../core/offer.js";
 
 async function DocumentRoutes(fastify) {
     fastify.get('/', {
@@ -77,6 +78,17 @@ async function DocumentRoutes(fastify) {
     }, async (request, reply) => {
         const data = await request.file();
         const documentProps = data.fields;
+        const offer = getOffer(fastify, documentProps.offerId);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+
+        if (offer.status !== "draft") {
+            reply.code(400);
+            return {error: "You can only add documents to draft offers!"};
+        }
+
         const document = await createDocument(fastify, documentProps, data);
         if (!document) {
             reply.code(500);
@@ -91,6 +103,17 @@ async function DocumentRoutes(fastify) {
         preHandler: roleCheck(1)
     }, async (request, reply) => {
         const documentProps = request.body;
+        const offer = getOffer(fastify, documentProps.offerId);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+
+        if (offer.status !== "draft") {
+            reply.code(400);
+            return {error: "You can only update documents of draft offers!"};
+        }
+
         const updatedDocument = updateDocument(fastify, request.params.id, documentProps);
         if (!updatedDocument) {
             reply.code(500);
@@ -103,6 +126,18 @@ async function DocumentRoutes(fastify) {
         schema: deleteDocumentSchema,
         preHandler: roleCheck(2)
     }, async (request, reply) => {
+        const documentProps = request.body;
+        const offer = getOffer(fastify, documentProps.offerId);
+        if (!offer) {
+            reply.code(404);
+            return {error: "Offer not found"};
+        }
+
+        if (offer.status !== "draft") {
+            reply.code(400);
+            return {error: "You can only delete documents of draft offers!"};
+        }
+
         const document = getDocument(fastify, request.params.id);
         if (!document) {
             reply.code(404);
