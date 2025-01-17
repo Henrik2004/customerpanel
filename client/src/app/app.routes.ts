@@ -5,13 +5,16 @@ import {CustomersComponent} from './layout/customers/customers.component';
 import {SettingsComponent} from './layout/settings/settings.component';
 import {CreateofferComponent} from './layout/createoffer/createoffer.component';
 import {AlloffersComponent} from './layout/alloffers/alloffers.component';
+import { LoginComponent } from './layout/login/login.component';
+import { AuthGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
-  { path: 'overview', component: OverviewComponent },
-  { path: 'offers', component: OffersComponent },
-  { path: 'customers', component: CustomersComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'createoffer', component: CreateofferComponent },
-  { path: 'alloffers', component: AlloffersComponent },
+  { path: 'overview', component: OverviewComponent, canActivate: [AuthGuard] },
+  { path: 'offers', component: OffersComponent, canActivate: [AuthGuard] },
+  { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'createoffer', component: CreateofferComponent, canActivate: [AuthGuard] },
+  { path: 'alloffers', component: AlloffersComponent, canActivate: [AuthGuard] },
+  {path: 'login', component: LoginComponent},
   { path: '', redirectTo: '/overview', pathMatch: 'full' }
 ];

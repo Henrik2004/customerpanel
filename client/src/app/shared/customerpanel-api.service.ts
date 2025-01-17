@@ -10,6 +10,10 @@ export class CustomerpanelApiService {
 
   constructor(private http: HttpClient) { }
 
+  public authenticateUser(credentials: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth`, credentials);
+  }
+
   public getOffers(): Observable<any> {
     return this.http.get(`${this.baseUrl}/offers`);
   }
