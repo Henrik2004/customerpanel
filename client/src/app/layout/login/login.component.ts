@@ -17,9 +17,7 @@ export class LoginComponent {
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private router: Router) {
-    if (localStorage.getItem('token')) {
-      localStorage.removeItem('token');
-    }
+
   }
 
   onSubmit() {
@@ -27,8 +25,7 @@ export class LoginComponent {
       name: this.username,
       password: this.password
     }).subscribe((response) => {
-      const token = response.token;
-      localStorage.setItem('token', token);
+      this.customerpanelApiService.token = response.token;
       this.router.navigate(['/overview']);
     });
   }
