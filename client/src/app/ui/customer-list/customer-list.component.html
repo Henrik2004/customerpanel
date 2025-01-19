@@ -1,0 +1,5 @@
+<div class="container is-fluid">
+  @for(customer of customers$ | async; track customer.id) {
+    <app-customer-card [customer]="customer"></app-customer-card>
+  }
+</div>

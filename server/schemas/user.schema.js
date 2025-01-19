@@ -89,6 +89,20 @@ const getUserSchema = {
     }
 }
 
+const getUserByNameSchema = {
+    $id: "getUserByNameSchema",
+    schema: {
+        response: {
+            200: {
+                type: "object",
+                properties: {
+                    user: userSchema
+                }
+            }
+        }
+    }
+}
+
 const getAllUsersSchema = {
     $id: "getAllUsersSchema",
     schema: {
@@ -101,4 +115,4 @@ const getAllUsersSchema = {
     }
 }
 
-export {userSchema, createUserSchema, updateUserSchema, deleteUserSchema, getUserSchema, getAllUsersSchema};
+export {userSchema, createUserSchema, updateUserSchema, deleteUserSchema, getUserSchema, getAllUsersSchema, getUserByNameSchema}

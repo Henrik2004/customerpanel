@@ -17,7 +17,6 @@ export class LoginComponent {
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private router: Router) {
-
   }
 
   onSubmit() {
@@ -25,8 +24,11 @@ export class LoginComponent {
       name: this.username,
       password: this.password
     }).subscribe((response) => {
-      this.customerpanelApiService.token = response.token;
-      this.router.navigate(['/overview']);
+      if (response.token) {
+        this.customerpanelApiService.token = response.token;
+        this.customerpanelApiService.user = response.userId;
+        this.router.navigate(['/overview']);
+      }
     });
   }
 }

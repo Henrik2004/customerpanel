@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 export class CustomerpanelApiService {
   private readonly baseUrl = 'http://localhost:8080';
   private _token = '';
+  private _user = 0;
 
   constructor(private http: HttpClient) { }
 
@@ -17,6 +18,14 @@ export class CustomerpanelApiService {
 
   set token(value: string) {
     this._token = value;
+  }
+
+  get user(): number {
+    return this._user;
+  }
+
+  set user(value: number) {
+    this._user = value;
   }
 
   public authenticateUser(credentials: any): Observable<any> {
@@ -33,6 +42,22 @@ export class CustomerpanelApiService {
 
   public getOfferById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/offers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public createOffer(offer: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/offers`, offer, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public getCustomers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/customers`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }

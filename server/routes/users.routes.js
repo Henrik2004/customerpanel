@@ -1,12 +1,13 @@
 import {
     createUserSchema, deleteUserSchema,
-    getAllUsersSchema,
+    getAllUsersSchema, getUserByNameSchema,
     getUserSchema,
     updateUserSchema,
     userSchema
 } from '../schemas/user.schema.js';
 
-import {createUser, deleteUser, getAllUsers, getUser, updateUser} from '../core/user.js';
+import {createUser, deleteUser, getAllUsers, getUser, getUserByName, updateUser} from '../core/user.js';
+import {roleCheck} from "../middleware/roleCheck.js";
 
 async function UsersRoutes(fastify) {
     fastify.get('/', getAllUsersSchema, async (request, reply) => {
@@ -18,8 +19,21 @@ async function UsersRoutes(fastify) {
         return users;
     });
 
-    fastify.get('/:id', getUserSchema, async (request, reply) => {
+    fastify.get('/byid/:id', getUserSchema, async (request, reply) => {
         const user = getUser(fastify, request.params.id);
+        if (!user) {
+            reply.code(404);
+            return {error: 'User not found'};
+        }
+        return {user: user};
+    });
+
+    fastify.get('/byname/:name', {
+        schema: getUserByNameSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
+        const name = request.params.name;
+        const user = getUserByName(fastify, name);
         if (!user) {
             reply.code(404);
             return {error: 'User not found'};

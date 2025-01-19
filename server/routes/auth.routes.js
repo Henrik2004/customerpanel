@@ -20,7 +20,7 @@ async function AuthRoutes(fastify) {
             userId: user.id,
             role: user.role
         }, SECRET_KEY);
-        return {token: token};
+        return {token: token, userId: user.id};
     });
 }
 

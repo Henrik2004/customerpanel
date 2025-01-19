@@ -1,0 +1,41 @@
+<div class="box customer-box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p class="is-size-4">
+          {{ customer.id }} - <strong>{{ customer.company }}</strong> - <small>{{ customer.name }}</small>
+        </p>
+        <div class="columns" *ngIf="showMore">
+          <div class="column is-one-third">
+            <p>
+              <strong>Email:</strong> {{ customer.email }}
+            </p>
+          </div>
+          <div class="column auto">
+            <p>
+              <strong>Phone:</strong> {{ customer.phone }}
+            </p>
+          </div>
+          <div class="column auto">
+            <p>
+              <strong>Address:</strong><br>
+              {{ customer.address }}<br>
+              {{ customer.zip }} {{ customer.city }}<br>
+              {{ customer.country }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <a class="level-item" aria-label="more" (click)="showMore = !showMore">
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true" *ngIf="!showMore"></i>
+              <i class="fas fa-angle-up" aria-hidden="true" *ngIf="showMore"></i>
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </article>
+</div>

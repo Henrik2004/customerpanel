@@ -1,60 +1,41 @@
 <section class="section">
   <div class="container">
     <h1 class="title">Create new offer</h1>
-    <div class="columns">
-      <div class="column">
-        <div class="field">
-          <label class="label">Name</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Text input">
-          </div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="title" class="label">Title</label>
+        <div class="control">
+          <input class="input" type="text" id="title" [(ngModel)]="title" name="title" placeholder="Title" required>
         </div>
-        <div class="field">
-          <label class="label">Select customer</label>
-          <div class="control">
-            <div class="select">
-              <select>
-                <option>Select dropdown</option>
-                <option>With options</option>
-              </select>
-            </div>
-          </div>
+      </div>
+      <div class="field">
+        <label for="description" class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" id="description" [(ngModel)]="description" name="description"
+                    placeholder="Description" required></textarea>
         </div>
-        <div class="field">
-          <label class="label">Status</label>
-          <div class="control">
-            <div class="select">
-              <select>
-                <option>Draft</option>
-                <option>Done</option>
-              </select>
-            </div>
-          </div>
+      </div>
+      <div class="field">
+        <label for="price" class="label">Price</label>
+        <div class="control">
+          <input class="input" type="number" id="price" [(ngModel)]="price" name="price" placeholder="Price" required>
         </div>
-
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-link">Submit</button>
-          </div>
-          <div class="control">
-            <button class="button is-link is-light">Cancel</button>
+      </div>
+      <div class="field">
+        <label for="customer" class="label">Customer</label>
+        <div class="control">
+          <div class="select">
+            <select id="customer" [(ngModel)]="customer" name="customer" required>
+              <option *ngFor="let customer of customers"
+                      [value]="customer.id">{{ customer.id }} {{ customer.company }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
-      <div class="column">
-        <div class="field">
-          <label class="label">Price</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Text input">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <textarea class="textarea" placeholder="Textarea"></textarea>
-          </div>
-        </div>
+      <div class="field">
+        <button class="button is-link" type="submit">Create</button>
       </div>
-    </div>
+    </form>
   </div>
 </section>
