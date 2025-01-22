@@ -1,13 +1,23 @@
 /**
  * Get all customers
  * @param fastify - the fastify instance
+ * @param filters - the filters for the customers
  * @returns {*|null} - the customers or null
  */
-export function getAllCustomers(fastify) {
-    const statement = fastify.db.prepare('SELECT * FROM customers');
+export function getAllCustomers(fastify, filters) {
+    const statement = fastify.db.prepare('SELECT * FROM customers WHERE name LIKE ? AND email LIKE ? AND phone LIKE ? AND address LIKE ? AND city LIKE ? AND country LIKE ? AND zip LIKE ? AND company LIKE ?');
+
+    const name = filters.name ? `%${filters.name}%` : '%';
+    const email = filters.email ? `%${filters.email}%` : '%';
+    const phone = filters.phone ? `%${filters.phone}%` : '%';
+    const address = filters.address ? `%${filters.address}%` : '%';
+    const city = filters.city ? `%${filters.city}%` : '%';
+    const country = filters.country ? `%${filters.country}%` : '%';
+    const zip = filters.zip ? `%${filters.zip}%` : '%';
+    const company = filters.company ? `%${filters.company}%` : '%';
 
     try {
-        return statement.all();
+        return statement.all(name, email, phone, address, city, country, zip, company);
     } catch (error) {
         fastify.log.error(error);
         return null;

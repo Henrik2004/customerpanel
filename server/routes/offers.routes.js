@@ -26,7 +26,8 @@ async function OffersRoutes(fastify) {
         schema: getAllOffersSchema,
         preHandler: roleCheck(3)
     }, async (request, reply) => {
-        const offers = getAllOffers(fastify);
+        const filters = request.query;
+        const offers = getAllOffers(fastify, filters);
         if (!offers) {
             reply.code(500);
             return {error: "Internal Server Error"};

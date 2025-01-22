@@ -24,7 +24,8 @@ async function CustomersRoutes(fastify) {
         schema: getAllCustomersSchema,
         preHandler: roleCheck(2)
     }, async (request, reply) => {
-        const customers = getAllCustomers(fastify);
+        const filters = request.query;
+        const customers = getAllCustomers(fastify, filters);
         if (!customers) {
             reply.code(500);
             return {error: "Internal Server Error"};

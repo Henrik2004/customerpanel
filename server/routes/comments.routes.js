@@ -33,7 +33,8 @@ async function CommentsRoutes(fastify) {
         schema: getAllCommentsSchema,
         preHandler: roleCheck(3)
     }, async (request, reply) => {
-        const comments = getAllComments(fastify);
+        const filters = request.query;
+        const comments = getAllComments(fastify, filters);
         if (!comments) {
             reply.code(500);
             return {error: "Internal Server Error"};

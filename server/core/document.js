@@ -8,11 +8,14 @@ const pump = promisify(pipeline);
 
 await fsPromises.mkdir(UPLOAD_DIR, {recursive: true});
 
-export function getAllDocuments(fastify) {
-    const statement = fastify.db.prepare("SELECT * FROM documents");
+export function getAllDocuments(fastify, filters) {
+    const statement = fastify.db.prepare("SELECT * FROM documents WHERE name LIKE ? AND offerId LIKE ?");
+
+    const name = filters.name ? `%${filters.name}%` : '%';
+    const offerId = filters.offerId ? `%${filters.offerId}%` : '%';
 
     try {
-        return statement.all();
+        return statement.all(name, offerId);
     } catch (error) {
         fastify.log.error(error);
         return null;

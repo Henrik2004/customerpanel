@@ -23,7 +23,8 @@ async function DocumentRoutes(fastify) {
         schema: getAllDocumentsSchema,
         preHandler: roleCheck(3)
     }, async (request, reply) => {
-        const documents = getAllDocuments(fastify);
+        const filters = request.query;
+        const documents = getAllDocuments(fastify, filters);
         if (!documents) {
             reply.code(500);
             return {error: "Internal Server Error"};

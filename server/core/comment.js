@@ -1,13 +1,17 @@
 /**
  * Get all comments
  * @param fastify - Fastify instance
+ * @param filters - the filters to apply
  * @returns {*|null} - Array of
  */
-export function getAllComments(fastify) {
-    const statement = fastify.db.prepare("SELECT * FROM comments");
+export function getAllComments(fastify, filters) {
+    const statement = fastify.db.prepare('SELECT * FROM comments WHERE user LIKE ? AND text LIKE ? AND offerId LIKE ?');
+    const user = filters.user ? `%${filters.user}%` : '%';
+    const text = filters.text ? `%${filters.text}%` : '%';
+    const offerId = filters.offerId ? `%${filters.offerId}%` : '%';
 
     try {
-        return statement.all();
+        return statement.all(user, text, offerId);
     } catch (error) {
         fastify.log.error(error);
         return null;
