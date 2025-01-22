@@ -63,4 +63,12 @@ export class CustomerpanelApiService {
       }
     });
   }
+
+  public createCustomer(customer: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/customers`, customer, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
 }
