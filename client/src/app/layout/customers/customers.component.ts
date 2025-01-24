@@ -1,14 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
-import {OfferListComponent} from "../../ui/offer-list/offer-list.component";
 import {CustomerListComponent} from '../../ui/customer-list/customer-list.component';
 import {CreateCustomerModalComponent} from '../../ui/create-customer-modal/create-customer-modal.component';
+import {EditCustomerModalComponent} from '../../ui/edit-customer-modal/edit-customer-modal.component';
 
 @Component({
   selector: 'app-customers',
   imports: [
-    OfferListComponent,
     CustomerListComponent,
-    CreateCustomerModalComponent
+    CreateCustomerModalComponent,
+    EditCustomerModalComponent
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss'

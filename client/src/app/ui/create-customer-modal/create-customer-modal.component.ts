@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
+import {RefreshService} from '../../shared/refresh.service';
 
 @Component({
   selector: 'app-create-customer-modal',
@@ -24,7 +25,8 @@ export class CreateCustomerModalComponent {
     createdBy: 0
   }
 
-  constructor(private customerPanelApiService: CustomerpanelApiService) { }
+  constructor(private customerPanelApiService: CustomerpanelApiService,
+              private refreshService: RefreshService) { }
 
   public closeModal(): void {
     this.isActive = false;
@@ -38,7 +40,7 @@ export class CreateCustomerModalComponent {
     this.closeModal();
     this.customer.createdBy = this.customerPanelApiService.user;
     this.customerPanelApiService.createCustomer(this.customer).subscribe((response) => {
-      console.log(response);
+      this.refreshService.triggerRefresh();
     });
   }
 }

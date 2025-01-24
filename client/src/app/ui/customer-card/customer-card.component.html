@@ -34,6 +34,16 @@
               <i class="fas fa-angle-up" aria-hidden="true" *ngIf="showMore"></i>
             </span>
           </a>
+          <a class="level-item" aria-label="edit" (click)="editCustomer()">
+            <span class="icon is-small">
+              <i class="fas fa-edit" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a class="level-item" aria-label="delete" (click)="deleteCustomer()">
+            <span class="icon is-small">
+              <i class="fas fa-trash" aria-hidden="true"></i>
+            </span>
+          </a>
         </div>
       </nav>
     </div>

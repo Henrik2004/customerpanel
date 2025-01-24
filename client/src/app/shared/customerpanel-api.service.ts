@@ -64,8 +64,32 @@ export class CustomerpanelApiService {
     });
   }
 
+  public getCustomerById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/customers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public createCustomer(customer: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/customers`, customer, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public updateCustomer(id: number, customer: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/customers/${id}`, customer, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public deleteCustomer(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/customers/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }

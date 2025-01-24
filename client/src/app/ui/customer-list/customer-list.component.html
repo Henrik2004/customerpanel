@@ -1,5 +1,5 @@
 <div class="container is-fluid">
-  @for(customer of customers$ | async; track customer.id) {
+  <div *ngFor="let customer of customers; trackBy: trackByCustomerId">
     <app-customer-card [customer]="customer"></app-customer-card>
-  }
+  </div>
 </div>

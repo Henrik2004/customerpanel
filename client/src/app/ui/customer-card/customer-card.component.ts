@@ -1,5 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {NgIf} from '@angular/common';
+import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
+import {ModalService} from '../../shared/modal.service';
+import {RefreshService} from '../../shared/refresh.service';
 
 @Component({
   selector: 'app-customer-card',
@@ -13,5 +16,20 @@ export class CustomerCardComponent {
   @Input({required: true}) customer!: any;
   public showMore = false;
 
-  constructor() { }
+  constructor(
+    private modalService: ModalService,
+    private customerPanelApiService: CustomerpanelApiService,
+    private refreshService: RefreshService
+  ) {
+  }
+
+  public editCustomer() {
+    this.modalService.openModal(this.customer.id);
+  }
+
+  public deleteCustomer() {
+    this.customerPanelApiService.deleteCustomer(this.customer.id).subscribe((response) => {
+      this.refreshService.triggerRefresh();
+    });
+  }
 }
