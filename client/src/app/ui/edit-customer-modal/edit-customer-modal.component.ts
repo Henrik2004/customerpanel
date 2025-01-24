@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {NgIf} from '@angular/common';
 import {ModalService} from '../../shared/modal.service';
@@ -9,28 +9,31 @@ import {RefreshService} from '../../shared/refresh.service';
   selector: 'app-edit-customer-modal',
   templateUrl: './edit-customer-modal.component.html',
   imports: [
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf
   ],
   styleUrls: ['./edit-customer-modal.component.scss']
 })
-export class EditCustomerModalComponent {
+export class EditCustomerModalComponent implements OnInit {
   protected isActive = false;
   protected customerId = 0;
-  protected customer = {
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    country: '',
-    zip: '',
-    company: '',
-    createdBy: 0
-  }
+  customerForm: any;
 
   constructor(private customerPanelApiService: CustomerpanelApiService,
               private modalService: ModalService,
-              private refreshService: RefreshService) {
+              private refreshService: RefreshService,
+              private fb: FormBuilder) {
+    this.customerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      zip: ['', Validators.required],
+      company: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -44,7 +47,7 @@ export class EditCustomerModalComponent {
 
   private loadCustomer(customerId: number) {
     this.customerPanelApiService.getCustomerById(customerId).subscribe((response) => {
-      this.customer = response.customer;
+      this.customerForm.patchValue(response.customer);
       this.customerId = customerId;
     });
   }
@@ -54,20 +57,12 @@ export class EditCustomerModalComponent {
   }
 
   public onSubmit(): void {
-    this.closeModal();
-    const customer = {
-      name: this.customer.name,
-      email: this.customer.email,
-      phone: this.customer.phone,
-      address: this.customer.address,
-      city: this.customer.city,
-      country: this.customer.country,
-      zip: this.customer.zip,
-      company: this.customer.company,
-      updatedBy: this.customerPanelApiService.user
+    if (this.customerForm.valid) {
+      this.closeModal();
+      const customer = { ...this.customerForm.value, updatedBy: this.customerPanelApiService.user };
+      this.customerPanelApiService.updateCustomer(this.customerId, customer).subscribe(() => {
+        this.refreshService.triggerRefresh();
+      });
     }
-    this.customerPanelApiService.updateCustomer(this.customerId, customer).subscribe((response) => {
-      this.refreshService.triggerRefresh();
-    });
   }
 }
