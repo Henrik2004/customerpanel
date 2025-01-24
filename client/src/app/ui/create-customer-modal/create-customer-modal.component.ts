@@ -1,32 +1,39 @@
-import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
-import {RefreshService} from '../../shared/refresh.service';
+import { Component } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { CustomerpanelApiService } from '../../shared/customerpanel-api.service';
+import { RefreshService } from '../../shared/refresh.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-create-customer-modal',
   templateUrl: './create-customer-modal.component.html',
   imports: [
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf
   ],
   styleUrls: ['./create-customer-modal.component.scss']
 })
 export class CreateCustomerModalComponent {
   protected isActive = false;
-  protected customer = {
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    country: '',
-    zip: '',
-    company: '',
-    createdBy: 0
-  }
+  customerForm: any;
 
-  constructor(private customerPanelApiService: CustomerpanelApiService,
-              private refreshService: RefreshService) { }
+  constructor(
+    private customerPanelApiService: CustomerpanelApiService,
+    private refreshService: RefreshService,
+    private fb: FormBuilder
+  ) {
+    this.customerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      zip: ['', Validators.required],
+      company: ['', Validators.required]
+    });
+  }
 
   public closeModal(): void {
     this.isActive = false;
@@ -37,10 +44,12 @@ export class CreateCustomerModalComponent {
   }
 
   public onSubmit(): void {
-    this.closeModal();
-    this.customer.createdBy = this.customerPanelApiService.user;
-    this.customerPanelApiService.createCustomer(this.customer).subscribe((response) => {
-      this.refreshService.triggerRefresh();
-    });
+    if (this.customerForm.valid) {
+      this.closeModal();
+      const customer = { ...this.customerForm.value, createdBy: this.customerPanelApiService.user };
+      this.customerPanelApiService.createCustomer(customer).subscribe((response) => {
+        this.refreshService.triggerRefresh();
+      });
+    }
   }
 }
