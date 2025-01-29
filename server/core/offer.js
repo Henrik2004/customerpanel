@@ -5,7 +5,7 @@
  * @returns {*|null} - array of offers or null if an error occurred
  */
 export function getAllOffers(fastify, filters) {
-    const statement = fastify.db.prepare('SELECT * FROM offers WHERE title LIKE ? AND description LIKE ? AND price LIKE ? AND status LIKE ? AND createdBy LIKE ? AND updatedBy LIKE ?');
+    const statement = fastify.db.prepare('SELECT * FROM offers WHERE title LIKE ? AND description LIKE ? AND price LIKE ? AND status LIKE ?');
 
     const title = filters.title ? `%${filters.title}%` : '%';
     const description = filters.description ? `%${filters.description}%` : '%';
@@ -13,7 +13,7 @@ export function getAllOffers(fastify, filters) {
     const status = filters.status ? `%${filters.status}%` : '%';
 
     try {
-        return statement.all(title, description, price, status, filters.createdBy, filters.updatedBy);
+        return statement.all(title, description, price, status);
     } catch (error) {
         fastify.log.error(error);
         return null;
