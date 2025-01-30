@@ -1,9 +1,7 @@
 <section class="section">
   <div class="container">
-    <div class="columns is-justify-content-space-between">
-      <app-customer-list></app-customer-list>
-      <button class="open-create-cus-modal button is-primary" (click)="openCreateCustomerModal()">Create Customer</button>
-    </div>
+    <button class="open-create-cus-modal button is-primary" (click)="openCreateCustomerModal()">Create Customer</button>
+    <app-customer-list></app-customer-list>
   </div>
 </section>
 <app-create-customer-modal></app-create-customer-modal>

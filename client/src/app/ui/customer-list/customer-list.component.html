@@ -1,5 +1,3 @@
-<div class="container is-fluid">
-  <div *ngFor="let customer of customers; trackBy: trackByCustomerId">
-    <app-customer-card [customer]="customer"></app-customer-card>
-  </div>
+<div *ngFor="let customer of customers; trackBy: trackByCustomerId">
+  <app-customer-card [customer]="customer"></app-customer-card>
 </div>

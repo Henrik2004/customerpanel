@@ -17,23 +17,34 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Email</label>
+          <label class="label">Company</label>
           <div class="control">
-            <input class="input" type="email" placeholder="Email" formControlName="email">
-            <div *ngIf="customerForm.get('email').hasError('required')">
-              <p class="help is-danger">Email is required</p>
-            </div>
-            <div *ngIf="customerForm.get('email').hasError('email')">
-              <p class="help is-danger">Email is invalid</p>
+            <input class="input" type="text" placeholder="Company" formControlName="company">
+            <div *ngIf="customerForm.get('company').hasError('required')">
+              <p class="help is-danger">Company is required</p>
             </div>
           </div>
         </div>
-        <div class="field">
-          <label class="label">Phone</label>
-          <div class="control">
-            <input class="input" type="tel" placeholder="Phone" formControlName="phone">
-            <div *ngIf="customerForm.get('phone').hasError('required')">
-              <p class="help is-danger">Phone is required</p>
+        <div class="inline-fields">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" placeholder="Email" formControlName="email">
+              <div *ngIf="customerForm.get('email').hasError('required')">
+                <p class="help is-danger">Email is required</p>
+              </div>
+              <div *ngIf="customerForm.get('email').hasError('email')">
+                <p class="help is-danger">Email is invalid</p>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Phone</label>
+            <div class="control">
+              <input class="input" type="tel" placeholder="Phone" formControlName="phone">
+              <div *ngIf="customerForm.get('phone').hasError('required')">
+                <p class="help is-danger">Phone is required</p>
+              </div>
             </div>
           </div>
         </div>
@@ -46,21 +57,23 @@
             </div>
           </div>
         </div>
-        <div class="field">
-          <label class="label">City</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="City" formControlName="city">
-            <div *ngIf="customerForm.get('city').hasError('required')">
-              <p class="help is-danger">City is required</p>
+        <div class="inline-fields">
+          <div class="field">
+            <label class="label">Zip</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Zip" formControlName="zip">
+              <div *ngIf="customerForm.get('zip').hasError('required')">
+                <p class="help is-danger">Zip is required</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field">
-          <label class="label">Zip</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Zip" formControlName="zip">
-            <div *ngIf="customerForm.get('zip').hasError('required')">
-              <p class="help is-danger">Zip is required</p>
+          <div class="field">
+            <label class="label">City</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="City" formControlName="city">
+              <div *ngIf="customerForm.get('city').hasError('required')">
+                <p class="help is-danger">City is required</p>
+              </div>
             </div>
           </div>
         </div>
@@ -70,15 +83,6 @@
             <input class="input" type="text" placeholder="Country" formControlName="country">
             <div *ngIf="customerForm.get('country').hasError('required')">
               <p class="help is-danger">Country is required</p>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Company</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Company" formControlName="company">
-            <div *ngIf="customerForm.get('company').hasError('required')">
-              <p class="help is-danger">Company is required</p>
             </div>
           </div>
         </div>
