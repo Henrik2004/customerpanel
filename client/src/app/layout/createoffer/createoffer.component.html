@@ -22,10 +22,10 @@
         </div>
       </div>
       <div class="field">
-        <label for="customer" class="label">Customer</label>
+        <label for="customer" class="label">Select Customer</label>
         <div class="control">
           <div class="select">
-            <select id="customer" [(ngModel)]="customer" name="customer" required>
+            <select id="customer" [(ngModel)]="selectedCustomer" name="customer" required>
               <option *ngFor="let customer of customers"
                       [value]="customer.id">{{ customer.id }} {{ customer.company }}
               </option>

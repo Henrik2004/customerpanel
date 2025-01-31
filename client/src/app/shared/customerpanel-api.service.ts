@@ -48,6 +48,14 @@ export class CustomerpanelApiService {
     });
   }
 
+  public deleteOffer(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/offers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public createOffer(offer: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/offers`, offer, {
       headers: {

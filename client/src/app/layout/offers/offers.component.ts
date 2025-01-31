@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {OfferListComponent} from '../../ui/offer-list/offer-list.component';
 import {NgIf} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-offers',
@@ -17,10 +18,14 @@ export class OffersComponent {
   statusonice = 'onice';
   showOnIceOffers = false;
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   toggleOnIceOffers() {
     this.showOnIceOffers = !this.showOnIceOffers;
+  }
+
+  openCreateOffer() {
+    this.router.navigate(['/createoffer']);
   }
 }

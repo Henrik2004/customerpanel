@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CustomerpanelApiService } from '../../shared/customerpanel-api.service';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
@@ -13,7 +13,7 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './createoffer.component.html',
   styleUrl: './createoffer.component.scss'
 })
-export class CreateofferComponent {
+export class CreateofferComponent implements OnInit {
   customers: any[] = [];
   protected title: any;
   protected description: any;

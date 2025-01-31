@@ -2,8 +2,8 @@
   <article class="media">
     <div class="media-content">
       <div class="content">
-        <p class="is-size-4">
-          {{ offer.id }} - <strong><span id="offerCardCustomerCompany">{{ offer.offerCardCustomerCompany }}</span></strong> - <strong><span id="offerCardCustomerName">{{ offer.offerCardCustomerName }}</span></strong> - <small>{{ offer.title }}</small>
+        <p class="is-size-4" *ngIf="customer$ | async as customer">
+          {{ offer.id }} - <strong><span id="offerCardCustomerCompany">{{ customer.customer.company }}</span></strong> - <strong><span id="offerCardCustomerName">{{ customer.customer.name }}</span></strong> - <small>{{ offer.title }}</small>
         </p>
         <div class="columns" *ngIf="showMore">
           <div class="column is-one-third">
@@ -37,7 +37,7 @@
               <i class="fas fa-edit" aria-hidden="true"></i>
             </span>
           </a>
-          <a class="level-item" aria-label="delete">
+          <a class="level-item" aria-label="delete" (click)="deleteOffer(offer.id)">
             <span class="icon is-small">
               <i class="fas fa-trash" aria-hidden="true"></i>
             </span>
