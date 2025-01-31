@@ -1,5 +1,3 @@
-<div class="offer-list">
-  @for(offer of offers$ | async; track offer.id) {
-    <app-offer-card [offer]="offer"></app-offer-card>
-  }
-</div>
+@for (offer of offers$ | async; track offer.id) {
+  <app-offer-card [offer]="offer"></app-offer-card>
+}

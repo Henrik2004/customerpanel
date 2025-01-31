@@ -1,7 +1,23 @@
 <section class="section">
   <div class="container">
-    <div class="columns">
-      <app-offer-list></app-offer-list>
+    <h1 class="title"><code>Draft</code> Offers</h1>
+    <app-offer-list [status]="statusdraft"></app-offer-list>
+  </div>
+  <br>
+  <br>
+  <div class="container">
+    <h1 class="title"><code>Active</code> Offers</h1>
+    <app-offer-list [status]="statusactive"></app-offer-list>
+  </div>
+  <br>
+  <br>
+  <div class="container">
+    <h1 class="title"><code>On Ice</code> Offers</h1>
+    <button class="button is-primary" (click)="toggleOnIceOffers()">
+      {{ showOnIceOffers ? 'Hide' : 'Show' }} On Ice Offers
+    </button>
+    <div *ngIf="showOnIceOffers">
+      <app-offer-list [status]="statusonice"></app-offer-list>
     </div>
   </div>
 </section>

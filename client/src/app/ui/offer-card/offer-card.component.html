@@ -1,6 +1,49 @@
-<div class="column">
-  <div class="box">
-    <h1 class="title">{{offer.title}}</h1>
-    <p class="subtitle">{{offer.description}}</p>
-  </div>
+<div class="box offer-box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p class="is-size-4">
+          {{ offer.id }} - <strong><span id="offerCardCustomerCompany">{{ offer.offerCardCustomerCompany }}</span></strong> - <strong><span id="offerCardCustomerName">{{ offer.offerCardCustomerName }}</span></strong> - <small>{{ offer.title }}</small>
+        </p>
+        <div class="columns" *ngIf="showMore">
+          <div class="column is-one-third">
+            <p>
+              <strong>Description:</strong> <br> {{ offer.description }}
+            </p>
+          </div>
+          <div class="column auto">
+            <p>
+              <strong>Price:</strong> <br> {{ offer.price }}
+            </p>
+          </div>
+          <div class="column auto">
+            <p>
+              <strong>Status:</strong><br>
+              {{ offer.status }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <a class="level-item" aria-label="more" (click)="showMore = !showMore">
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true" *ngIf="!showMore"></i>
+              <i class="fas fa-angle-up" aria-hidden="true" *ngIf="showMore"></i>
+            </span>
+          </a>
+          <a class="level-item" aria-label="edit">
+            <span class="icon is-small">
+              <i class="fas fa-edit" aria-hidden="true"></i>
+            </span>
+          </a>
+          <a class="level-item" aria-label="delete">
+            <span class="icon is-small">
+              <i class="fas fa-trash" aria-hidden="true"></i>
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </article>
 </div>
