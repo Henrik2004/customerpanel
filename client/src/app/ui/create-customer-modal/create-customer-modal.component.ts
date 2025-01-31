@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CustomerpanelApiService } from '../../shared/customerpanel-api.service';
 import { RefreshService } from '../../shared/refresh.service';
@@ -51,5 +51,9 @@ export class CreateCustomerModalComponent {
         this.refreshService.triggerRefresh();
       });
     }
+  }
+
+  public isModalActive(): boolean {
+    return this.isActive;
   }
 }

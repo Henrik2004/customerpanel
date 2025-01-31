@@ -38,7 +38,7 @@ export class CreateofferComponent implements OnInit {
       customerId: this.selectedCustomer,
       status: 'draft',
       createdBy: this.customerpanelApiService.user
-    }).subscribe((response) => {
+    }).subscribe(() => {
       this.router.navigate(['/offers']);
     });
   }
