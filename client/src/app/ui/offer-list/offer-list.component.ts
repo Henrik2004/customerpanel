@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {OfferCardComponent} from '../offer-card/offer-card.component';
-import {AsyncPipe, NgForOf} from '@angular/common';
-import { Observable } from 'rxjs';
+import {NgForOf} from '@angular/common';
 import {RefreshService} from '../../shared/refresh.service';
 
 @Component({
@@ -10,7 +9,6 @@ import {RefreshService} from '../../shared/refresh.service';
   templateUrl: './offer-list.component.html',
   imports: [
     OfferCardComponent,
-    AsyncPipe,
     NgForOf
   ],
   styleUrls: ['./offer-list.component.scss']

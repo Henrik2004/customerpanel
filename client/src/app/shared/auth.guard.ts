@@ -7,7 +7,8 @@ import {CustomerpanelApiService} from './customerpanel-api.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private customerPanelApiService: CustomerpanelApiService, private router: Router) {}
+  constructor(private customerPanelApiService: CustomerpanelApiService,
+              private router: Router) {}
 
   canActivate(): boolean {
     if (this.customerPanelApiService.token !== '') {
