@@ -28,6 +28,10 @@ export class CustomerpanelApiService {
     this._user = value;
   }
 
+  public logout(): void {
+    this.token = '';
+  }
+
   public authenticateUser(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth`, credentials);
   }

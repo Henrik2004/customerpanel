@@ -30,7 +30,7 @@
         <a routerLink="/settings" routerLinkActive="active">Settings</a>
       </li>
       <li [class.active]="isActive('/login')">
-        <a routerLink="/login" routerLinkActive="active">Logout</a>
+        <a routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
       </li>
     </ul>
   </div>
