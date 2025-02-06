@@ -1,19 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { CustomerpanelApiService } from '../../shared/customerpanel-api.service';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {CreateCustomerModalComponent} from '../../ui/create-customer-modal/create-customer-modal.component';
 
 @Component({
   selector: 'app-createoffer',
   imports: [
     NgForOf,
-    FormsModule
+    FormsModule,
+    CreateCustomerModalComponent
   ],
   templateUrl: './createoffer.component.html',
   styleUrl: './createoffer.component.scss'
 })
 export class CreateofferComponent implements OnInit {
+  @ViewChild(CreateCustomerModalComponent) createCustomerModal!: CreateCustomerModalComponent;
+
   customers: any[] = [];
   protected title: any;
   protected description: any;
@@ -31,6 +35,11 @@ export class CreateofferComponent implements OnInit {
   }
 
   onSubmit() {
+
+    if (this.createCustomerModal.isModalActive()) {
+      return;
+    }
+
     this.customerpanelApiService.createOffer({
       title: this.title,
       description: this.description,
@@ -41,5 +50,15 @@ export class CreateofferComponent implements OnInit {
     }).subscribe(() => {
       this.router.navigate(['/offers']);
     });
+  }
+
+  fetchCustomers() {
+    this.customerpanelApiService.getCustomers().subscribe((customers) => {
+      this.customers = customers;
+    });
+  }
+
+  createCustomer() {
+    this.createCustomerModal.openModal();
   }
 }

@@ -22,10 +22,14 @@
         </div>
       </div>
       <div class="field">
+        <label for="createCustomer" class="label">Create Customer</label>
+        <button class="button is-link" (click)="createCustomer()" id="createCustomer">Create Customer</button>
+      </div>
+      <div class="field">
         <label for="customer" class="label">Select Customer</label>
         <div class="control">
           <div class="select">
-            <select id="customer" [(ngModel)]="selectedCustomer" name="customer" required>
+            <select id="customer" [(ngModel)]="selectedCustomer" name="customer" (click)="fetchCustomers()" required>
               <option *ngFor="let customer of customers"
                       [value]="customer.id">{{ customer.id }} {{ customer.company }}
               </option>
@@ -39,3 +43,4 @@
     </form>
   </div>
 </section>
+<app-create-customer-modal></app-create-customer-modal>
