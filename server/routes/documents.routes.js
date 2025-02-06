@@ -78,6 +78,10 @@ async function DocumentRoutes(fastify) {
         }
     }, async (request, reply) => {
         const data = await request.file();
+        if (!data) {
+            reply.code(400);
+            return {error: "No file uploaded"};
+        }
         const documentProps = data.fields;
         const offerId = documentProps.offerId.value;
         const offer = getOffer(fastify, offerId);
@@ -91,13 +95,13 @@ async function DocumentRoutes(fastify) {
             return {error: "You can only add documents to draft offers!"};
         }
 
-        const document = await createDocument(fastify, documentProps, data);
+        const document = createDocument(fastify, documentProps, data);
         if (!document) {
             reply.code(500);
             return {error: "Internal Server Error"};
         }
         reply.code(201);
-        return {document: document};
+        return {message: 'Document created successfully'};
     });
 
     fastify.put('/:id', {
