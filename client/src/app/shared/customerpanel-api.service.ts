@@ -68,6 +68,14 @@ export class CustomerpanelApiService {
     });
   }
 
+  public updateOffer(id: number, offer: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/offers/${id}`, offer, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public getCustomers(): Observable<any> {
     return this.http.get(`${this.baseUrl}/customers`, {
       headers: {

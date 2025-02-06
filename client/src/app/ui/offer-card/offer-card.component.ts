@@ -3,6 +3,7 @@ import {AsyncPipe, NgIf} from '@angular/common';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {RefreshService} from '../../shared/refresh.service';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-offer-card',
@@ -19,7 +20,8 @@ export class OfferCardComponent implements OnInit {
   customer$: Observable<any> | undefined;
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
-              private refreshService: RefreshService) {
+              private refreshService: RefreshService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -30,5 +32,9 @@ export class OfferCardComponent implements OnInit {
     this.customerpanelApiService.deleteOffer(offerId).subscribe(() => {
       this.refreshService.triggerRefresh();
     });
+  }
+
+  editOffer(offerId: number) {
+    this.router.navigate(['/editoffer'], {queryParams: {id: offerId}});
   }
 }
