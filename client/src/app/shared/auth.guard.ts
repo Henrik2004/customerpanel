@@ -11,7 +11,13 @@ export class AuthGuard implements CanActivate {
               private router: Router) {}
 
   canActivate(): boolean {
-    if (this.customerPanelApiService.token !== '') {
+    if (localStorage.getItem('token')) {
+      if (new Date().getTime() - parseInt(<string>localStorage.getItem('tokenTime'), 10) > 300000) {
+        this.customerPanelApiService.logout();
+        this.router.navigate(['/login']);
+        return false;
+      }
+      this.customerPanelApiService.token = localStorage.getItem('token') || '';
       return true;
     } else {
       this.router.navigate(['/login']);

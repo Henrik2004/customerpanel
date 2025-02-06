@@ -30,6 +30,9 @@ export class CustomerpanelApiService {
 
   public logout(): void {
     this.token = '';
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('tokenTime');
   }
 
   public authenticateUser(credentials: any): Observable<any> {

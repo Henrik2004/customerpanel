@@ -27,6 +27,9 @@ export class LoginComponent {
       if (response.token) {
         this.customerpanelApiService.token = response.token;
         this.customerpanelApiService.user = response.userId;
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('tokenTime', new Date().getTime().toString());
         this.router.navigate(['/overview']);
       }
     });
