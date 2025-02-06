@@ -37,4 +37,8 @@ export class OfferCardComponent implements OnInit {
   editOffer(offerId: number) {
     this.router.navigate(['/editoffer'], {queryParams: {id: offerId}});
   }
+
+  showOfferDetails(offerId: number) {
+    this.router.navigate(['/detailoffer'], {queryParams: {id: offerId}});
+  }
 }

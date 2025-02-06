@@ -22,6 +22,9 @@
               {{ offer.status }}
             </p>
           </div>
+          <div class="column auto">
+            <button class="button is-primary" (click)="showOfferDetails(offer.id)">Details</button>
+          </div>
         </div>
       </div>
       <nav class="level is-mobile">
