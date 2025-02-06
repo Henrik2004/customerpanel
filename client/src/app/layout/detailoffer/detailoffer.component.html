@@ -1,5 +1,55 @@
 <section class="section">
   <div class="container">
     <h1 class="title">Offerdetails</h1>
+    <div class="columns">
+      <div class="column is-6">
+        <div class="box">
+          <div class="content">
+            <h2 class="title is-4">Offerdetails</h2>
+            <div class="columns">
+              <div class="column is-6">
+                <p>ID: {{offer.id}}</p>
+                <p>Name: {{offer.title}}</p>
+                <p>Description: {{offer.description}}</p>
+                <p>Price: {{offer.price}}</p>
+                <p>Status: {{offer.status}}</p>
+              </div>
+              <div class="column is-6">
+                <p>Created by: {{createdByOffer}}</p>
+                <p>Date created: {{offer.createdAt}}</p>
+                <p>Updated by: {{updatedByOffer}}</p>
+                <p>Date updated: {{offer.updatedAt}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="box">
+          <div class="content">
+            <h2 class="title is-4">Customer</h2>
+            <div class="columns">
+              <div class="column is-6">
+                <p>ID: {{customer.id}}</p>
+                <p>Name: {{customer.name}}</p>
+                <p>Company: {{customer.company}}</p>
+                <p>Email: {{customer.email}}</p>
+                <p>Phone: {{customer.phone}}</p>
+                <p>Address: {{customer.address}}</p>
+                <p>Zip: {{customer.zip}}</p>
+                <p>City: {{customer.city}}</p>
+                <p>Country: {{customer.country}}</p>
+              </div>
+              <div class="column is-6">
+                <p>Created by: {{createdByCustomer}}</p>
+                <p>Date created: {{customer.createdAt}}</p>
+                <p>Updated by: {{updatedByCustomer}}</p>
+                <p>Date updated: {{customer.updatedAt}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

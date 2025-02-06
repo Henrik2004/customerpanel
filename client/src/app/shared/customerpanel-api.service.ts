@@ -39,6 +39,14 @@ export class CustomerpanelApiService {
     return this.http.post(`${this.baseUrl}/auth`, credentials);
   }
 
+  public getUserById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/byid/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public getOffers(status: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/offers?status=` + status, {
       headers: {

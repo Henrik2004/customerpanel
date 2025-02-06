@@ -13,6 +13,11 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DetailofferComponent implements OnInit {
   offer: any = {};
+  customer: any = {};
+  createdByOffer: any = {};
+  updatedByOffer: any = {};
+  createdByCustomer: any = {};
+  updatedByCustomer: any = {};
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private route: ActivatedRoute) {
@@ -23,6 +28,21 @@ export class DetailofferComponent implements OnInit {
       const offerId = params['id'];
       this.customerpanelApiService.getOfferById(offerId).subscribe((offer) => {
         this.offer = offer.offer;
+        this.customerpanelApiService.getCustomerById(this.offer.customerId).subscribe((customer) => {
+          this.customer = customer.customer;
+          this.customerpanelApiService.getUserById(this.customer.createdBy).subscribe((user) => {
+            this.createdByCustomer = user.user.name;
+          });
+          this.customerpanelApiService.getUserById(this.customer.updatedBy).subscribe((user) => {
+            this.updatedByCustomer = user.user.name;
+          });
+        });
+        this.customerpanelApiService.getUserById(this.offer.createdBy).subscribe((user) => {
+          this.createdByOffer = user.user.name;
+        });
+        this.customerpanelApiService.getUserById(this.offer.updatedBy).subscribe((user) => {
+          this.updatedByOffer = user.user.name;
+        });
       });
     });
   }
