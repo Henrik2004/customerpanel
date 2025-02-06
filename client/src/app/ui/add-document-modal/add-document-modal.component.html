@@ -1,0 +1,39 @@
+<div class="modal" [class.is-active]="isActive">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Add Document</p>
+      <button class="delete" aria-label="close" (click)="closeModal()"></button>
+    </header>
+    <section class="modal-card-body">
+      <form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Name" formControlName="name">
+            <div *ngIf="documentForm.get('name').hasError('required')">
+              <p class="help is-danger">Name is required</p>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">File</label>
+          <div class="control">
+            <input class="input" type="file" placeholder="File" formControlName="file">
+            <div *ngIf="documentForm.get('file').hasError('required')">
+              <p class="help is-danger">File is required</p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" type="submit" [disabled]="!documentForm.valid">Submit</button>
+          </div>
+          <div class="control">
+            <button class="button is-link" (click)="closeModal()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

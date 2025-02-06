@@ -6,11 +6,15 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class CustomerpanelApiService {
-  private readonly baseUrl = 'http://localhost:8080';
+  private readonly _baseUrl = 'http://localhost:8080';
   private _token = '';
   private _user = 0;
 
   constructor(private http: HttpClient) { }
+
+  get baseUrl(): string {
+    return this._baseUrl;
+  }
 
   get token(): string {
     return this._token;
@@ -36,11 +40,11 @@ export class CustomerpanelApiService {
   }
 
   public authenticateUser(credentials: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth`, credentials);
+    return this.http.post(`${this._baseUrl}/auth`, credentials);
   }
 
   public getUserById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/users/byid/${id}`, {
+    return this.http.get(`${this._baseUrl}/users/byid/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -48,7 +52,7 @@ export class CustomerpanelApiService {
   }
 
   public getOffers(status: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/offers?status=` + status, {
+    return this.http.get(`${this._baseUrl}/offers?status=` + status, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -56,7 +60,7 @@ export class CustomerpanelApiService {
   }
 
   public getOfferById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/offers/${id}`, {
+    return this.http.get(`${this._baseUrl}/offers/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -64,7 +68,7 @@ export class CustomerpanelApiService {
   }
 
   public deleteOffer(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/offers/${id}`, {
+    return this.http.delete(`${this._baseUrl}/offers/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -72,7 +76,7 @@ export class CustomerpanelApiService {
   }
 
   public createOffer(offer: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/offers`, offer, {
+    return this.http.post(`${this._baseUrl}/offers`, offer, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -80,7 +84,7 @@ export class CustomerpanelApiService {
   }
 
   public updateOffer(id: number, offer: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/offers/${id}`, offer, {
+    return this.http.put(`${this._baseUrl}/offers/${id}`, offer, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -88,7 +92,7 @@ export class CustomerpanelApiService {
   }
 
   public getCustomers(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/customers`, {
+    return this.http.get(`${this._baseUrl}/customers`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -96,7 +100,7 @@ export class CustomerpanelApiService {
   }
 
   public getCustomerById(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/customers/${id}`, {
+    return this.http.get(`${this._baseUrl}/customers/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -104,7 +108,7 @@ export class CustomerpanelApiService {
   }
 
   public createCustomer(customer: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/customers`, customer, {
+    return this.http.post(`${this._baseUrl}/customers`, customer, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -112,7 +116,7 @@ export class CustomerpanelApiService {
   }
 
   public updateCustomer(id: number, customer: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/customers/${id}`, customer, {
+    return this.http.put(`${this._baseUrl}/customers/${id}`, customer, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -120,9 +124,50 @@ export class CustomerpanelApiService {
   }
 
   public deleteCustomer(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/customers/${id}`, {
+    return this.http.delete(`${this._baseUrl}/customers/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public getDocumentsByOfferId(id: number): Observable<any> {
+    return this.http.get(`${this._baseUrl}/documents/offerid/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public getDocumentContent(id: number): Observable<any> {
+    return this.http.get(`${this._baseUrl}/documents/content/${id}`, {
+      responseType: 'text',
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public deleteDocument(id: number, document: any): Observable<any> {
+    return this.http.delete(`${this._baseUrl}/documents/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      },
+      body: document
+    });
+  }
+
+  public createDocument(document: any): Observable<any> {
+    //multipart/form-data
+    const formData = new FormData();
+    formData.append('file', document.file);
+    formData.append('name', document.name);
+    formData.append('createdBy', document.createdBy);
+    formData.append('offerId', document.offerId);
+    return this.http.post(`${this._baseUrl}/documents`, formData, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'enctype': 'multipart/form-data'
       }
     });
   }

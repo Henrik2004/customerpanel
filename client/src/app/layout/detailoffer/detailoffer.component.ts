@@ -1,19 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {ActivatedRoute} from '@angular/router';
+import {NgForOf} from '@angular/common';
+import {ShowDocumentModalComponent} from '../../ui/show-document-modal/show-document-modal.component';
+import {AddDocumentModalComponent} from '../../ui/add-document-modal/add-document-modal.component';
 
 @Component({
   selector: 'app-detailoffer',
   imports: [
-    FormsModule
+    FormsModule,
+    NgForOf,
+    ShowDocumentModalComponent,
+    AddDocumentModalComponent
   ],
   templateUrl: './detailoffer.component.html',
   styleUrl: './detailoffer.component.scss'
 })
 export class DetailofferComponent implements OnInit {
+  @ViewChild(ShowDocumentModalComponent) showDocumentModalComponent!: ShowDocumentModalComponent;
+  @ViewChild(AddDocumentModalComponent) addDocumentModalComponent!: AddDocumentModalComponent;
+
   offer: any = {};
   customer: any = {};
+  documents: any = [];
   createdByOffer: any = {};
   updatedByOffer: any = {};
   createdByCustomer: any = {};
@@ -44,6 +54,23 @@ export class DetailofferComponent implements OnInit {
           this.updatedByOffer = user.user.name;
         });
       });
+      this.customerpanelApiService.getDocumentsByOfferId(offerId).subscribe((documents) => {
+        this.documents = documents;
+      });
+    });
+  }
+
+  openAddDocumentModal() {
+    this.addDocumentModalComponent.openModal(this.offer.id);
+  }
+
+  openDocument(document: any) {
+    this.showDocumentModalComponent.openModal(document);
+  }
+
+  deleteDocument(document: any) {
+    this.customerpanelApiService.deleteDocument(document.id, {offerId: this.offer.id}).subscribe(() => {
+      this.documents = this.documents.filter((doc: { id: any; }) => doc.id !== document.id);
     });
   }
 }
