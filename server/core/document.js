@@ -48,7 +48,7 @@ export async function createDocument(fastify, documentProps, file) {
     const statement = fastify.db.prepare("INSERT INTO documents (name, documentPath, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)");
 
     try {
-        file.filename = `${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}.${file.mimetype.split('/')[1]}`;
+        file.filename = `${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}-${file.filename}`;
         const documentPath = `${UPLOAD_DIR}${file.filename}`;
         await pump(file.file, fs.createWriteStream(documentPath));
         const result = statement.run(documentProps.name.value, documentPath, documentProps.offerId.value, documentProps.createdBy.value, documentProps.createdBy.value);
