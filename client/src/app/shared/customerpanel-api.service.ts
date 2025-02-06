@@ -157,13 +157,8 @@ export class CustomerpanelApiService {
     });
   }
 
-  public createDocument(document: any): Observable<any> {
-    //multipart/form-data
-    const formData = new FormData();
-    formData.append('file', document.file);
-    formData.append('name', document.name);
-    formData.append('createdBy', document.createdBy);
-    formData.append('offerId', document.offerId);
+  public createDocument(formData: any): Observable<any> {
+    console.log("Creating document");
     return this.http.post(`${this._baseUrl}/documents`, formData, {
       headers: {
         Authorization: `Bearer ${this.token}`,

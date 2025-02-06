@@ -6,7 +6,7 @@
       <button class="delete" aria-label="close" (click)="closeModal()"></button>
     </header>
     <section class="modal-card-body">
-      <form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="documentForm" (ngSubmit)="onSubmit($event)">
         <div class="field">
           <label class="label">Name</label>
           <div class="control">
@@ -19,7 +19,7 @@
         <div class="field">
           <label class="label">File</label>
           <div class="control">
-            <input class="input" type="file" placeholder="File" formControlName="file">
+            <input class="input" type="file" placeholder="File" formControlName="file" (change)="onFileChanged($event)">
             <div *ngIf="documentForm.get('file').hasError('required')">
               <p class="help is-danger">File is required</p>
             </div>

@@ -18,6 +18,7 @@ export class AddDocumentModalComponent {
   protected isActive = false;
   documentForm: any;
   offerId: number = 0;
+  selectedFile: File | null = null;
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private refreshService: RefreshService,
@@ -26,6 +27,10 @@ export class AddDocumentModalComponent {
       name: ['', [Validators.required, Validators.minLength(3)]],
       file: ['', Validators.required]
     });
+  }
+
+  onFileChanged(event: any): void {
+    this.selectedFile = event.target.files[0] as File;
   }
 
   public closeModal(): void {
@@ -37,12 +42,18 @@ export class AddDocumentModalComponent {
     this.isActive = true;
   }
 
-  onSubmit(): void {
-    if (this.documentForm.valid) {
+  onSubmit(event: Event): void {
+    event.preventDefault();
+    console.log('submitting');
+    if (this.documentForm.valid && this.selectedFile) {
       this.closeModal();
-      const document = { ...this.documentForm.value, createdBy: this.customerpanelApiService.user, offerId: this.offerId };
-      this.customerpanelApiService.createDocument(document).subscribe(() => {
-        this.refreshService.triggerRefresh();
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      formData.append('name', this.documentForm.value.name);
+      formData.append('offerId', this.offerId.toString());
+      formData.append('createdBy', this.customerpanelApiService.user.toString());
+      this.customerpanelApiService.createDocument(formData).subscribe(() => {
+        this.refreshService.triggerRefresh()
       });
     }
   }

@@ -1,10 +1,7 @@
 import fs from "fs";
 import fsPromises from "fs/promises";
-import {pipeline} from "stream";
-import {promisify} from "util";
 
 const UPLOAD_DIR = "./assets/";
-const pump = promisify(pipeline);
 
 await fsPromises.mkdir(UPLOAD_DIR, {recursive: true});
 
@@ -50,7 +47,7 @@ export async function createDocument(fastify, documentProps, file) {
     try {
         file.filename = `${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}-${file.filename}`;
         const documentPath = `${UPLOAD_DIR}${file.filename}`;
-        await pump(file.file, fs.createWriteStream(documentPath));
+        await fsPromises.writeFile(documentPath, file.file);
         const result = statement.run(documentProps.name.value, documentPath, documentProps.offerId.value, documentProps.createdBy.value, documentProps.createdBy.value);
         const documentId = result.changes === 1 ? result.lastInsertRowid : null;
         if (documentId) {
