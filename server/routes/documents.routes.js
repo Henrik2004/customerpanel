@@ -79,7 +79,8 @@ async function DocumentRoutes(fastify) {
     }, async (request, reply) => {
         const data = await request.file();
         const documentProps = data.fields;
-        const offer = getOffer(fastify, documentProps.offerId);
+        const offerId = documentProps.offerId.value;
+        const offer = getOffer(fastify, offerId);
         if (!offer) {
             reply.code(404);
             return {error: "Offer not found"};

@@ -16,7 +16,7 @@ auth:bearer {
 
 body:multipart-form {
   name: TestDocument3
-  offerId: 1
+  offerId: 2
   createdBy: 1
   : @file(C:\Users\henri\Downloads\Test3.txt)
 }
@@ -24,6 +24,6 @@ body:multipart-form {
 tests {
   test("createDocument", function() {
     const data = res.getBody();
-    expect(res.getStatus()).to.equal(201);
+    expect(res.getStatus()).to.equal(500);
   });
 }

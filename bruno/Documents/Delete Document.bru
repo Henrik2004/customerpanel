@@ -6,12 +6,18 @@ meta {
 
 delete {
   url: http://localhost:8080/documents/1
-  body: none
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: {{auth_token}}
+}
+
+body:json {
+  {
+    "offerId": 2
+  }
 }
 
 tests {
