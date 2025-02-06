@@ -16,6 +16,7 @@ const documentSchema = {
 const createDocumentSchema = {
     $id: "createDocumentSchema",
     schema: {
+        consumes: ['multipart/form-data'],
         body: {
             type: 'object',
             properties: {

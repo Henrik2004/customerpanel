@@ -66,10 +66,10 @@ export async function createDocument(fastify, documentProps, file) {
 }
 
 export function updateDocument(fastify, id, document) {
-    const statement = fastify.db.prepare('UPDATE documents SET name = ?, documentPath = ?, offerId = ?, updatedBy = ? WHERE id = ?');
+    const statement = fastify.db.prepare('UPDATE documents SET name = ?, offerId = ?, updatedBy = ? WHERE id = ?');
 
     try {
-        const result = statement.run(document.name, document.documentPath, document.offerId, document.updatedBy, id);
+        const result = statement.run(document.name, document.offerId, document.updatedBy, id);
         if (result.changes === 1) {
             return getDocument(fastify, id);
         } else {
