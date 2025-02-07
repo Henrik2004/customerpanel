@@ -29,6 +29,12 @@ export class OfferListComponent {
   }
 
   private loadOffers() {
+    if (this.status === 'all') {
+      this.customerpanelApiService.getAllOffers().subscribe((response) => {
+        this.offers = response;
+      });
+      return;
+    }
     this.customerpanelApiService.getOffers(this.status).subscribe((response) => {
       this.offers = response;
     });
