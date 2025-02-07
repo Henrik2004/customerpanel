@@ -92,6 +92,14 @@ export class CustomerpanelApiService {
     });
   }
 
+  public changeOfferStatus(id: number, status: any): Observable<any> {
+    return this.http.patch(`${this._baseUrl}/offers/${id}/status`, status, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public getCustomers(): Observable<any> {
     return this.http.get(`${this._baseUrl}/customers`, {
       headers: {

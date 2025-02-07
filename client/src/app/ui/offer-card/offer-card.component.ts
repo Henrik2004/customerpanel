@@ -1,16 +1,19 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {RefreshService} from '../../shared/refresh.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-offer-card',
   templateUrl: './offer-card.component.html',
   imports: [
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    FormsModule,
+    NgForOf
   ],
   styleUrls: ['./offer-card.component.scss']
 })
@@ -18,6 +21,7 @@ export class OfferCardComponent implements OnInit {
   @Input({required: true}) offer!: any;
   showMore: boolean = false;
   customer$: Observable<any> | undefined;
+  statuses = ['draft', 'active', 'onIce'];
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private refreshService: RefreshService,
@@ -40,5 +44,15 @@ export class OfferCardComponent implements OnInit {
 
   showOfferDetails(offerId: number) {
     this.router.navigate(['/detailoffer'], {queryParams: {id: offerId}});
+  }
+
+  changeStatus(offerId: number) {
+    const data = {
+      status: this.offer.status,
+      updatedBy: this.customerpanelApiService.user
+    }
+    this.customerpanelApiService.changeOfferStatus(offerId, data).subscribe(() => {
+      this.refreshService.triggerRefresh();
+    });
   }
 }
