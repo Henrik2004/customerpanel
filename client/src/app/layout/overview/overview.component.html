@@ -1,23 +1,21 @@
 <section class="section">
   <div class="container">
+    <h1 class="title">Overview</h1>
     <div class="columns">
-      <div class="column is-two-thirds">
-        <h1 class="title">Overview</h1>
-      </div>
-      <div class="column">
-        <div class="field">
-          <label class="label">Search</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Search">
-          </div>
+      <div class="column is-6">
+        <div class="box">
+          <h2 class="title is-4">Offers</h2>
+          <p>Offerscount: {{ offersCount }}</p>
+          <br>
+          <button class="button is-primary" (click)="viewOffers()">View Offers</button>
         </div>
       </div>
-    </div>
-    <div class="columns">
-      <div class="column">
+      <div class="column is-6">
         <div class="box">
-          <h1 class="title">Overview</h1>
-          <p class="subtitle">This is the overview page</p>
+          <h2 class="title is-4">Customers</h2>
+          <p>Customerscount: {{ customersCount }}</p>
+          <br>
+          <button class="button is-primary" (click)="viewCustomers()">View Customers</button>
         </div>
       </div>
     </div>

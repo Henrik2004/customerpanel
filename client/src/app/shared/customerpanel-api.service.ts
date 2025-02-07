@@ -75,6 +75,14 @@ export class CustomerpanelApiService {
     });
   }
 
+  public getAllOffers(): Observable<any> {
+    return this.http.get(`${this._baseUrl}/offers`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public getOffers(status: string): Observable<any> {
     return this.http.get(`${this._baseUrl}/offers?status=` + status, {
       headers: {
