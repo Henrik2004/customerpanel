@@ -1,1 +1,21 @@
-<p>settings works!</p>
+<section class="section">
+  <div class="container">
+    <h1 class="title">Settings</h1>
+    <div class="columns">
+      <div class="column is-6">
+        <div class="box">
+          <p class="is-text">Clears the database, recreates tables and loads test data</p>
+          <br>
+          <button class="button is-primary" (click)="recreateDatabaseTables()">Recreate database Tables</button>
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="box">
+          <p class="is-text">Loads test data into the database</p>
+          <br>
+          <button class="button is-primary" (click)="loadTestData()">Load Test Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

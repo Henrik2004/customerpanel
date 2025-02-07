@@ -44,6 +44,29 @@ export class CustomerpanelApiService {
     return this.http.post(`${this._baseUrl}/auth`, credentials);
   }
 
+  public recreateDatabaseTables(): Observable<any> {
+    const data = {
+      action: 'recreateTables',
+      secret: 'Henrik27#!?X'
+    }
+    return this.http.post(`${this._baseUrl}/settings`, data, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public loadTestData(): Observable<any> {
+    const data = {
+      test: 'loadTestData'
+    }
+    return this.http.post(`${this._baseUrl}/test`, data, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public getUserById(id: number): Observable<any> {
     return this.http.get(`${this._baseUrl}/users/byid/${id}`, {
       headers: {

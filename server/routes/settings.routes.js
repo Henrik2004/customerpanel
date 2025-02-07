@@ -6,7 +6,7 @@ import {roleCheck} from "../middleware/roleCheck.js";
 async function SettingsRoutes(fastify) {
     fastify.post('/', {
         schema: settingsSchema,
-        //preHandler: roleCheck('1')
+        preHandler: roleCheck('1')
     }, async (request, reply) => {
         const action = request.body.action;
         const secret = request.body.secret;
