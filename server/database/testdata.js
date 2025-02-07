@@ -73,4 +73,20 @@ export const offers = [{
     status: 'draft',
     createdBy: 1,
     updatedBy: 1
+}, {
+    customerId: 1,
+    title: 'Pfeiffer Offer 2',
+    description: 'Pfeiffer Offer Description 2',
+    price: 300,
+    status: 'onice',
+    createdBy: 1,
+    updatedBy: 1
+}, {
+    customerId: 2,
+    title: 'Meier Offer 2',
+    description: 'Meier Offer Description 2',
+    price: 400,
+    status: 'onice',
+    createdBy: 1,
+    updatedBy: 1
 }]
