@@ -28,6 +28,9 @@ export class DetailofferComponent implements OnInit {
   updatedByOffer: any = {};
   createdByCustomer: any = {};
   updatedByCustomer: any = {};
+  comment: string = '';
+  comments: any = [];
+  userComment: any = {};
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private route: ActivatedRoute) {
@@ -57,6 +60,14 @@ export class DetailofferComponent implements OnInit {
       this.customerpanelApiService.getDocumentsByOfferId(offerId).subscribe((documents) => {
         this.documents = documents;
       });
+      this.customerpanelApiService.getCommentsByOfferId(offerId).subscribe((comments) => {
+        this.comments = comments;
+        for (let i = 0; i < this.comments.length; i++) {
+          this.customerpanelApiService.getUserById(this.comments[i].user).subscribe((user) => {
+            this.userComment[this.comments[i].id] = user.user.name;
+          });
+        }
+      });
     });
   }
 
@@ -71,6 +82,24 @@ export class DetailofferComponent implements OnInit {
   deleteDocument(document: any) {
     this.customerpanelApiService.deleteDocument(document.id, {offerId: this.offer.id}).subscribe(() => {
       this.documents = this.documents.filter((doc: { id: any; }) => doc.id !== document.id);
+    });
+  }
+
+  addComment() {
+    const data = {
+      user: this.customerpanelApiService.user,
+      text: this.comment,
+      offerId: this.offer.id,
+      createdBy: this.customerpanelApiService.user
+    }
+    this.customerpanelApiService.addComment(data).subscribe(() => {
+      this.comment = '';
+    });
+  }
+
+  deleteComment(comment: any) {
+    this.customerpanelApiService.deleteComment(comment.id).subscribe(() => {
+      this.comments = this.comments.filter((com: { id: any; }) => com.id !== comment.id);
     });
   }
 }

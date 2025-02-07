@@ -25,6 +25,7 @@ export class CustomerpanelApiService {
   }
 
   get user(): number {
+    this._user = parseInt(localStorage.getItem('userId') || '0', 10);
     return this._user;
   }
 
@@ -160,6 +161,30 @@ export class CustomerpanelApiService {
   public createDocument(formData: any): Observable<any> {
     console.log("Creating document");
     return this.http.post(`${this._baseUrl}/documents`, formData, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public addComment(comment: any): Observable<any> {
+    return this.http.post(`${this._baseUrl}/comments`, comment, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public getCommentsByOfferId(id: number): Observable<any> {
+    return this.http.get(`${this._baseUrl}/comments/offerId/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public deleteComment(id: number): Observable<any> {
+    return this.http.delete(`${this._baseUrl}/comments/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
