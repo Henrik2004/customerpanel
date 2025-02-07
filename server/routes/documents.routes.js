@@ -95,11 +95,13 @@ async function DocumentRoutes(fastify) {
             return {error: "You can only add documents to draft offers!"};
         }
 
-        const document = createDocument(fastify, documentProps, data);
+        const document = await createDocument(fastify, documentProps, data);
+
         if (!document) {
             reply.code(500);
             return {error: "Internal Server Error"};
         }
+
         reply.code(201);
         return {message: 'Document created successfully'};
     });
