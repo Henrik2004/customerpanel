@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {RefreshService} from '../../shared/refresh.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-add-document-modal',
@@ -52,8 +51,9 @@ export class AddDocumentModalComponent {
       formData.append('name', this.documentForm.value.name);
       formData.append('offerId', this.offerId.toString());
       formData.append('createdBy', this.customerpanelApiService.user.toString());
+
       this.customerpanelApiService.createDocument(formData).subscribe(() => {
-        this.refreshService.triggerRefresh()
+        this.refreshService.triggerRefresh();
       });
     }
   }

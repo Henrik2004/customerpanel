@@ -161,8 +161,7 @@ export class CustomerpanelApiService {
     console.log("Creating document");
     return this.http.post(`${this._baseUrl}/documents`, formData, {
       headers: {
-        Authorization: `Bearer ${this.token}`,
-        'enctype': 'multipart/form-data'
+        Authorization: `Bearer ${this.token}`
       }
     });
   }
