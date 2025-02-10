@@ -74,6 +74,7 @@ export class DetailofferComponent implements OnInit {
     });
   }
 
+  //Aufgabe 3
   openTagsModal(document: any) {
     this.tagsModalComponent.openModal(document);
   }

@@ -230,6 +230,7 @@ export class CustomerpanelApiService {
     });
   }
 
+  //Aufgabe 3
   public createTag(tag: any): Observable<any> {
     return this.http.post(`${this._baseUrl}/tags`, tag, {
       headers: {
@@ -238,6 +239,7 @@ export class CustomerpanelApiService {
     });
   }
 
+  //Aufgabe 3
   public deleteTag(id: number): Observable<any> {
     return this.http.delete(`${this._baseUrl}/tags/${id}`, {
       headers: {
@@ -246,6 +248,7 @@ export class CustomerpanelApiService {
     });
   }
 
+  //Aufgabe 3
   public getTagsByDocumentId(id: number): Observable<any> {
     return this.http.get(`${this._baseUrl}/tags/documentid/${id}`, {
       headers: {

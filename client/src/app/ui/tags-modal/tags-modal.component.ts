@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
   ],
   styleUrls: ['./tags-modal.component.scss']
 })
+//Aufgabe 3
 export class TagsModalComponent {
   protected isActive = false;
   document: any = {};
