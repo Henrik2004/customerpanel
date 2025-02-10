@@ -1,0 +1,44 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">All Documents</h1>
+    <div class="columns">
+      <div class="column is-half">
+        <div class="field">
+          <label class="label">Search Tags</label>
+          <p>Seperated by <code>,</code></p>
+          <div class="control">
+            <input class="input" type="text" placeholder="Search, Tags, ..." [(ngModel)]="search">
+          </div>
+          <button class="button is-primary" (click)="searchDocuments()">Search</button>
+        </div>
+      </div>
+    </div>
+    <table class="table is-fullwidth">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Filepath</th>
+        <th>Date created</th>
+        <th>Date updated</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let document of documents">
+        <td>{{ document.id }}</td>
+        <td>{{ document.name }}</td>
+        <td>{{ document.documentPath }}</td>
+        <td>{{ document.createdAt }}</td>
+        <td>{{ document.updatedAt }}</td>
+        <td>
+          <button class="button is-small is-primary" (click)="openTagsModal(document)">Tags</button>
+          <button class="button is-small is-primary" (click)="openDocument(document)">Open</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<app-show-document-modal></app-show-document-modal>
+<app-tags-modal-modal></app-tags-modal-modal>

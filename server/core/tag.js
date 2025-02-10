@@ -41,7 +41,7 @@ export function createTag(fastify, tagProps) {
     const statement = fastify.db.prepare("INSERT INTO tags (documentId, name, createdBy, updatedBy) VALUES (?, ?, ?, ?)");
 
     try {
-        const result = statement.run(tagProps.documentId, tagProps.name, tagProps.createdBy, tagProps.createdBy);
+        const result = statement.run(tagProps.documentId, tagProps.name.toLowerCase(), tagProps.createdBy, tagProps.createdBy);
         const tagId = result.changes === 1 ? result.lastInsertRowid : null;
         if (tagId) {
             return getTag(fastify, tagId);
@@ -121,10 +121,8 @@ export function processLro(fastify, tags, id) {
     for (const documentId of documentIds) {
         documents.push(getDocument(fastify, documentId));
     }
-    setTimeout(() => {
-        const statement = fastify.db.prepare('UPDATE lro SET status = ?, payload = ? WHERE id = ?');
-        statement.run('Completed', JSON.stringify(documents), id);
-    }, 60000);
+    const statement = fastify.db.prepare('UPDATE lro SET status = ?, payload = ? WHERE id = ?');
+    statement.run('Completed', JSON.stringify(documents), id);
 }
 
 export function getLro(fastify, id) {

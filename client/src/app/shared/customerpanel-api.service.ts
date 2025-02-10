@@ -171,6 +171,14 @@ export class CustomerpanelApiService {
     });
   }
 
+  public getDocuments(): Observable<any> {
+    return this.http.get(`${this._baseUrl}/documents`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   public getDocumentsByOfferId(id: number): Observable<any> {
     return this.http.get(`${this._baseUrl}/documents/offerid/${id}`, {
       headers: {
@@ -182,6 +190,14 @@ export class CustomerpanelApiService {
   public getDocumentContent(id: number): Observable<any> {
     return this.http.get(`${this._baseUrl}/documents/content/${id}`, {
       responseType: 'text',
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public getDocumentById(id: number): Observable<any> {
+    return this.http.get(`${this._baseUrl}/documents/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
@@ -251,6 +267,28 @@ export class CustomerpanelApiService {
   //Aufgabe 3
   public getTagsByDocumentId(id: number): Observable<any> {
     return this.http.get(`${this._baseUrl}/tags/documentid/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  //Aufgabe 3
+  public processTags(tags: any): Observable<any> {
+    const data = {
+      tags: tags,
+      createdBy: this.user
+    }
+    return this.http.post(`${this._baseUrl}/tags/process`, data, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  //Aufgabe 3
+  public getProcess(processId: number): Observable<any> {
+    return this.http.get(`${this._baseUrl}/tags/process/${processId}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
