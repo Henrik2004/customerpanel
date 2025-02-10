@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (localStorage.getItem('token')) {
-      if (new Date().getTime() - parseInt(<string>localStorage.getItem('tokenTime'), 10) > 300000) {
+      if (new Date().getTime() - parseInt(<string>localStorage.getItem('tokenTime'), 10) > 1800000) {
         this.customerPanelApiService.logout();
         this.router.navigate(['/login']);
         return false;
