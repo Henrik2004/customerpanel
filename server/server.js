@@ -63,6 +63,15 @@ import {AuthRoutes} from "./routes/auth.routes.js";
 import {addLegacyDataSchema, legacySchema} from "./schemas/legacy.schema.js";
 import {LegacyRoutes} from "./routes/legacy.routes.js";
 import {TestRoutes} from "./routes/test.routes.js";
+import {TagsRoutes} from "./routes/tags.routes.js";
+import {
+    createTagSchema,
+    deleteTagSchema,
+    getTagsByDocumentIdSchema,
+    getTagSchema,
+    getTagsSchema,
+    updateTagSchema
+} from "./schemas/tag.schema.js";
 
 const server = Fastify({logger: true});
 
@@ -119,6 +128,13 @@ server.addSchema(getAllUsersSchema);
 server.addSchema(settingsSchema);
 server.addSchema(legacySchema);
 server.addSchema(addLegacyDataSchema);
+//Aufgabe 3
+server.addSchema(getTagSchema);
+server.addSchema(getTagsSchema);
+server.addSchema(createTagSchema);
+server.addSchema(updateTagSchema);
+server.addSchema(deleteTagSchema);
+server.addSchema(getTagsByDocumentIdSchema);
 
 server.register(CustomersRoutes, {prefix: '/customers'});
 server.register(CommentsRoutes, {prefix: '/comments'});
@@ -130,6 +146,8 @@ server.register(SettingsRoutes, {prefix: '/settings'});
 server.register(AuthRoutes, {prefix: '/auth'});
 server.register(LegacyRoutes, {prefix: '/legacy'});
 server.register(TestRoutes, {prefix: '/test'});
+//Aufgabe 3
+server.register(TagsRoutes, {prefix: '/tags'});
 
 server.listen({port: 8080}, (err, address) => {
     if (err) {

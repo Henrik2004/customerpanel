@@ -1,0 +1,23 @@
+meta {
+  name: Create Tag
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/tags
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
+
+body:json {
+  {
+    "name": "TestTag",
+    "documentId": 1,
+    "createdBy": 1
+  }
+}

@@ -106,6 +106,23 @@ const tables = (db) => {
         BEGIN
             UPDATE documents SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
         END;`).run();
+
+    //Aufgabe 3
+    db.prepare(`CREATE TABLE IF NOT EXISTS tags (
+        id INTEGER PRIMARY KEY,
+        documentId INTEGER,
+        name TEXT,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy INTEGER,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedBy INTEGER)`).run();
+
+    db.prepare(`CREATE TRIGGER IF NOT EXISTS update_timestamp_tag
+        AFTER UPDATE ON tags
+        FOR EACH ROW
+        BEGIN
+            UPDATE tags SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
+        END;`).run();
 }
 
 export default tables;
