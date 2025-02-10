@@ -23,6 +23,7 @@ interface Customer {
 interface SortedCustomer {
   id: number;
   totalPrice: number;
+  offerCount: number;
   name: string;
   email: string;
   phone: string;
@@ -77,14 +78,17 @@ export class CustomerListComponent implements OnInit {
     this.customerPanelApiService.getAllOffers().subscribe((offers) => {
       for (const customer of customers) {
         let totalPrice = 0;
+        let offerCount = 0;
         for (const offer of offers) {
           if (offer.customerId === customer.id) {
             totalPrice += offer.price;
+            offerCount++;
           }
         }
         sortedCustomers.push({
           id: customer.id,
           totalPrice,
+          offerCount,
           name: customer.name,
           email: customer.email,
           phone: customer.phone,
@@ -99,7 +103,21 @@ export class CustomerListComponent implements OnInit {
           updatedBy: customer.updatedBy
         });
       }
-      sortedCustomers.sort((a, b) => b.totalPrice - a.totalPrice);
+      sortedCustomers.sort((a, b) => {
+        if (a.totalPrice < b.totalPrice) {
+          return 1;
+        } else if (a.totalPrice > b.totalPrice) {
+          return -1;
+        } else {
+          if (a.offerCount < b.offerCount) {
+            return 1;
+          } else if (a.offerCount > b.offerCount) {
+            return -1;
+          }
+        }
+        return 0;
+      });
+      console.log(sortedCustomers);
     });
     return sortedCustomers;
   }

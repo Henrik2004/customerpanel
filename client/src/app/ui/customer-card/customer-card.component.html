@@ -25,6 +25,18 @@
             </p>
           </div>
         </div>
+        <div class="columns" *ngIf="showMore">
+          <div class="column is-one-third">
+            <p>
+              <strong>Revenue:</strong> <br> {{ customer.totalPrice }}
+            </p>
+          </div>
+          <div class="column auto">
+            <p>
+              <strong>Offers:</strong> <br> {{ customer.offerCount }}
+            </p>
+          </div>
+        </div>
       </div>
       <nav class="level is-mobile">
         <div class="level-left">
