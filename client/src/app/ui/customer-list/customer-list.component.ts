@@ -118,7 +118,6 @@ export class CustomerListComponent implements OnInit {
         }
         return 0;
       });
-      console.log(sortedCustomers);
     });
     return sortedCustomers;
   }

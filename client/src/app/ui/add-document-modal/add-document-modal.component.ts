@@ -45,7 +45,6 @@ export class AddDocumentModalComponent {
 
   onSubmit(event: Event): void {
     event.preventDefault();
-    console.log('submitting');
     if (this.documentForm.valid && this.selectedFile) {
       this.closeModal();
       const formData = new FormData();

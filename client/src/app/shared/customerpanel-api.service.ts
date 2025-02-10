@@ -14,10 +14,6 @@ export class CustomerpanelApiService {
   constructor(private http: HttpClient,
               private toastr: ToastrService) { }
 
-  get baseUrl(): string {
-    return this._baseUrl;
-  }
-
   get token(): string {
     return this._token;
   }
@@ -217,7 +213,6 @@ export class CustomerpanelApiService {
   }
 
   public createDocument(formData: any): Observable<any> {
-    console.log("Creating document");
     return this.http.post(`${this._baseUrl}/documents`, formData, {
       headers: {
         Authorization: `Bearer ${this.token}`

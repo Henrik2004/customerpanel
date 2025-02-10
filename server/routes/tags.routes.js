@@ -37,7 +37,6 @@ async function TagsRoutes(fastify) {
         preHandler: roleCheck(2)
     }, async (request, reply) => {
         const tag = getTag(fastify, request.params.id);
-        console.log(tag);
         if (!tag) {
             reply.code(404);
             return {error: "Tag not found"};
