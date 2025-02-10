@@ -9,7 +9,8 @@
           <div class="control">
             <input class="input" type="text" placeholder="Search, Tags, ..." [(ngModel)]="search">
           </div>
-          <button class="button is-primary" (click)="searchDocuments()">Search</button>
+          <button *ngIf="searchbtnactive" class="button is-primary" (click)="searchDocuments()">Search</button>
+          <p *ngIf="!searchbtnactive" class="help is-warning">Loading...</p>
         </div>
       </div>
     </div>

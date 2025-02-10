@@ -121,8 +121,10 @@ export function processLro(fastify, tags, id) {
     for (const documentId of documentIds) {
         documents.push(getDocument(fastify, documentId));
     }
-    const statement = fastify.db.prepare('UPDATE lro SET status = ?, payload = ? WHERE id = ?');
-    statement.run('Completed', JSON.stringify(documents), id);
+    setTimeout(() => {
+        const statement = fastify.db.prepare('UPDATE lro SET status = ?, payload = ? WHERE id = ?');
+        statement.run('Completed', JSON.stringify(documents), id);
+    }, 6000);
 }
 
 export function getLro(fastify, id) {
