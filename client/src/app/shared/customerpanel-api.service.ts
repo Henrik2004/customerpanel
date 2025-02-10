@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class CustomerpanelApiService {
   private _token = '';
   private _user = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private toastr: ToastrService) { }
 
   get baseUrl(): string {
     return this._baseUrl;
@@ -38,6 +40,7 @@ export class CustomerpanelApiService {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('tokenTime');
+    this.toastr.success('Logout successful');
   }
 
   public authenticateUser(credentials: any): Observable<any> {

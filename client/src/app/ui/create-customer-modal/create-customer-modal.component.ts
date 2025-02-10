@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angu
 import { CustomerpanelApiService } from '../../shared/customerpanel-api.service';
 import { RefreshService } from '../../shared/refresh.service';
 import {NgIf} from '@angular/common';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-customer-modal',
@@ -21,7 +22,8 @@ export class CreateCustomerModalComponent {
   constructor(
     private customerPanelApiService: CustomerpanelApiService,
     private refreshService: RefreshService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.customerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -49,6 +51,7 @@ export class CreateCustomerModalComponent {
       const customer = { ...this.customerForm.value, createdBy: this.customerPanelApiService.user };
       this.customerPanelApiService.createCustomer(customer).subscribe((response) => {
         this.refreshService.triggerRefresh();
+        this.toastr.success('Customer created successfully');
       });
     }
   }

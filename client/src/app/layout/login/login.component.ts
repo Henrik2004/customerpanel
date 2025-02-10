@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   protected password = '';
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
   }
 
   onSubmit() {
@@ -31,6 +33,7 @@ export class LoginComponent {
         localStorage.setItem('userId', response.userId);
         localStorage.setItem('tokenTime', new Date().getTime().toString());
         this.router.navigate(['/overview']);
+        this.toastr.success('Login successful');
       }
     });
   }

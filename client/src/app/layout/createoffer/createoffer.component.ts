@@ -4,6 +4,7 @@ import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {CreateCustomerModalComponent} from '../../ui/create-customer-modal/create-customer-modal.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-createoffer',
@@ -25,7 +26,9 @@ export class CreateofferComponent implements OnInit {
   protected customer: any;
   selectedCustomer: number = 0;
 
-  constructor(private customerpanelApiService: CustomerpanelApiService, private router: Router) {
+  constructor(private customerpanelApiService: CustomerpanelApiService,
+              private router: Router,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -49,6 +52,7 @@ export class CreateofferComponent implements OnInit {
       createdBy: this.customerpanelApiService.user
     }).subscribe(() => {
       this.router.navigate(['/offers']);
+      this.toastr.success('Offer created successfully');
     });
   }
 

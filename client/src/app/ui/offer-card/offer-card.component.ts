@@ -5,6 +5,7 @@ import {RefreshService} from '../../shared/refresh.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-offer-card',
@@ -25,7 +26,8 @@ export class OfferCardComponent implements OnInit {
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private refreshService: RefreshService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class OfferCardComponent implements OnInit {
   deleteOffer(offerId: number) {
     this.customerpanelApiService.deleteOffer(offerId).subscribe(() => {
       this.refreshService.triggerRefresh();
+      this.toastr.success('Offer deleted successfully');
     });
   }
 
@@ -53,6 +56,7 @@ export class OfferCardComponent implements OnInit {
     }
     this.customerpanelApiService.changeOfferStatus(offerId, data).subscribe(() => {
       this.refreshService.triggerRefresh();
+      this.toastr.success('Status changed successfully');
     });
   }
 }

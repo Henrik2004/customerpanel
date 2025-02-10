@@ -6,6 +6,7 @@ import {NgForOf} from '@angular/common';
 import {ShowDocumentModalComponent} from '../../ui/show-document-modal/show-document-modal.component';
 import {AddDocumentModalComponent} from '../../ui/add-document-modal/add-document-modal.component';
 import {TagsModalComponent} from '../../ui/tags-modal/tags-modal.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-detailoffer',
@@ -36,7 +37,8 @@ export class DetailofferComponent implements OnInit {
   userComment: any = {};
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -90,6 +92,7 @@ export class DetailofferComponent implements OnInit {
   deleteDocument(document: any) {
     this.customerpanelApiService.deleteDocument(document.id, {offerId: this.offer.id}).subscribe(() => {
       this.documents = this.documents.filter((doc: { id: any; }) => doc.id !== document.id);
+      this.toastr.success('Dokument wurde gelöscht');
     });
   }
 
@@ -102,12 +105,14 @@ export class DetailofferComponent implements OnInit {
     }
     this.customerpanelApiService.addComment(data).subscribe(() => {
       this.comment = '';
+      this.toastr.success('Kommentar wurde hinzugefügt');
     });
   }
 
   deleteComment(comment: any) {
     this.customerpanelApiService.deleteComment(comment.id).subscribe(() => {
       this.comments = this.comments.filter((com: { id: any; }) => com.id !== comment.id);
+      this.toastr.success('Kommentar wurde gelöscht');
     });
   }
 }

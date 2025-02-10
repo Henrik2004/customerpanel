@@ -3,6 +3,7 @@ import {NgIf} from '@angular/common';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {ModalService} from '../../shared/modal.service';
 import {RefreshService} from '../../shared/refresh.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-customer-card',
@@ -19,7 +20,8 @@ export class CustomerCardComponent {
   constructor(
     private modalService: ModalService,
     private customerPanelApiService: CustomerpanelApiService,
-    private refreshService: RefreshService
+    private refreshService: RefreshService,
+    private toastr: ToastrService
   ) {
   }
 
@@ -30,6 +32,7 @@ export class CustomerCardComponent {
   public deleteCustomer() {
     this.customerPanelApiService.deleteCustomer(this.customer.id).subscribe((response) => {
       this.refreshService.triggerRefresh();
+      this.toastr.success('Customer deleted successfully');
     });
   }
 }

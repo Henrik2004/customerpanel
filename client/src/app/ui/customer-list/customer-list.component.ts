@@ -3,6 +3,7 @@ import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {RefreshService} from '../../shared/refresh.service';
 import {CustomerCardComponent} from '../customer-card/customer-card.component';
 import {NgForOf} from '@angular/common';
+import {ToastrService} from 'ngx-toastr';
 
 interface Customer {
   id: number;

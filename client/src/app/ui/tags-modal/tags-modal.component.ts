@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {NgForOf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-tags-modal-modal',
@@ -19,7 +20,8 @@ export class TagsModalComponent {
   tags: any = [];
   tag: string = '';
 
-  constructor(private customerpanelApiService: CustomerpanelApiService) {
+  constructor(private customerpanelApiService: CustomerpanelApiService,
+              private toastr: ToastrService) {
   }
 
   public closeModal(): void {
@@ -47,12 +49,14 @@ export class TagsModalComponent {
     this.customerpanelApiService.createTag(data).subscribe((tag) => {
       this.tags.push(tag);
       this.tag = '';
+      this.toastr.success('Tag created successfully');
     });
   }
 
   public deleteTag(tag: any) {
     this.customerpanelApiService.deleteTag(tag.id).subscribe(() => {
       this.tags = this.tags.filter((t: any) => t.id !== tag.id);
+      this.toastr.success('Tag deleted successfully');
     });
   }
 }

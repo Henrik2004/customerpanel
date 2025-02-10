@@ -3,6 +3,7 @@ import { CustomerpanelApiService } from '../../shared/customerpanel-api.service'
 import {NgForOf} from '@angular/common';
 import {Router, ActivatedRoute} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-editoffer',
@@ -24,7 +25,8 @@ export class EditofferComponent implements OnInit {
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -53,6 +55,7 @@ export class EditofferComponent implements OnInit {
       updatedBy: this.customerpanelApiService.user
     }).subscribe(() => {
       this.router.navigate(['/offers']);
+      this.toastr.success('Offer updated successfully');
     });
   }
 

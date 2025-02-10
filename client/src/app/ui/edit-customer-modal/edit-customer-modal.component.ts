@@ -4,6 +4,7 @@ import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {NgIf} from '@angular/common';
 import {ModalService} from '../../shared/modal.service';
 import {RefreshService} from '../../shared/refresh.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-customer-modal',
@@ -23,7 +24,8 @@ export class EditCustomerModalComponent implements OnInit {
   constructor(private customerPanelApiService: CustomerpanelApiService,
               private modalService: ModalService,
               private refreshService: RefreshService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private toastr: ToastrService) {
     this.customerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -62,6 +64,7 @@ export class EditCustomerModalComponent implements OnInit {
       const customer = { ...this.customerForm.value, updatedBy: this.customerPanelApiService.user };
       this.customerPanelApiService.updateCustomer(this.customerId, customer).subscribe(() => {
         this.refreshService.triggerRefresh();
+        this.toastr.success('Customer updated successfully');
       });
     }
   }

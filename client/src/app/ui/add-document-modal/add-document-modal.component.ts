@@ -3,6 +3,7 @@ import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {RefreshService} from '../../shared/refresh.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from '@angular/common';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-document-modal',
@@ -21,7 +22,8 @@ export class AddDocumentModalComponent {
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private refreshService: RefreshService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private toastr: ToastrService) {
     this.documentForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       file: ['', Validators.required]
@@ -54,6 +56,7 @@ export class AddDocumentModalComponent {
 
       this.customerpanelApiService.createDocument(formData).subscribe(() => {
         this.refreshService.triggerRefresh();
+        this.toastr.success('Document created successfully');
       });
     }
   }
