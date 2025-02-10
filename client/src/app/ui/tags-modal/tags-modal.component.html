@@ -1,0 +1,40 @@
+<div class="modal" [class.is-active]="isActive">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Tags</p>
+      <button class="delete" aria-label="close" (click)="closeModal()"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="content">
+        <div class="field">
+          <label class="label">Tags</label>
+          <div class="control">
+            <input class="input" type="text" [(ngModel)]="tag">
+          </div>
+          <button class="button is-primary" (click)="addTag()">Add tag</button>
+          <table class="table is-fullwidth">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>CreatedAt</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tag of tags">
+                <td>{{tag.id}}</td>
+                <td>{{tag.name}}</td>
+                <td>{{tag.createdAt}}</td>
+                <td>
+                  <button class="button is-small is-danger" (click)="deleteTag(tag)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

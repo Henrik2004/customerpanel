@@ -229,4 +229,28 @@ export class CustomerpanelApiService {
       }
     });
   }
+
+  public createTag(tag: any): Observable<any> {
+    return this.http.post(`${this._baseUrl}/tags`, tag, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public deleteTag(id: number): Observable<any> {
+    return this.http.delete(`${this._baseUrl}/tags/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
+  public getTagsByDocumentId(id: number): Observable<any> {
+    return this.http.get(`${this._baseUrl}/tags/documentid/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
 }

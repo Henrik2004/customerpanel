@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NgForOf} from '@angular/common';
 import {ShowDocumentModalComponent} from '../../ui/show-document-modal/show-document-modal.component';
 import {AddDocumentModalComponent} from '../../ui/add-document-modal/add-document-modal.component';
+import {TagsModalComponent} from '../../ui/tags-modal/tags-modal.component';
 
 @Component({
   selector: 'app-detailoffer',
@@ -12,7 +13,8 @@ import {AddDocumentModalComponent} from '../../ui/add-document-modal/add-documen
     FormsModule,
     NgForOf,
     ShowDocumentModalComponent,
-    AddDocumentModalComponent
+    AddDocumentModalComponent,
+    TagsModalComponent
   ],
   templateUrl: './detailoffer.component.html',
   styleUrl: './detailoffer.component.scss'
@@ -20,6 +22,7 @@ import {AddDocumentModalComponent} from '../../ui/add-document-modal/add-documen
 export class DetailofferComponent implements OnInit {
   @ViewChild(ShowDocumentModalComponent) showDocumentModalComponent!: ShowDocumentModalComponent;
   @ViewChild(AddDocumentModalComponent) addDocumentModalComponent!: AddDocumentModalComponent;
+  @ViewChild(TagsModalComponent) tagsModalComponent!: TagsModalComponent;
 
   offer: any = {};
   customer: any = {};
@@ -69,6 +72,10 @@ export class DetailofferComponent implements OnInit {
         }
       });
     });
+  }
+
+  openTagsModal(document: any) {
+    this.tagsModalComponent.openModal(document);
   }
 
   openAddDocumentModal() {

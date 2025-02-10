@@ -76,6 +76,7 @@
                   <td>{{document.createdAt}}</td>
                   <td>{{document.updatedAt}}</td>
                   <td>
+                    <button class="button is-small is-primary" (click)="openTagsModal(document)">Tags</button>
                     <button class="button is-small is-primary" (click)="openDocument(document)">Open</button>
                     <button class="button is-small is-danger" (click)="deleteDocument(document)">Delete</button>
                   </td>
@@ -130,3 +131,4 @@
 </section>
 <app-show-document-modal></app-show-document-modal>
 <app-add-document-modal></app-add-document-modal>
+<app-tags-modal-modal></app-tags-modal-modal>
