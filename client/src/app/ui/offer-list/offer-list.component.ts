@@ -15,7 +15,7 @@ import {RefreshService} from '../../shared/refresh.service';
 })
 export class OfferListComponent {
   @Input() status: string = '';
-  offers = [];
+  offers: any[] = [];
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private refreshService: RefreshService) {
@@ -29,14 +29,20 @@ export class OfferListComponent {
   }
 
   private loadOffers() {
+    const sortOffersByDate = (offers: any[]) => {
+      return offers.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+    };
+
     if (this.status === 'all') {
       this.customerpanelApiService.getAllOffers().subscribe((response) => {
-        this.offers = response;
+        this.offers = sortOffersByDate(response);
       });
       return;
     }
     this.customerpanelApiService.getOffers(this.status).subscribe((response) => {
-      this.offers = response;
+      this.offers = sortOffersByDate(response);
     });
   }
 
