@@ -24,6 +24,7 @@ export class DocumentsComponent implements OnInit {
   documents: any[] = [];
   search: string = '';
   searchbtnactive: boolean = true;
+  tagsCount: any = {};
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private toastr: ToastrService) {
@@ -32,6 +33,11 @@ export class DocumentsComponent implements OnInit {
   ngOnInit() {
     this.customerpanelApiService.getDocuments().subscribe((data: any) => {
       this.documents = data;
+      for (let i = 0; i < this.documents.length; i++) {
+        this.customerpanelApiService.getTagsByDocumentId(this.documents[i].id).subscribe((tags) => {
+          this.tagsCount[this.documents[i].id] = tags.length;
+        });
+      }
     });
   }
 
