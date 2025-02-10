@@ -35,6 +35,7 @@ export class DetailofferComponent implements OnInit {
   comment: string = '';
   comments: any = [];
   userComment: any = {};
+  tagsCount: any = {};
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private route: ActivatedRoute,
@@ -64,6 +65,11 @@ export class DetailofferComponent implements OnInit {
       });
       this.customerpanelApiService.getDocumentsByOfferId(offerId).subscribe((documents) => {
         this.documents = documents;
+        for (let i = 0; i < this.documents.length; i++) {
+          this.customerpanelApiService.getTagsByDocumentId(this.documents[i].id).subscribe((tags) => {
+            this.tagsCount[this.documents[i].id] = tags.length;
+          });
+        }
       });
       this.customerpanelApiService.getCommentsByOfferId(offerId).subscribe((comments) => {
         this.comments = comments;

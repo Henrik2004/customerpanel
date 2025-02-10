@@ -65,6 +65,7 @@
                   <th>Filepath</th>
                   <th>Date created</th>
                   <th>Date updated</th>
+                  <th>TagCount</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -75,6 +76,7 @@
                   <td>{{document.documentPath}}</td>
                   <td>{{document.createdAt}}</td>
                   <td>{{document.updatedAt}}</td>
+                  <td>{{tagsCount[document.id]}}</td>
                   <td>
                     <button class="button is-small is-primary" (click)="openTagsModal(document)">Tags</button>
                     <button class="button is-small is-primary" (click)="openDocument(document)">Open</button>
