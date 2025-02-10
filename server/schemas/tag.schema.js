@@ -120,6 +120,84 @@ const  getTagsByDocumentIdSchema = {
     }
 }
 
+const lroSchema = {
+    $id: "lroSchema",
+    type: "object",
+    properties: {
+        id: { type: "integer" },
+        status: { type: "string" },
+        payload: { type: "object" },
+        createdAt: { type: "string" },
+        createdBy: { type: "integer" }
+    }
+}
+
+const processTagsSchema = {
+    $id: "processTagsSchema",
+    schema: {
+        body: {
+            type: "object",
+            properties: {
+                tags: {
+                    type: "array",
+                    items: { type: "string" }
+                }
+            },
+            required: ["tags"]
+        },
+        response: {
+            202: {
+                type: "object",
+                properties: {
+                    message: { type: "string" }
+                }
+            }
+        }
+    }
+}
+
+const createLroSchema = {
+    $id: "createLroSchema",
+    schema: {
+        body: {
+            type: "object",
+            properties: {
+                payload: { type: "object" },
+                createdBy: { type: "integer" }
+            },
+            required: ["createdBy"]
+        },
+        response: {
+            201: {
+                type: "object",
+                properties: {
+                    lro: { $ref: "lroSchema" }
+                }
+            }
+        }
+    }
+}
+
+const getLroSchema = {
+    $id: "getLroSchema",
+    schema: {
+        response: {
+            200: {
+                type: "object",
+                properties: {
+                    lro: { $ref: "lroSchema" }
+                }
+            },
+            202: {
+                type: "object",
+                properties: {
+                    message: { type: "string" }
+                }
+            }
+        }
+    }
+}
+
 export {
     tagSchema,
     createTagSchema,
@@ -127,5 +205,8 @@ export {
     deleteTagSchema,
     getTagSchema,
     getTagsSchema,
-    getTagsByDocumentIdSchema
+    getTagsByDocumentIdSchema,
+    processTagsSchema,
+    createLroSchema,
+    getLroSchema
 }

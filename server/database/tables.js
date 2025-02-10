@@ -123,6 +123,14 @@ const tables = (db) => {
         BEGIN
             UPDATE tags SET updatedAt = CURRENT_TIMESTAMP WHERE id = OLD.id;
         END;`).run();
+
+    //Aufgabe 3
+    db.prepare(`CREATE TABLE IF NOT EXISTS lro (
+        id INTEGER PRIMARY KEY,
+        status TEXT,
+        payload TEXT,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        createdBy INTEGER)`).run();
 }
 
 export default tables;

@@ -3,10 +3,19 @@ import {
     createTagSchema,
     deleteTagSchema,
     getTagsSchema,
-    updateTagSchema
+    updateTagSchema, createLroSchema, getLroSchema, processTagsSchema
 } from "../schemas/tag.schema.js";
 import {roleCheck} from "../middleware/roleCheck.js";
-import {createTag, deleteTag, getAllTags, getTag, getTagsByDocumentId, updateTag} from "../core/tag.js";
+import {
+    createLro,
+    createTag,
+    deleteTag,
+    getAllTags, getLro,
+    getTag,
+    getTagsByDocumentId,
+    processLro,
+    updateTag
+} from "../core/tag.js";
 
 //Aufgabe 3
 async function TagsRoutes(fastify) {
@@ -86,6 +95,37 @@ async function TagsRoutes(fastify) {
         }
         deleteTag(fastify, request.params.id);
         return {message: 'Tag deleted'};
+    });
+
+    fastify.post('/process', {
+        schema: processTagsSchema,
+        preHandler: roleCheck(1)
+    }, async (request, reply) => {
+        const tags = request.body.tags;
+        const createdBy = request.body.createdBy;
+        const lro = createLro(fastify, tags, createdBy);
+        if (!lro) {
+            reply.code(500);
+            return {error: "Internal Server Error"};
+        }
+        reply.code(202);
+        return {lro};
+    });
+
+    fastify.get('/process/:id', {
+        schema: getLroSchema,
+        preHandler: roleCheck(2)
+    }, async (request, reply) => {
+        const lro = getLro(fastify, request.params.id);
+        if (!lro) {
+            reply.code(404);
+            return {error: "Task not found"};
+        }
+        if (lro.status !== 'Completed') {
+            reply.code(202);
+            return {message: 'Task not processed yet'};
+        }
+        return {lro};
     });
 }
 

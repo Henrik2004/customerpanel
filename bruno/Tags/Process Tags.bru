@@ -1,0 +1,21 @@
+meta {
+  name: Process Tags
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/tags/process
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
+
+body:json {
+  {
+    "tags": ["Test", "Hallo", "Nein"]
+  }
+}
