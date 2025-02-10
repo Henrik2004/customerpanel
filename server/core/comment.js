@@ -116,3 +116,26 @@ export function deleteComment(fastify, id) {
         return {success: false};
     }
 }
+
+/**
+ * Delete all comments by offer
+ * @param fastify - Fastify instance
+ * @param offerId - the offer id
+ * @returns {{success: boolean}} - the result
+ */
+export function deleteCommentsByOffer(fastify, offerId) {
+    const statement = fastify.db.prepare('DELETE FROM comments WHERE offerId = ?');
+
+    try {
+        const result = statement.run(offerId);
+        if (result.changes > 0) {
+            return {success: true};
+        } else {
+            fastify.log.error('Could not delete comments');
+            return {success: false};
+        }
+    } catch (error) {
+        fastify.log.error(error);
+        return {success: false};
+    }
+}

@@ -1,3 +1,5 @@
+import {deleteOffersByCustomer} from "./offer.js";
+
 /**
  * Get all customers
  * @param fastify - the fastify instance
@@ -100,6 +102,7 @@ export function deleteCustomer(fastify, id) {
 
     try {
         const result = statement.run(id);
+        deleteOffersByCustomer(fastify, id);
         if (result.changes === 1) {
             return {success: true};
         } else {

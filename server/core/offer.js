@@ -1,3 +1,6 @@
+import {deleteCommentsByOffer} from "./comment.js";
+import {deleteDocumentsByOfferId} from "./document.js";
+
 /**
  * Get all offers from the database
  * @param fastify - instance of Fastify
@@ -5,15 +8,16 @@
  * @returns {*|null} - array of offers or null if an error occurred
  */
 export function getAllOffers(fastify, filters) {
-    const statement = fastify.db.prepare('SELECT * FROM offers WHERE title LIKE ? AND description LIKE ? AND price LIKE ? AND status LIKE ?');
+    const statement = fastify.db.prepare('SELECT * FROM offers WHERE title LIKE ? AND description LIKE ? AND price LIKE ? AND status LIKE ? AND customerId LIKE ?');
 
     const title = filters.title ? `%${filters.title}%` : '%';
     const description = filters.description ? `%${filters.description}%` : '%';
     const price = filters.price ? `%${filters.price}%` : '%';
     const status = filters.status ? `%${filters.status}%` : '%';
+    const customerId = filters.customerId ? `%${filters.customerId}%` : '%';
 
     try {
-        return statement.all(title, description, price, status);
+        return statement.all(title, description, price, status, customerId);
     } catch (error) {
         fastify.log.error(error);
         return null;
@@ -120,6 +124,8 @@ export function deleteOffer(fastify, id) {
 
     try {
         const result = statement.run(id);
+        deleteCommentsByOffer(fastify, id);
+        deleteDocumentsByOfferId(fastify, id);
         if (result.changes === 1) {
             return true;
         } else {
@@ -130,4 +136,16 @@ export function deleteOffer(fastify, id) {
         fastify.log.error(error);
         return false;
     }
+}
+
+/**
+ * Delete all offers by customer
+ * @param fastify - instance of Fastify
+ * @param customerId - customer id
+ */
+export function deleteOffersByCustomer(fastify, customerId) {
+    const offers = getAllOffers(fastify, {customerId: customerId});
+    offers.forEach(offer => {
+        deleteOffer(fastify, offer.id);
+    });
 }

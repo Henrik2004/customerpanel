@@ -84,6 +84,17 @@ export function deleteTag(fastify, id) {
     }
 }
 
+export function deleteTagsByDocumentId(fastify, documentId) {
+    const statement = fastify.db.prepare('DELETE FROM tags WHERE documentId = ?');
+
+    try {
+        return statement.run(documentId);
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
 export function createLro(fastify, tags, createdBy) {
     const data = {
         status: 'Started',

@@ -1,5 +1,6 @@
 import fs from "fs";
 import fsPromises from "fs/promises";
+import {deleteTagsByDocumentId} from "./tag.js";
 
 const UPLOAD_DIR = "./assets/";
 
@@ -90,11 +91,33 @@ export function deleteDocument(fastify, id) {
         }
         fsPromises.unlink(document.documentPath);
         const result = statement.run(id);
+        deleteTagsByDocumentId(fastify, id);
         if (result.changes === 1) {
             return {success: true};
         } else {
             fastify.log.error('Could not delete document');
             return {success: false};
+        }
+    } catch (error) {
+        fastify.log.error(error);
+        return null;
+    }
+}
+
+export function deleteDocumentsByOfferId(fastify, offerId) {
+    const statement = fastify.db.prepare('DELETE FROM documents WHERE offerId = ?');
+
+    try {
+        const documents = getDocumentsByOfferId(fastify, offerId);
+        documents.forEach(document => {
+            fsPromises.unlink(document.documentPath);
+            deleteTagsByDocumentId(fastify, document.id);
+        });
+        const result =  statement.run(offerId);
+        if (result.changes > 0) {
+            return {success: true};
+        } else {
+            return {error: 'Could not delete documents'};
         }
     } catch (error) {
         fastify.log.error(error);
