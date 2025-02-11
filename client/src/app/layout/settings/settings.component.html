@@ -6,7 +6,7 @@
         <div class="box">
           <p class="is-text">Clears the database, recreates tables and loads test data</p>
           <br>
-          <button *ngIf="tablesbtnactive" class="button is-primary" (click)="recreateDatabaseTables()">Recreate database Tables</button>
+          <button *ngIf="tablesbtnactive" class="button is-primary" (click)="recreateDatabaseTables()"><i class="fas fa-list-check icon-space-right"></i> Recreate database Tables</button>
           <p *ngIf="!tablesbtnactive" class="is-text is-warning">Loading...</p>
         </div>
       </div>
@@ -14,7 +14,7 @@
         <div class="box">
           <p class="is-text">Loads test data into the database</p>
           <br>
-          <button *ngIf="testbtnactive" class="button is-primary" (click)="loadTestData()">Load Test Data</button>
+          <button *ngIf="testbtnactive" class="button is-primary" (click)="loadTestData()"><i class="fas fa-database icon-space-right"></i> Load Test Data</button>
           <p *ngIf="!testbtnactive" class="is-text is-warning">Loading...</p>
         </div>
       </div>

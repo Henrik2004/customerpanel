@@ -12,7 +12,7 @@
           <div class="control">
             <input class="input" type="text" [(ngModel)]="tag">
           </div>
-          <button class="button is-primary" (click)="addTag()">Add tag</button>
+          <button class="button is-primary" (click)="addTag()"><i class="fas fa-plus icon-space-right"></i> Add tag</button>
           <table class="table is-fullwidth">
             <thead>
               <tr>
@@ -28,7 +28,7 @@
                 <td>{{tag.name}}</td>
                 <td>{{tag.createdAt}}</td>
                 <td>
-                  <button class="button is-small is-danger" (click)="deleteTag(tag)">Delete</button>
+                  <button class="button is-small is-danger" (click)="deleteTag(tag)"><i class="fas fa-trash icon-space-right"></i> Delete</button>
                 </td>
               </tr>
             </tbody>

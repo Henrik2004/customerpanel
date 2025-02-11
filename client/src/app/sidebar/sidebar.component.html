@@ -6,34 +6,34 @@
   <div class="sidebar-menu">
     <ul>
       <li [class.active]="isActive('/overview')">
-        <a routerLink="/overview" routerLinkActive="active">Overview</a>
+        <a routerLink="/overview" routerLinkActive="active"><i class="fas fa-home icon-space-right"></i> Overview</a>
       </li>
       <li [class.active]="isActive('/offers') || isActive('/createoffer') || isActive('/alloffers')" class="has-submenu">
-        <a routerLink="/offers" routerLinkActive="active">Offers</a>
+        <a routerLink="/offers" routerLinkActive="active"><i class="fas fa-envelope icon-space-right"></i> Offers</a>
         <ul class="submenu">
           <li [class.active]="isActive('/createoffer')">
-            <a routerLink="/createoffer" routerLinkActive="active">Create new</a>
+            <a routerLink="/createoffer" routerLinkActive="active"><i class="fas fa-plus icon-space-right"></i> Create new</a>
           </li>
           <li [class.active]="isActive('/alloffers')">
-            <a routerLink="/alloffers" routerLinkActive="active">List all</a>
+            <a routerLink="/alloffers" routerLinkActive="active"><i class="fas fa-list icon-space-right"></i> List all</a>
           </li>
         </ul>
       </li>
       <li [class.active]="isActive('/customers')">
-        <a routerLink="/customers" routerLinkActive="active">Customers</a>
+        <a routerLink="/customers" routerLinkActive="active"><i class="fas fa-user icon-space-right"></i> Customers</a>
       </li>
       <li [class.active]="isActive('/documents')">
-        <a routerLink="/documents" routerLinkActive="active">Documents</a>
+        <a routerLink="/documents" routerLinkActive="active"><i class="fas fa-file icon-space-right"></i> Documents</a>
       </li>
     </ul>
   </div>
   <div class="sidebar-footer">
     <ul>
       <li [class.active]="isActive('/settings')">
-        <a routerLink="/settings" routerLinkActive="active">Settings</a>
+        <a routerLink="/settings" routerLinkActive="active"><i class="fas fa-gears icon-space-right"></i> Settings</a>
       </li>
       <li [class.active]="isActive('/login')">
-        <a routerLink="/login" routerLinkActive="active" (click)="logout()">Logout</a>
+        <a routerLink="/login" routerLinkActive="active" (click)="logout()"><i class="fas fa-door-open icon-space-right"></i> Logout</a>
       </li>
     </ul>
   </div>

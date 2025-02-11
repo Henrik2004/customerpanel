@@ -1,7 +1,5 @@
 <section class="section">
-  <button class="open-create-offer button is-primary" (click)="openCreateOffer()">
-    Create Offer
-  </button>
+  <button class="open-create-offer button is-primary" (click)="openCreateOffer()"><i class="fas fa-plus icon-space-right"></i> Create Offer</button>
   <div class="container">
     <h1 class="title"><code>Draft</code> Offers</h1>
     <app-offer-list [status]="statusdraft"></app-offer-list>
@@ -17,6 +15,7 @@
   <div class="container">
     <h1 class="title"><code>On Ice</code> Offers</h1>
     <button class="button is-primary" (click)="toggleOnIceOffers()">
+      <i class="fas fa-eye icon-space-right"></i>
       {{ showOnIceOffers ? 'Hide' : 'Show' }} On Ice Offers
     </button>
     <div *ngIf="showOnIceOffers">

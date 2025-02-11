@@ -9,7 +9,7 @@
           <div class="control">
             <input class="input" type="text" placeholder="Search, Tags, ..." [(ngModel)]="search">
           </div>
-          <button *ngIf="searchbtnactive" class="button is-primary" (click)="searchDocuments()">Search</button>
+          <button *ngIf="searchbtnactive" class="button is-primary" (click)="searchDocuments()"><i class="fas fa-search icon-space-right"></i> Search</button>
           <p *ngIf="!searchbtnactive" class="help is-warning">Loading...</p>
         </div>
       </div>
@@ -35,8 +35,8 @@
         <td>{{ document.updatedAt }}</td>
         <td>{{ tagsCount[document.id]}}</td>
         <td>
-          <button class="button is-small is-primary" (click)="openTagsModal(document)">Tags</button>
-          <button class="button is-small is-primary" (click)="openDocument(document)">Open</button>
+          <button class="button is-small is-primary" (click)="openTagsModal(document)"><i class="fas fa-tags icon-space-right"></i> Tags</button>
+          <button class="button is-small is-primary" (click)="openDocument(document)"><i class="fas fa-plus icon-space-right"></i> Open</button>
         </td>
       </tr>
       </tbody>
