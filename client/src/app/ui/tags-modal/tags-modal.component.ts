@@ -26,6 +26,7 @@ export class TagsModalComponent {
 
   public closeModal(): void {
     this.isActive = false;
+    window.location.reload();
   }
 
   public openModal(document: any): void {
@@ -50,6 +51,9 @@ export class TagsModalComponent {
       this.tags.push(tag);
       this.tag = '';
       this.toastr.success('Tag created successfully');
+      this.customerpanelApiService.getTagsByDocumentId(this.document.id).subscribe((tags) => {
+        this.tags = tags;
+      });
     });
   }
 

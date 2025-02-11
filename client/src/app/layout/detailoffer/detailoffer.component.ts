@@ -112,6 +112,7 @@ export class DetailofferComponent implements OnInit {
     this.customerpanelApiService.addComment(data).subscribe(() => {
       this.comment = '';
       this.toastr.success('Kommentar wurde hinzugefügt');
+      window.location.reload();
     });
   }
 

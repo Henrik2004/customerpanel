@@ -7,10 +7,12 @@
           <label class="label">Search Tags</label>
           <p>Seperated by <code>,</code></p>
           <div class="control">
-            <input class="input" type="text" placeholder="Search, Tags, ..." [(ngModel)]="search">
+            <input class="input" type="text" placeholder="Search, Tags, ..." [(ngModel)]="search" (change)="changeSearch()">
           </div>
+          <br>
           <button *ngIf="searchbtnactive" class="button is-primary" (click)="searchDocuments()"><i class="fas fa-search icon-space-right"></i> Search</button>
           <p *ngIf="!searchbtnactive" class="help is-warning">Loading...</p>
+          <p *ngIf="!searchbtnactive" class="help is-warning">Process ID: {{lro_id}}</p>
         </div>
       </div>
     </div>

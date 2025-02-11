@@ -56,6 +56,7 @@ export class AddDocumentModalComponent {
       this.customerpanelApiService.createDocument(formData).subscribe(() => {
         this.refreshService.triggerRefresh();
         this.toastr.success('Document created successfully');
+        window.location.reload();
       });
     }
   }

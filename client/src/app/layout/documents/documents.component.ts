@@ -25,12 +25,17 @@ export class DocumentsComponent implements OnInit {
   search: string = '';
   searchbtnactive: boolean = true;
   tagsCount: any = {};
+  lro_id: number = 0;
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private toastr: ToastrService) {
   }
 
   ngOnInit() {
+    this.loadDocuments();
+  }
+
+  loadDocuments() {
     this.customerpanelApiService.getDocuments().subscribe((data: any) => {
       this.documents = data;
       for (let i = 0; i < this.documents.length; i++) {
@@ -50,10 +55,17 @@ export class DocumentsComponent implements OnInit {
     this.showDocumentModalComponent.openModal(document);
   }
 
+  changeSearch() {
+    if (this.search === '') {
+      this.loadDocuments();
+    }
+  }
+
   searchDocuments() {
     this.toastr.info('Processing documents, please wait...');
     const search = this.search.toLowerCase().split(',').map((tag: string) => tag.trim());
     this.customerpanelApiService.processTags(search).subscribe((data: any) => {
+      this.lro_id = data.lro.id;
       this.getProcess(data.lro.id, null);
       let interval = setInterval(() => {
         this.getProcess(data.lro.id, interval);
