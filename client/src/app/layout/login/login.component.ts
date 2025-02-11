@@ -32,7 +32,7 @@ export class LoginComponent {
         localStorage.setItem('token', response.token);
         localStorage.setItem('userId', response.userId);
         localStorage.setItem('tokenTime', new Date().getTime().toString());
-        this.router.navigate(['/overview']);
+        this.router.navigate(['/offers']);
         this.toastr.success('Login successful');
       }
     });

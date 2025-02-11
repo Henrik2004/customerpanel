@@ -1,35 +1,35 @@
-<div class="sidebar">
+<div class="sidebar" *ngIf="this.userService.role != 0">
   <div class="sidebar-header">
     <h1 class="title">OfferSphere</h1>
     <p class="subtitle is-6">By Prismarine Solutions</p>
   </div>
   <div class="sidebar-menu">
     <ul>
-      <li [class.active]="isActive('/overview')">
+      <li [class.active]="isActive('/overview')" *ngIf="this.userService.role <= 2">
         <a routerLink="/overview" routerLinkActive="active"><i class="fas fa-home icon-space-right"></i> Overview</a>
       </li>
       <li [class.active]="isActive('/offers') || isActive('/createoffer') || isActive('/alloffers')" class="has-submenu">
         <a routerLink="/offers" routerLinkActive="active"><i class="fas fa-envelope icon-space-right"></i> Offers</a>
         <ul class="submenu">
-          <li [class.active]="isActive('/createoffer')">
+          <li [class.active]="isActive('/createoffer')" *ngIf="this.userService.role <= 1">
             <a routerLink="/createoffer" routerLinkActive="active"><i class="fas fa-plus icon-space-right"></i> Create new</a>
           </li>
-          <li [class.active]="isActive('/alloffers')">
+          <li [class.active]="isActive('/alloffers')" *ngIf="this.userService.role <= 2">
             <a routerLink="/alloffers" routerLinkActive="active"><i class="fas fa-list icon-space-right"></i> List all</a>
           </li>
         </ul>
       </li>
-      <li [class.active]="isActive('/customers')">
+      <li [class.active]="isActive('/customers')" *ngIf="this.userService.role <= 2">
         <a routerLink="/customers" routerLinkActive="active"><i class="fas fa-user icon-space-right"></i> Customers</a>
       </li>
-      <li [class.active]="isActive('/documents')">
+      <li [class.active]="isActive('/documents')" *ngIf="this.userService.role <= 2">
         <a routerLink="/documents" routerLinkActive="active"><i class="fas fa-file icon-space-right"></i> Documents</a>
       </li>
     </ul>
   </div>
   <div class="sidebar-footer">
     <ul>
-      <li [class.active]="isActive('/settings')">
+      <li [class.active]="isActive('/settings')" *ngIf="this.userService.role <= 2">
         <a routerLink="/settings" routerLinkActive="active"><i class="fas fa-gears icon-space-right"></i> Settings</a>
       </li>
       <li [class.active]="isActive('/login')">
