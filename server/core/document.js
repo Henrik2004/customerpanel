@@ -1,4 +1,3 @@
-import fs from "fs";
 import fsPromises from "fs/promises";
 import {deleteTagsByDocumentId} from "./tag.js";
 
@@ -6,6 +5,12 @@ const UPLOAD_DIR = "./assets/";
 
 await fsPromises.mkdir(UPLOAD_DIR, {recursive: true});
 
+/**
+ * Get all documents
+ * @param fastify - Fastify instance
+ * @param filters - the filters for the documents
+ * @returns {*|null} - the documents or null
+ */
 export function getAllDocuments(fastify, filters) {
     const statement = fastify.db.prepare("SELECT * FROM documents WHERE name LIKE ? AND offerId LIKE ?");
 
@@ -20,6 +25,12 @@ export function getAllDocuments(fastify, filters) {
     }
 }
 
+/**
+ * Get document by id
+ * @param fastify - Fastify instance
+ * @param id - the document id
+ * @returns {*|null} - the document or null
+ */
 export function getDocument(fastify, id) {
     const statement = fastify.db.prepare("SELECT * FROM documents WHERE id = ?");
 
@@ -31,6 +42,12 @@ export function getDocument(fastify, id) {
     }
 }
 
+/**
+ * Get documents by offer id
+ * @param fastify - Fastify instance
+ * @param offerId - the offer id
+ * @returns {*|null} - the documents or null
+ */
 export function getDocumentsByOfferId(fastify, offerId) {
     const statement = fastify.db.prepare("SELECT * FROM documents WHERE offerId = ?");
 
@@ -42,6 +59,13 @@ export function getDocumentsByOfferId(fastify, offerId) {
     }
 }
 
+/**
+ * Create a document
+ * @param fastify - Fastify instance
+ * @param documentProps - the document properties
+ * @param file - the file to upload
+ * @returns {Promise<*|null>} - the created document or null
+ */
 export async function createDocument(fastify, documentProps, file) {
     const statement = fastify.db.prepare("INSERT INTO documents (name, documentPath, offerId, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)");
 
@@ -63,6 +87,13 @@ export async function createDocument(fastify, documentProps, file) {
     }
 }
 
+/**
+ * Update a document
+ * @param fastify - Fastify instance
+ * @param id - the document id
+ * @param document - the document properties
+ * @returns {*|null} - the updated document or null
+ */
 export function updateDocument(fastify, id, document) {
     const statement = fastify.db.prepare('UPDATE documents SET name = ?, offerId = ?, updatedBy = ? WHERE id = ?');
 
@@ -80,6 +111,12 @@ export function updateDocument(fastify, id, document) {
     }
 }
 
+/**
+ * Delete a document
+ * @param fastify - Fastify instance
+ * @param id - the document id
+ * @returns {{success: boolean}|null} - the result
+ */
 export function deleteDocument(fastify, id) {
     const statement = fastify.db.prepare('DELETE FROM documents WHERE id = ?');
 
@@ -104,6 +141,12 @@ export function deleteDocument(fastify, id) {
     }
 }
 
+/**
+ * Delete all documents by offer id
+ * @param fastify - Fastify instance
+ * @param offerId - the offer id
+ * @returns {{success: boolean}|{error: string}|null} - the result
+ */
 export function deleteDocumentsByOfferId(fastify, offerId) {
     const statement = fastify.db.prepare('DELETE FROM documents WHERE offerId = ?');
 

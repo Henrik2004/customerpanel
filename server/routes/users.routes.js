@@ -9,6 +9,12 @@ import {
 import {createUser, deleteUser, getAllUsers, getUser, getUserByName, updateUser} from '../core/user.js';
 import {roleCheck} from "../middleware/roleCheck.js";
 
+/**
+ * User routes
+ * @param fastify - Fastify instance
+ * @returns {Promise<void>} - the routes
+ * @constructor
+ */
 async function UsersRoutes(fastify) {
     fastify.get('/', getAllUsersSchema, async (request, reply) => {
         const users = getAllUsers(fastify);

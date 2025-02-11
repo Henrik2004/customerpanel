@@ -3,6 +3,12 @@ import {coordinateSettings} from "../core/settings.js";
 import {SETTINGS_SECRET} from "../app_config.js";
 import {roleCheck} from "../middleware/roleCheck.js";
 
+/**
+ * Settings routes
+ * @param fastify - the fastify instance
+ * @returns {Promise<void>} - the promise
+ * @constructor
+ */
 async function SettingsRoutes(fastify) {
     fastify.post('/', {
         schema: settingsSchema

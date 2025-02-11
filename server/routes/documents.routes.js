@@ -18,6 +18,12 @@ import {
 import {roleCheck} from "../middleware/roleCheck.js";
 import {getOffer} from "../core/offer.js";
 
+/**
+ * Document routes
+ * @param fastify - Fastify instance
+ * @returns {Promise<void>} - the routes
+ * @constructor
+ */
 async function DocumentRoutes(fastify) {
     fastify.get('/', {
         schema: getAllDocumentsSchema,

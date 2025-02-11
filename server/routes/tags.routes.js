@@ -18,6 +18,12 @@ import {
 } from "../core/tag.js";
 
 //Aufgabe 3
+/**
+ * Tags routes
+ * @param fastify - instance of Fastify
+ * @returns {Promise<void>} - the promise
+ * @constructor
+ */
 async function TagsRoutes(fastify) {
     fastify.get('/', {
         schema: getTagsSchema,

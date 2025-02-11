@@ -2,6 +2,12 @@ import {loadTestData} from "../core/test.js";
 import {runTestsSchema} from "../schemas/test.schema.js";
 import {roleCheck} from "../middleware/roleCheck.js";
 
+/**
+ * Test routes
+ * @param fastify - the fastify instance
+ * @returns {Promise<void>} - the promise
+ * @constructor
+ */
 export async function TestRoutes(fastify) {
     fastify.post('/', {
         schema: runTestsSchema

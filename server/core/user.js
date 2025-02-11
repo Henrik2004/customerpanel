@@ -1,3 +1,8 @@
+/**
+ * Get all users from the database
+ * @param fastify - Fastify instance
+ * @returns {*|null} - array of users or null if an error occurred
+ */
 export function getAllUsers(fastify) {
     const statement = fastify.db.prepare('SELECT * FROM users');
 
@@ -9,6 +14,12 @@ export function getAllUsers(fastify) {
     }
 }
 
+/**
+ * Get a single user from the database
+ * @param fastify - instance of Fastify
+ * @param id - user id
+ * @returns {*|null} - user object or null if an error occurred
+ */
 export function getUser(fastify, id) {
     const statement = fastify.db.prepare('SELECT * FROM users WHERE id = ?');
 
@@ -20,6 +31,12 @@ export function getUser(fastify, id) {
     }
 }
 
+/**
+ * Get user by name
+ * @param fastify - instance of Fastify
+ * @param name - user name
+ * @returns {*|null} - user object or null if an error occurred
+ */
 export function getUserByName(fastify, name) {
     const statement = fastify.db.prepare('SELECT * FROM users WHERE name = ?');
 
@@ -31,6 +48,12 @@ export function getUserByName(fastify, name) {
     }
 }
 
+/**
+ * Create a new user in the database
+ * @param fastify - instance of Fastify
+ * @param user - user object
+ * @returns {*|null} - user object or null if an error occurred
+ */
 export function createUser(fastify, user) {
     const statement = fastify.db.prepare('INSERT INTO users (name, password, role, createdBy, updatedBy) VALUES (?, ?, ?, ?, ?)');
 
@@ -49,6 +72,13 @@ export function createUser(fastify, user) {
     }
 }
 
+/**
+ * Update a user in the database
+ * @param fastify - instance of Fastify
+ * @param id - user id
+ * @param user - user object
+ * @returns {*|null} - user object or null if an error occurred
+ */
 export function updateUser(fastify, id, user) {
     const statement = fastify.db.prepare('UPDATE users SET name = ?, password = ?, role = ?, updatedBy = ? WHERE id = ?');
 
@@ -66,6 +96,12 @@ export function updateUser(fastify, id, user) {
     }
 }
 
+/**
+ * Delete a user from the database
+ * @param fastify - instance of Fastify
+ * @param id - user id
+ * @returns {boolean} - true if the user was deleted, false
+ */
 export function deleteUser(fastify, id) {
     const statement = fastify.db.prepare('DELETE FROM users WHERE id = ?');
 

@@ -2,6 +2,12 @@ import {addLegacyDataSchema} from "../schemas/legacy.schema.js";
 import {roleCheck} from "../middleware/roleCheck.js";
 import {addLegacyData} from "../core/legacy.js";
 
+/**
+ * Legacy routes
+ * @param fastify - the fastify instance
+ * @returns {Promise<void>} - the promise
+ * @constructor
+ */
 export async function LegacyRoutes(fastify) {
     fastify.post('/', {
         schema: addLegacyDataSchema,

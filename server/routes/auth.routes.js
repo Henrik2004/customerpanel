@@ -3,6 +3,12 @@ import {authenticateUser} from "../core/auth.js";
 import jwt from "jsonwebtoken";
 import {SECRET_KEY} from "../app_config.js";
 
+/**
+ * Auth routes
+ * @param fastify - Fastify instance
+ * @returns {Promise<void>} - the routes
+ * @constructor
+ */
 async function AuthRoutes(fastify) {
     fastify.post('/', {
         schema: userSchema

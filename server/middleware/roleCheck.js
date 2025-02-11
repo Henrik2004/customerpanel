@@ -1,6 +1,11 @@
 import {SECRET_KEY} from "../app_config.js";
 import jwt from 'jsonwebtoken';
 
+/**
+ * Middleware to check the role of the user
+ * @param requiredRole - the required role
+ * @returns {(function(*, *, *): Promise<void>)|*} - the middleware function
+ */
 export function roleCheck(requiredRole) {
     return async function (request, reply, done) {
         const {authorization} = request.headers;

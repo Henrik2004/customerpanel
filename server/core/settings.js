@@ -1,5 +1,12 @@
 import tables from "../database/tables.js";
 
+/**
+ * Handle the settings
+ * @param action - the action to perform
+ * @param data - the data for the action
+ * @param fastify - the fastify instance
+ * @returns {{success: boolean, message: string}} - the result
+ */
 function coordinateSettings(action, data, fastify) {
     switch (action) {
         case 'recreateTables':
@@ -8,6 +15,12 @@ function coordinateSettings(action, data, fastify) {
     }
 }
 
+/**
+ * Recreate the tables
+ * @param data - the data for the action
+ * @param fastify - the fastify instance
+ * @returns {{success: boolean, message: string}} - the result
+ */
 function handleRecreateTables(data, fastify) {
     //drop all tables and recreate them
     const dropRoles = fastify.db.prepare('DROP TABLE IF EXISTS roles');
