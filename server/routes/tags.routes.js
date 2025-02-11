@@ -58,7 +58,7 @@ async function TagsRoutes(fastify) {
 
     fastify.post('/', {
         schema: createTagSchema,
-        preHandler: roleCheck(1)
+        preHandler: roleCheck(2)
     }, async (request, reply) => {
         const tagProps = request.body;
         const newTag = createTag(fastify, tagProps);
@@ -85,7 +85,7 @@ async function TagsRoutes(fastify) {
 
     fastify.delete('/:id', {
         schema: deleteTagSchema,
-        preHandler: roleCheck(1)
+        preHandler: roleCheck(2)
     }, async (request, reply) => {
         const tag = getTag(fastify, request.params.id);
         if (!tag) {
@@ -98,7 +98,7 @@ async function TagsRoutes(fastify) {
 
     fastify.post('/process', {
         schema: processTagsSchema,
-        preHandler: roleCheck(1)
+        preHandler: roleCheck(2)
     }, async (request, reply) => {
         const tags = request.body.tags;
         const createdBy = request.body.createdBy;

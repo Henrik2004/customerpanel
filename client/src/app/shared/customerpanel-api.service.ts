@@ -48,22 +48,14 @@ export class CustomerpanelApiService {
       action: 'recreateTables',
       secret: 'Henrik27#!?X'
     }
-    return this.http.post(`${this._baseUrl}/settings`, data, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.post(`${this._baseUrl}/settings`, data, {});
   }
 
   public loadTestData(): Observable<any> {
     const data = {
       test: 'loadTestData'
     }
-    return this.http.post(`${this._baseUrl}/test`, data, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+    return this.http.post(`${this._baseUrl}/test`, data, {});
   }
 
   public getUserById(id: number): Observable<any> {

@@ -4,8 +4,7 @@ import {roleCheck} from "../middleware/roleCheck.js";
 
 export async function TestRoutes(fastify) {
     fastify.post('/', {
-        schema: runTestsSchema,
-        preHandler: roleCheck(2)
+        schema: runTestsSchema
     }, async (request, reply) => {
         const test = request.body.test;
         switch (test) {

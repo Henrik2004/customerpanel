@@ -16,12 +16,16 @@ function handleRecreateTables(data, fastify) {
     const dropUsers = fastify.db.prepare('DROP TABLE IF EXISTS users');
     const dropCustomers = fastify.db.prepare('DROP TABLE IF EXISTS customers');
     const dropOffers = fastify.db.prepare('DROP TABLE IF EXISTS offers');
+    const dropTags = fastify.db.prepare('DROP TABLE IF EXISTS tags');
+    const dropLRO = fastify.db.prepare('DROP TABLE IF EXISTS lro');
     dropRoles.run();
     dropComments.run();
     dropDocuments.run();
     dropUsers.run();
     dropCustomers.run();
     dropOffers.run();
+    dropTags.run();
+    dropLRO.run();
 
     tables(fastify.db);
 
