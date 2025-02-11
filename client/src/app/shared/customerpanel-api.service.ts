@@ -46,7 +46,7 @@ export class CustomerpanelApiService {
   public recreateDatabaseTables(): Observable<any> {
     const data = {
       action: 'recreateTables',
-      secret: 'Henrik27#!?X'
+      secret: '27#!?X'
     }
     return this.http.post(`${this._baseUrl}/settings`, data, {});
   }
