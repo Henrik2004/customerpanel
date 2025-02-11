@@ -236,6 +236,14 @@ export class CustomerpanelApiService {
     });
   }
 
+  public getTags(): Observable<any> {
+    return this.http.get(`${this._baseUrl}/tags`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
+
   //Aufgabe 3
   public createTag(tag: any): Observable<any> {
     return this.http.post(`${this._baseUrl}/tags`, tag, {
