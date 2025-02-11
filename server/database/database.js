@@ -1,4 +1,5 @@
 import fp from "fastify-plugin";
+import fs from "fs";
 import Database from "better-sqlite3";
 import tables from "./tables.js";
 
@@ -11,6 +12,10 @@ const filePath = "./database/customerpanel.db";
  * @param done - callback function
  */
 function connectDatabase(fastify, options, done) {
+    if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, "");
+    }
+
     const db = new Database(filePath);
 
     tables(db);

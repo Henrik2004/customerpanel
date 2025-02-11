@@ -72,6 +72,7 @@ import {
     getTagsSchema,
     updateTagSchema
 } from "./schemas/tag.schema.js";
+import {loadTestData} from "./core/test.js";
 
 const server = Fastify({logger: true});
 
@@ -155,4 +156,5 @@ server.listen({port: 8080}, (err, address) => {
         process.exit(1);
     }
     server.log.info(`Server listening at ${address}`);
+    loadTestData(server);
 });
