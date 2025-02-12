@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'app-offer-card',
@@ -27,7 +28,8 @@ export class OfferCardComponent implements OnInit {
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private refreshService: RefreshService,
               private router: Router,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              protected userService: UserService) {
   }
 
   ngOnInit() {

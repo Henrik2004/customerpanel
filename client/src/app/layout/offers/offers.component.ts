@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {OfferListComponent} from '../../ui/offer-list/offer-list.component';
 import {NgIf} from '@angular/common';
 import {Router} from '@angular/router';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'app-offers',
@@ -18,7 +19,8 @@ export class OffersComponent {
   statusonice = 'onice';
   showOnIceOffers = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              protected userService: UserService) {
   }
 
   toggleOnIceOffers() {

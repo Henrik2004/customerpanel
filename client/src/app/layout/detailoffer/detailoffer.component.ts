@@ -2,21 +2,23 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CustomerpanelApiService} from '../../shared/customerpanel-api.service';
 import {ActivatedRoute} from '@angular/router';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {ShowDocumentModalComponent} from '../../ui/show-document-modal/show-document-modal.component';
 import {AddDocumentModalComponent} from '../../ui/add-document-modal/add-document-modal.component';
 import {TagsModalComponent} from '../../ui/tags-modal/tags-modal.component';
 import {ToastrService} from 'ngx-toastr';
+import {UserService} from '../../shared/user.service';
 
 @Component({
   selector: 'app-detailoffer',
-  imports: [
-    FormsModule,
-    NgForOf,
-    ShowDocumentModalComponent,
-    AddDocumentModalComponent,
-    TagsModalComponent
-  ],
+    imports: [
+        FormsModule,
+        NgForOf,
+        ShowDocumentModalComponent,
+        AddDocumentModalComponent,
+        TagsModalComponent,
+        NgIf
+    ],
   templateUrl: './detailoffer.component.html',
   styleUrl: './detailoffer.component.scss'
 })
@@ -39,7 +41,8 @@ export class DetailofferComponent implements OnInit {
 
   constructor(private customerpanelApiService: CustomerpanelApiService,
               private route: ActivatedRoute,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              protected userService: UserService) {
   }
 
   ngOnInit() {

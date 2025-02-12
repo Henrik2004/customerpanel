@@ -18,9 +18,9 @@
           </div>
           <div class="column auto">
             <p>
-              <strong>Status:</strong><br>
+              <strong>Status:</strong><br> <span *ngIf="this.userService.role >= 2">{{offer.status}}</span>
             </p>
-            <div class="select">
+            <div class="select" *ngIf="this.userService.role <= 1">
               <select [(ngModel)]="offer.status" (change)="changeStatus(offer.id)">
                 <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
               </select>
@@ -39,12 +39,12 @@
               <i class="fas fa-angle-up" aria-hidden="true" *ngIf="showMore"></i>
             </span>
           </a>
-          <a class="level-item" aria-label="edit" (click)="editOffer(offer.id)">
+          <a class="level-item" aria-label="edit" (click)="editOffer(offer.id)" *ngIf="this.userService.role <= 2">
             <span class="icon is-small">
               <i class="fas fa-edit" aria-hidden="true"></i>
             </span>
           </a>
-          <a class="level-item" aria-label="delete" (click)="deleteOffer(offer.id)">
+          <a class="level-item" aria-label="delete" (click)="deleteOffer(offer.id)" *ngIf="this.userService.role <= 1">
             <span class="icon is-small">
               <i class="fas fa-trash" aria-hidden="true"></i>
             </span>

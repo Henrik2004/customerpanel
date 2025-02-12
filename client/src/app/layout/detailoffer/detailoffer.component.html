@@ -56,7 +56,7 @@
         <div class="box">
           <div class="content">
             <h2 class="title is-4">Documents</h2>
-            <button class="button is-primary" (click)="openAddDocumentModal()"><i class="fas fa-plus icon-space-right"></i> Add document</button>
+            <button class="button is-primary" (click)="openAddDocumentModal()" *ngIf="this.userService.role <= 2"><i class="fas fa-plus icon-space-right"></i> Add document</button>
             <table class="table is-fullwidth">
               <thead>
                 <tr>
@@ -78,9 +78,9 @@
                   <td>{{document.updatedAt}}</td>
                   <td>{{tagsCount[document.id]}}</td>
                   <td>
-                    <button class="button is-small is-primary" (click)="openTagsModal(document)"><i class="fas fa-tags icon-space-right"></i> Tags</button>
+                    <button class="button is-small is-primary" (click)="openTagsModal(document)" *ngIf="this.userService.role <= 2"><i class="fas fa-tags icon-space-right"></i> Tags</button>
                     <button class="button is-small is-primary" (click)="openDocument(document)"><i class="fas fa-plus icon-space-right"></i> Open</button>
-                    <button class="button is-small is-danger" (click)="deleteDocument(document)"><i class="fas fa-trash icon-space-right"></i> Delete</button>
+                    <button class="button is-small is-danger" (click)="deleteDocument(document)" *ngIf="this.userService.role <= 2"><i class="fas fa-trash icon-space-right"></i> Delete</button>
                   </td>
                 </tr>
               </tbody>
@@ -94,13 +94,13 @@
         <div class="box">
           <div class="content">
             <h2 class="title is-4">Comments</h2>
-            <div class="field">
+            <div class="field" *ngIf="this.userService.role <= 2">
               <label class="label">Comment</label>
               <div class="control">
                 <textarea class="textarea" [(ngModel)]="comment"></textarea>
               </div>
             </div>
-            <button class="button is-primary" (click)="addComment()"><i class="fas fa-plus icon-space-right"></i> Add comment</button>
+            <button class="button is-primary" (click)="addComment()" *ngIf="this.userService.role <= 2"><i class="fas fa-plus icon-space-right"></i> Add comment</button>
             <table class="table is-fullwidth">
               <thead>
                 <tr>
@@ -120,7 +120,7 @@
                   <td>{{comment.createdAt}}</td>
                   <td>{{comment.updatedAt}}</td>
                   <td>
-                    <button class="button is-small is-danger" (click)="deleteComment(comment)"><i class="fas fa-trash icon-space-right"></i> Delete</button>
+                    <button class="button is-small is-danger" (click)="deleteComment(comment)" *ngIf="this.userService.role <= 2"><i class="fas fa-trash icon-space-right"></i> Delete</button>
                   </td>
                 </tr>
               </tbody>
